@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "parking-app",
+    "slug": "parking-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "com.alintest.parkpin",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alintest.parkpin",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "This app uses face id & touch id to verify authenticate user"
+      }
+    },
+    "android": {
+      "package": "com.alintest.parkpin",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a4da9a2c-bfaa-44b0-836d-6a7b9187c11a"
+      }
+    }
+  }
+}
