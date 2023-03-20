@@ -1,32 +1,36 @@
-import { ScrollView, SafeAreaView, StyleSheet, Image, Text, View, TouchableOpacity, FlatList, StatusBar, Dimensions } from 'react-native'
+import { ScrollView, SafeAreaView, StyleSheet, RefreshControl, Image, Text, View, TouchableOpacity, FlatList, StatusBar, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import Swiper from 'react-native-swiper';
 import { COLORS, SIZES, lightFONTS, darkFONTS, icons, images } from '../../constants'
 import { Avatar, Card } from 'react-native-ui-lib'
 import { Searchbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllParking } from '../../redux/action'
+import { getAllParking, getMyBookings } from '../../redux/action'
 import ParkingCard from '../../components/ParkingCard'
 import axios from 'axios'
 import TestNotification from '../TestNotification'
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
 import ParkingHistory from '../../components/ParkingHistory';
-
+import moment from 'moment';
 
 const Home = ({ navigation }) => {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
     const { locationValue } = useSelector(state => state.location);
     const { parkingSpace, error, message } = useSelector(state => state.parking);
+    const { bookingDetails } = useSelector(state => state.booking);
 
     const [locationName, setLocationName] = useState();
+    const [refreshing, setRefreshing] = useState(false);
     // console.log("🚀 ~ file: Home.js:19 ~ Home ~ locationName", locationName)
 
     // console.log("🚀 ~ file: Home.js:14 ~ Home ~ location", parkingSpace)
 
     useEffect(() => {
         dispatch(getAllParking());
+        dispatch(getMyBookings(user._id))
         if (locationValue) {
             // fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=27.756028&lon=85.321436`)
             fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${locationValue.coords.latitude}&lon=${locationValue.coords.longitude}`)
@@ -41,6 +45,15 @@ const Home = ({ navigation }) => {
         }
     }, [user]);
 
+    const handleRefresh = () => {
+        setRefreshing(true);
+        dispatch(getAllParking());
+        dispatch(getMyBookings(user._id));
+        setRefreshing(false);
+    }
+
+    const ongoingBookings = bookingDetails?.bookingDetails.filter(b => b.response !== 'Rejected')
+    console.log("🚀 ~ file: Home.js:49 ~ Home ~ ongoingBookings:", ongoingBookings)
 
     useEffect(() => {
         if (error) {
@@ -86,11 +99,18 @@ const Home = ({ navigation }) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}>
-                    <Icon
-                        name='ios-search-outline'
+                    <MaterialIcon
+                        name='message-outline'
+                        size={25}
+                        onPress={() => navigation.navigate('HomeStack', {
+                            screen: 'messages'
+                        })}
+                    />
+                    {/* <Icon
+                        name='ios-notifications-outline'
                         size={25}
                         onPress={() => navigation.navigate('Search')}
-                    />
+                    /> */}
                     <TouchableOpacity style={{
                         marginLeft: 20
                     }} onPress={() => navigation.navigate('MyProfile')}>
@@ -105,11 +125,117 @@ const Home = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <ScrollView showsVerticalScrollIndicator={false} style={{
-                marginBottom: 160
-            }}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+                style={{
+                    // marginBottom: 160
+                }}>
+                <View style={styles.sliderContainer}>
+                    <Swiper
+                        autoplay
+                        horizontal={false}
+                        height={150}
+                        activeDotColor="#0054fdff">
+                        <View style={styles.slide}>
+                            <Image
+                                source={images.offerBanner}
+                                resizeMode="cover"
+                                style={styles.sliderImage}
+                            />
+                        </View>
+                        <View style={styles.slide}>
+                            <Image
+                                source={images.offerBanner}
+                                resizeMode="cover"
+                                style={styles.sliderImage}
+                            />
+                        </View>
+                    </Swiper>
+                </View>
+
+                {
+                    ongoingBookings?.length > 0 &&
+                    <View>
+                        <Text style={{
+                            ...lightFONTS.h4,
+                            marginHorizontal: 20,
+                            marginBottom: 10,
+                        }}>Ongoing Bookings</Text>
+                        <View style={{
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            backgroundColor: 'white',
+                            margin: 15,
+                            borderRadius: 15
+                            // alignItems: 'center',
+                        }}>
+                            {/* <Image source={require('../../assets/images/progress.gif')} style={{ height: 6, width: Dimensions.get('window').width - 30, alignSelf: 'center', marginVertical: 15 }} /> */}
+                            <Text style={{
+                                ...lightFONTS.h5,
+                                marginHorizontal: 20,
+                                marginBottom: 10,
+                                color: '#0054fdff'
+                            }}>ID: {ongoingBookings[0]?._id}</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'flex-start',
+                                marginHorizontal: 20
+                            }}>
+                                <View style={{
+                                    flexDirection: 'column',
+                                }}>
+                                    <Text style={{
+                                        ...lightFONTS.h5
+                                    }}>Kathmandu, Nepal</Text>
+                                    <Text style={{ ...lightFONTS.body3 }}>{moment(ongoingBookings[0]?.booking_startTime).format('LL')}</Text>
+                                </View>
+                                <View>
+                                    <Text style={{ ...lightFONTS.body3 }}>{`${moment(ongoingBookings[0]?.booking_startTime).format('LT')} - ${moment(ongoingBookings[0]?.booking_endTime).format('LT')}`}</Text>
+                                </View>
+                            </View>
+
+                            <View
+                                // onPress={() => navigation.navigate('HomeStack', {
+                                //     screen: 'parkingDetails',
+                                //     params: { space: item },
+                                // })}
+                                style={styles.card}>
+                                <Image
+                                    // source={{ uri: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1734&q=80' }}
+                                    source={{ uri: ongoingBookings[0]?.parkingSpaceDetails?.image.url }}
+                                    style={styles.cardImage}
+                                    resizeMode="cover"
+                                />
+                                <View style={styles.textContent}>
+                                    <Text numberOfLines={2} style={styles.cardtitle}>Kathmandu, Nepal</Text>
+                                    <Text style={{
+                                        color: 'orange',
+                                    }}>{ongoingBookings[0]?.response}</Text>
+                                    {/* <Text style={{
+                                        ...lightFONTS.h3,
+                                        color: '#0054fdff',
+                                    }}>Rs. {(Math.round(ongoingBookings[0]?.parkingSpaceDetails?.two_wheeler?.rate * Math.round((ongoingBookings[0]?.booking_endtime.getTime() - ongoingBookings[0]?.booking_starttime.getTime()) / (1000 * 60 * 60))))
+                                        }</Text> */}
+                                    {/* {} */}
+                                </View>
+                            </View>
+                            {/* <ParkingHistory item={item.parkingSpaceDetails} /> */}
+                            {/* {
+                            ongoingBookings?.map((item, index) => {
+                                return (
+                                    // <View key={item._id}>
+                                    <ParkingHistory item={item.parkingSpaceDetails} />
+                                );
+                            })
+                        } */}
+                        </View>
+                    </View>
+                }
+
                 <Text style={{
-                    ...lightFONTS.h3,
+                    ...lightFONTS.h4,
                     marginHorizontal: 20,
                     marginBottom: 10,
                 }}>Featured</Text>
@@ -128,7 +254,7 @@ const Home = ({ navigation }) => {
                     keyExtractor={item => item._id}
                 />
                 <Text style={{
-                    ...lightFONTS.h3,
+                    ...lightFONTS.h4,
                     marginHorizontal: 20,
                     marginVertical: 10,
                 }}>Parking Spaces near you</Text>
@@ -182,22 +308,24 @@ const styles = StyleSheet.create({
         // padding: 10,
         elevation: 2,
         backgroundColor: "#FFF",
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
+        borderRadius: 5,
         marginHorizontal: 10,
-        shadowColor: "#000",
-        shadowRadius: 5,
-        shadowOpacity: 0.3,
-        shadowOffset: { x: 2, y: -2 },
-        height: 270,
-        width: Dimensions.get('window').width * 0.5,
-        overflow: "hidden",
+        // shadowColor: "#000",
+        // shadowRadius: 5,
+        // shadowOpacity: 0.3,
+        // shadowOffset: { x: 2, y: -2 },
+        height: 100,
+        width: '95%',
+        marginVertical: 15,
+        flexDirection: 'row',
     },
     cardImage: {
-        flex: 3,
+        flex: 1,
         width: "100%",
         height: "100%",
         alignSelf: "center",
+        backgroundColor: '#707C80',
+        borderRadius: 10
     },
     textContent: {
         flex: 2,
@@ -239,6 +367,28 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         color: '#FFF'
-    }
+    },
+    sliderContainer: {
+        height: 150,
+        width: '90%',
+        marginTop: 10,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        borderRadius: 8,
+        marginBottom: 20,
+    },
+
+    slide: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+        borderRadius: 8,
+    },
+    sliderImage: {
+        height: '100%',
+        width: '100%',
+        alignSelf: 'center',
+        borderRadius: 8,
+    },
 
 })

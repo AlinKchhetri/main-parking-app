@@ -25,6 +25,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import DrawerNavigation, { DrawerContent } from './Drawer';
 import LoginScreen from '../screens/Login/LoginScreen';
 import OnboardingScreen from '../screens/Login/Onboarding';
+import Booking from '../screens/Booking/Booking';
+import Add from '../screens/Add/Add';
+import Messages from '../screens/Messages';
 
 const Drawer = createDrawerNavigator();
 
@@ -76,7 +79,7 @@ async function registerForPushNotificationsAsync() {
         token = (await Notifications.getExpoPushTokenAsync()).data;
         console.log(token);
     } else {
-        alert('Must use physical device for Push Notifications');
+        // alert('Must use physical device for Push Notifications');
     }
 
     if (Platform.OS === 'android') {
@@ -122,7 +125,7 @@ export const LoginStack = () => {
             }} />
             <Stack.Screen name="signup" component={SignUp} options={{ headerShown: true, headerTitle: '', headerBackTitleVisible: false }} />
             <Stack.Screen name="forgotPassword" component={ForgetPassword} options={{ headerShown: true, headerTitle: '', headerBackTitleVisible: false }} />
-            <Stack.Screen name="resetPassword" component={ResetPassword} options={{ presentation: 'modal'}}/>
+            <Stack.Screen name="resetPassword" component={ResetPassword} options={{ presentation: 'modal' }} />
 
         </Stack.Navigator>
     );
@@ -137,6 +140,26 @@ export const HomeStack = () => {
             initialRouteName={'home'}
         >
             <Stack.Screen name="home" component={Tabs} />
+            <Stack.Screen name="book" component={Booking}
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Reserve Parking Details',
+                    headerBackTitleVisible: false,
+                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />
+                    , presentation: 'modal'
+                }}
+            />
+            <Stack.Screen name="add" component={Add}
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Add New Space',
+                    headerBackTitleVisible: false,
+                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
+                    presentation: 'modal'
+                }}
+            />
             <Stack.Screen name="test" component={TestNotification} />
             <Stack.Screen name="changePassword" component={ChangePassword} options={{ headerShown: true, headerTitle: 'Change Password', headerBackTitleVisible: false, headerTitleStyle: { ...lightFONTS.h3 } }} />
             <Stack.Screen name="verify" component={Verify} />
@@ -147,6 +170,15 @@ export const HomeStack = () => {
                     headerTransparent: true,
                     headerBackTitleVisible: false,
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#FFF'} size={25} style={{ marginLeft: 10 }} />
+                }} />
+            <Stack.Screen name="messages" component={Messages}
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Messages',
+                    headerBackTitleVisible: false,
+                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
+                    presentation: 'modal'
                 }} />
             <Stack.Screen name="editProfile" component={Profile} options={{ headerShown: true, headerTitle: 'Update Profile', headerBackTitleVisible: false, headerTitleStyle: { ...lightFONTS.h3 } }} />
         </Stack.Navigator>

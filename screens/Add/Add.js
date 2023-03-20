@@ -42,8 +42,8 @@ const Add = ({ navigation, route }) => {
   const [image, setImage] = useState('');
   const [thumbnailImage, setThumbnailImage] = useState('');
   const [rate, setRate] = useState(0);
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
+  const [latitude, setLatitude] = useState(locationValue?.coords?.latitude);
+  const [longitude, setLongitude] = useState(locationValue?.coords?.longitude);
 
 
   useEffect(() => {
@@ -95,12 +95,10 @@ const Add = ({ navigation, route }) => {
     myForm.append('thumbnailImage', { uri: thumbnailImage, type: mime.getType(thumbnailImage), name: thumbnailImage.split("/").pop() });
     myForm.append('image', { uri: image, type: mime.getType(image), name: image.split("/").pop() });
 
-    await dispatch(addParking(myForm));
+    dispatch(addParking(myForm));
     console.log('done')
 
     navigation.navigate('My Parking')
-
-
   }
 
   const Button = () => {
@@ -116,93 +114,97 @@ const Add = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.login}>
       <StatusBar barStyle="dark-content" />
-      <ScrollView>
+      {
+        locationValue ?
+          <ScrollView>
+            {/* <Text style={{ ...lightFONTS.h3, textAlign: 'center', margin: SIZES.padding }}>Add New Parking spot</Text> */}
+            {/* {console.log("🚀 ~ file: Add.js:36 ~ Add ~ locationValue", latitude, longitude)} */}
+            {
+              locationValue ?
+                <MapView style={{ width: '80%', height: '40%', margin: SIZES.padding, alignSelf: 'center' }}
+                  region={{
+                    latitude: latitude,
+                    longitude: longitude,
+                    latitudeDelta: 0.005,
+                    longitudeDelta: 0.0121,
+                  }}
+                  provider="google"
+                >
+                  <Marker
+                    coordinate={{
+                      latitude: latitude,
+                      longitude: longitude,
+                    }}
+                    title='test'
+                    draggable={true}
+                    onDragStart={(e) => e.nativeEvent.coordinate}
+                    onDragEnd={(e) => {
+                      setLatitude(e.nativeEvent.coordinate.latitude);
+                      setLongitude(e.nativeEvent.coordinate.longitude)
+                      if (e.nativeEvent.coordinate) {
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${e.nativeEvent.coordinate.latitude}&lon=${e.nativeEvent.coordinate.longitude}`)
+                          .then((response) => response.json())
+                          .then((result) => {
+                            console.log("🚀 ~ file: Add.js:149 ~ .then ~ result", result.display_name)
+                          })
+                          .catch((error) => console.log(error));
+                      }
+                    }
+                    }
+                  >
+                    <Image source={icons.setMarker} style={{ width: 60, height: 60 }} />
+                  </Marker>
+                </MapView>
+                :
+                <LoadingScreen />
+            }
 
-        <Text style={{ ...lightFONTS.h3, textAlign: 'center', margin: SIZES.padding }}>Add New Parking spot</Text>
-        {console.log("🚀 ~ file: Add.js:36 ~ Add ~ locationValue", latitude, longitude)}
-        {
-          locationValue ?
-            <MapView style={{ width: '80%', height: '40%', margin: SIZES.padding, alignSelf: 'center' }}
-              region={{
-                latitude: latitude,
-                longitude: longitude,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.0121,
-              }}
-              provider="google"
-            >
-              <Marker
-                coordinate={{
-                  latitude: latitude,
-                  longitude: longitude,
-                }}
-                title='test'
-                draggable={true}
-                onDragStart={(e) => e.nativeEvent.coordinate}
-                onDragEnd={(e) => {
-                  setLatitude(e.nativeEvent.coordinate.latitude);
-                  setLongitude(e.nativeEvent.coordinate.longitude)
-                  if (e.nativeEvent.coordinate) {
-                    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${e.nativeEvent.coordinate.latitude}&lon=${e.nativeEvent.coordinate.longitude}`)
-                      .then((response) => response.json())
-                      .then((result) => {
-                        console.log("🚀 ~ file: Add.js:149 ~ .then ~ result", result.display_name)
-                      })
-                      .catch((error) => console.log(error));
-                  }
-                }
-                }
-              >
-                <Image source={icons.setMarker} style={{ width: 60, height: 60 }} />
-              </Marker>
-            </MapView>
-            :
-            <LoadingScreen />
-        }
-
-        <View>
-          {/* <TouchableOpacity onPress={handleChooseLocation} style={styles.inputField}>
+            <View>
+              {/* <TouchableOpacity onPress={handleChooseLocation} style={styles.inputField}>
           <Text>Set on map</Text>
           <Icon name='map-marker-plus' size={25} />
         </TouchableOpacity> */}
-          <TextInput style={styles.inputField} placeholder="Hourly Rate" onChangeText={setRate} clearButtonMode='while-editing' />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Pressable style={{ backgroundColor: '#1ab65c', justifyContent: 'center', width: 170, height: 170, borderRadius: 20 }} onPress={handleThumbnailImage}>
-              {
-                thumbnailImage ?
-                  <Image
-                    resizeMode='cover'
-                    source={{ uri: thumbnailImage }}
-                    style={{ backgroundColor: '#1ab65c', alignSelf: 'center', width: 170, height: 170, borderRadius: 20 }}
-                  />
-                  :
-                  <Image
-                    resizeMode='contain'
-                    source={icons.thumbnail}
-                    style={{ backgroundColor: '#1ab65c', alignSelf: 'center', width: 30, height: 30 }}
-                  />
-              }
-            </Pressable>
-            <Pressable style={{ backgroundColor: '#1ab65c', justifyContent: 'center', width: 170, height: 170, borderRadius: 20 }} onPress={handleImage}>
-              {
-                image ?
-                  <Image
-                    resizeMode='cover'
-                    source={{ uri: image }}
-                    style={{ backgroundColor: '#1ab65c', alignSelf: 'center', width: 170, height: 170, borderRadius: 20 }}
-                  />
-                  :
-                  <Image
-                    resizeMode='contain'
-                    source={icons.thumbnail}
-                    style={{ backgroundColor: '#1ab65c', alignSelf: 'center', width: 30, height: 30 }}
-                  />
-              }
-            </Pressable>
-          </View>
-          <Button />
-        </View>
-      </ScrollView>
+              <TextInput style={styles.inputField} placeholder="Hourly Rate" onChangeText={setRate} clearButtonMode='while-editing' />
+              <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                <Pressable style={{ backgroundColor: '#1ab65c', justifyContent: 'center', width: 170, height: 170, borderRadius: 20 }} onPress={handleThumbnailImage}>
+                  {
+                    thumbnailImage ?
+                      <Image
+                        resizeMode='cover'
+                        source={{ uri: thumbnailImage }}
+                        style={{ backgroundColor: '#1ab65c', alignSelf: 'center', width: 170, height: 170, borderRadius: 20 }}
+                      />
+                      :
+                      <Image
+                        resizeMode='contain'
+                        source={icons.thumbnail}
+                        style={{ backgroundColor: '#1ab65c', alignSelf: 'center', width: 30, height: 30 }}
+                      />
+                  }
+                </Pressable>
+                <Pressable style={{ backgroundColor: '#1ab65c', justifyContent: 'center', width: 170, height: 170, borderRadius: 20 }} onPress={handleImage}>
+                  {
+                    image ?
+                      <Image
+                        resizeMode='cover'
+                        source={{ uri: image }}
+                        style={{ backgroundColor: '#1ab65c', alignSelf: 'center', width: 170, height: 170, borderRadius: 20 }}
+                      />
+                      :
+                      <Image
+                        resizeMode='contain'
+                        source={icons.thumbnail}
+                        style={{ backgroundColor: '#1ab65c', alignSelf: 'center', width: 30, height: 30 }}
+                      />
+                  }
+                </Pressable>
+              </View>
+              <Button />
+            </View>
+          </ScrollView>
+          :
+          <LoadingScreen />
+      }
     </SafeAreaView>
   );
 };

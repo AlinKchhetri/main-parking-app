@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native'
 
-const ParkingCard = ({ item }) => {
+const ParkingList = ({ item }) => {
 
     const navigation = useNavigation();
     return (
@@ -16,7 +16,6 @@ const ParkingCard = ({ item }) => {
             })}
             style={styles.card}>
             <Image
-                // source={{ uri: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1734&q=80' }}
                 source={{ uri: item?.image.url }}
                 style={styles.cardImage}
                 resizeMode="cover"
@@ -40,7 +39,8 @@ const ParkingCard = ({ item }) => {
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        backgroundColor: COLORS.gray,
+                        backgroundColor: COLORS.green,
+                        opacity: 0.8,
                         paddingHorizontal: 8,
                         paddingVertical: 2,
                         borderRadius: 8,
@@ -49,16 +49,14 @@ const ParkingCard = ({ item }) => {
                         <MaterialIcon
                             name='bike'
                             size={17}
-                            color='black'
+                            color='white'
                             style={{
-                                opacity: 0.5,
                                 // marginHorizontal: 20
                             }}
                         />
                         <Text style={{
                             ...lightFONTS.body5,
-                            // color: 'white',
-                            opacity: 0.5,
+                            color: 'white',
                             marginLeft: 5
                         }}>{item?.two_wheeler?.no_slot} slot</Text>
                     </View>
@@ -71,7 +69,7 @@ const ParkingCard = ({ item }) => {
                             backgroundColor: COLORS.green,
                             paddingHorizontal: 8,
                             borderRadius: 8,
-                            opacity: 0.5,
+                            opacity: 0.8,
                             paddingVertical: 2,
                         }}>
                             <MaterialIcon
@@ -108,24 +106,25 @@ const styles = StyleSheet.create({
         // padding: 10,
         elevation: 2,
         backgroundColor: "#FFF",
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
-        marginHorizontal: 10,
+        borderRadius: 5,
         shadowColor: "#000",
         shadowRadius: 5,
         shadowOpacity: 0.3,
         shadowOffset: { x: 2, y: -2 },
-        height: 200,
-        width: Dimensions.get('window').width * 0.45,
+        height: 120,
+        width: Dimensions.get('window').width - 20,
         overflow: "hidden",
-        flexDirection: 'column',
+        flexDirection: 'row',
+        marginVertical: 8,
     },
     cardImage: {
-        flex: 3,
+        flex: 1,
         width: "100%",
         height: "100%",
-        backgroundColor: '#707C80',
         alignSelf: "center",
+        backgroundColor: '#707C80',
+        borderRadius: 10,
+        marginRight: 5
     },
     textContent: {
         flex: 2,
@@ -163,4 +162,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default ParkingCard
+export default ParkingList

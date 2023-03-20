@@ -55,6 +55,10 @@ const App = () => {
     "Roboto-Black": require('./assets/fonts/Roboto-Black.ttf'),
     "Roboto-Bold": require('./assets/fonts/Roboto-Bold.ttf'),
     "Roboto-Regular": require('./assets/fonts/Roboto-Regular.ttf'),
+
+    "SF-Pro-Regular": require('./assets/fonts/SF-Pro-Text-Font-Family/SF-Pro-Text-Regular.otf'),
+    "SF-Pro-Medium": require('./assets/fonts/FontsFree-Net-SFProDisplay-Medium-1.ttf'),
+    "SF-Pro-Bold": require('./assets/fonts/SF-Pro-Text-Font-Family/SF-Pro-Text-Semibold.otf'),
   })
 
   if (!loaded) {

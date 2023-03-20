@@ -36,9 +36,16 @@ export default function CameraComponent({ navigation, route }) {
   const takePicture = async () => {
     const data = await camera.takePictureAsync();
     if (route.params.updateProfile) return navigation.navigate('editProfile', { image: data.uri })
-    else if (route.params.addThumbnailImage) return navigation.navigate('Add', { thumbnailImage: data.uri })
-    else if (route.params.addImage) return navigation.navigate('Add', { image: data.uri })
-    else return navigation.navigate('register', {  image: data.uri })
+    else if (route.params.addThumbnailImage) return navigation.navigate('HomeStack', {
+      screen: 'add',
+      params: { thumbnailImage: data.uri }
+    })
+    // else if (route.params.addThumbnailImage) return navigation.navigate('Add', { thumbnailImage: data.uri })
+    else if (route.params.addImage) return navigation.navigate('HomeStack', {
+      screen: 'add',
+      params: { image: data.uri }
+    })
+    else return navigation.navigate('register', { image: data.uri })
   }
 
   const pickImage = async () => {
@@ -49,8 +56,15 @@ export default function CameraComponent({ navigation, route }) {
       quality: 1,
     });
     if (route.params.updateProfile) return navigation.navigate('editProfile', { image: result.uri })
-    else if (route.params.addThumbnailImage) return navigation.navigate('Add', { thumbnailImage: result.uri })
-    else if (route.params.addImage) return navigation.navigate('Add', { image: result.uri })
+    else if (route.params.addThumbnailImage) return navigation.navigate('HomeStack', {
+      screen: 'add',
+      params: { thumbnailImage: result.uri }
+    })
+    // else if (route.params.addThumbnailImage) return navigation.navigate('Add', { thumbnailImage: data.uri })
+    else if (route.params.addImage) return navigation.navigate('HomeStack', {
+      screen: 'add',
+      params: { image: result.uri }
+    })
     else return navigation.navigate('register', { image: result.uri })
   }
 
@@ -62,16 +76,16 @@ export default function CameraComponent({ navigation, route }) {
           else if (route.params.addThumbnailImage) return navigation.navigate('Add')
           else if (route.params.addImage) return navigation.navigate('Add')
           else return navigation.navigate('register')
-        }} 
-        style={{
-          position: 'absolute',
-          top: 30,
-          backgroundColor: 'white',
-          borderRadius:40,
-          padding: 10,
         }}
+          style={{
+            position: 'absolute',
+            top: 30,
+            backgroundColor: 'white',
+            borderRadius: 40,
+            padding: 10,
+          }}
         >
-          <Text style={{...lightFONTS.body3}}>Close</Text>
+          <Text style={{ ...lightFONTS.body3 }}>Close</Text>
         </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>

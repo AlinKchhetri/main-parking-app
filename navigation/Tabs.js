@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MapBox from "../screens/Search/MapBox";
 import { Theme } from "../constants/theme";
+import MyParking from "../screens/Add/MyParking";
 
 const Tab = createBottomTabNavigator()
 
@@ -41,17 +42,16 @@ const Tabs = () => {
             dispatch({ type: 'getLocation', payload: location });
         })();
 
-             if(isDarkMode == false){
+        if (isDarkMode == false) {
 
-                dispatch({ type: 'setPrimaryColor', payload: '#000' })
-            }
-            else
-            {
+            dispatch({ type: 'setPrimaryColor', payload: '#000' })
+        }
+        else {
 
-                dispatch({ type: 'setPrimaryColor', payload: '#66D59A' });
-            }
+            dispatch({ type: 'setPrimaryColor', payload: '#66D59A' });
+        }
 
-        
+
     }, []);
 
 
@@ -71,7 +71,7 @@ const Tabs = () => {
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        backgroundColor: COLORS.green,
+                        backgroundColor: 'black',
                         elevation: 0
                     },
                         null]
@@ -107,8 +107,8 @@ const Tabs = () => {
                     }}
                 />
                 <Tab.Screen
-                    name="AddTabs"
-                    component={AddTabs}
+                    name="MySpaces"
+                    component={MyParking}
                     options={{
                         tabBarIcon: ({ size, focused }) => (
                             <Image

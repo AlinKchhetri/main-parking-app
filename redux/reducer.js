@@ -251,17 +251,7 @@ export const parkingReducer = createReducer({}, {
         state.loading = false;
         state.error = action.payload;
     },
-    bookParkingRequest: (state) => {
-        state.loading = true;
-    },
-    bookParkingSuccess: (state, action) => {
-        state.loading = false;
-        state.message = action.payload;
-    },
-    bookParkingFailure: (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-    },
+
     getUserRequest: (state) => {
         state.loading = true;
     },
@@ -274,12 +264,39 @@ export const parkingReducer = createReducer({}, {
         state.error = action.payload;
     },
 
+
     clearError: (state) => {
         state.error = null;
     },
     clearMesssage: (state) => {
         state.message = null;
     }
+});
+
+
+export const bookingReducer = createReducer({}, {
+    bookParkingRequest: (state) => {
+        state.loading = true;
+    },
+    bookParkingSuccess: (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+    },
+    bookParkingFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    getMyBookingsRequest: (state) => {
+        state.loading = true;
+    },
+    getMyBookingsSuccess: (state, action) => {
+        state.loading = false;
+        state.bookingDetails = action.payload;
+    },
+    getMyBookingsFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
 });
 
 export const locationReducer = createReducer({}, {

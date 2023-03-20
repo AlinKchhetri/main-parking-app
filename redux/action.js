@@ -346,13 +346,27 @@ export const getMyParking = (id) => async (dispatch) => {
   }
 };
 
-export const bookParking = (id, userID, userName, userEmail, userPhoneNumber, bookingHour, fee) => async (dispatch) => {
+export const getMyBookings = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: 'getMyBookingsRequest' });
+
+    const { data } = await axios.get(
+      `${serverUrl}/getbooking/${id}`,
+    );
+    dispatch({ type: "getMyBookingsSuccess", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "getMyBookingsFailure", payload: error.response.data.message })
+  }
+};
+
+export const bookParking = (userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType ) => async (dispatch) => {
   try {
     dispatch({ type: "bookParkingRequest" });
 
     const { data } = await axios.post(
-      `${serverUrl}/book/${id}`,
-      { id, userID, userName, userEmail, userPhoneNumber, bookingHour, fee },
+      `${serverUrl}/newbooking`,
+      { userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType  },
       {
         headers: {
           "Content-Type": "application/json",

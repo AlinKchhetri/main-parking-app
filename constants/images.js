@@ -13,6 +13,8 @@ const onboarding1 = require("../assets/images/main.png");
 const onboarding2 = require("../assets/images/main2.png");
 const onboarding3 = require("../assets/images/main3.png");
 
+const offerBanner = require("../assets/images/appBanner.png");
+
 export default {
     wallieLogo,
     banner,
@@ -26,6 +28,8 @@ export default {
     onboarding,
     onboarding1,
     onboarding2,
-    onboarding3
+    onboarding3,
+
+    offerBanner
 
 }

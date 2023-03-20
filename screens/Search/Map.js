@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Platform, Text, View, Animated, StyleSheet, TouchableOpacity, Image, Dimensions, Linking, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { SafeAreaView, Platform, Text, View, Animated, StyleSheet, TouchableOpacity, Image, Dimensions, Linking, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { COLORS, lightFONTS, darkFONTS, images, icons, SIZES } from '../../constants'
 import Toast from 'react-native-toast-message'
 import { TextInput } from 'react-native-paper';
@@ -15,7 +15,7 @@ import { Searchbar } from 'react-native-paper';
 
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = 220;
-const CARD_WIDTH = width * 0.65;
+const CARD_WIDTH = width * 0.3;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 const Map = ({ navigation }) => {
@@ -609,7 +609,7 @@ const Map = ({ navigation }) => {
   const _scrollView = React.useRef(null);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center' }}>
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', backgroundColor: COLORS.white, justifyContent: 'center', alignItems: 'center' }}>
       <MapView
         onPress={() => {
           Keyboard.dismiss();
@@ -709,7 +709,7 @@ const Map = ({ navigation }) => {
       </MapView >
       <View style={{
         position: 'absolute',
-        top: 30,
+        top: 50,
         width: Dimensions.get('window').width - 40,
         justifyContent: 'center',
         alignItems: 'center'
@@ -830,7 +830,7 @@ const Map = ({ navigation }) => {
           )
         })}
       </Animated.ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 
