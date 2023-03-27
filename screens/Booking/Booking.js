@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker, { getToday } from 'react-native-modern-datepicker';
-import { ScrollView, SafeAreaView, View, Text, StatusBar, TouchableOpacity, Pressable } from 'react-native';
+import { ScrollView, SafeAreaView, View, Text, StatusBar, TouchableOpacity, Pressable, Alert } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { COLORS, images, lightFONTS, SIZES } from '../../constants';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
 import { CheckBox } from 'react-native-elements';
 import moment from 'moment';
 import { Stepper, Slider } from 'react-native-ui-lib';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookParking } from '../../redux/action';
+import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
 
 const Booking = ({ navigation, route }) => {
 
@@ -22,7 +23,7 @@ const Booking = ({ navigation, route }) => {
     const [startTimeModal, setStartTimeModal] = useState(false);
     const [endTimeModal, setEndTimeModal] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const [currentValue, setCurrentValue] = useState('bike');
+    const [fee, setFee] = useState(0);
     const [item, setItem] = useState();
     const [selected, setSelected] = useState('bike');
     const [duration, setDuration] = useState(1);
@@ -51,13 +52,37 @@ const Booking = ({ navigation, route }) => {
         return hours;
     }
 
-    const getTotal = () => {
-        if (selected === 'bike') {
-            return (Math.round(item?.two_wheeler?.rate * Math.round((endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60))))
-        } else {
-            return (Math.round(item?.four_wheeler?.rate * Math.round((endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60))))
+    useEffect(() => {
+        const hour = Math.round((endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60));
+        // const hour = moment(endTime).diff(moment(startTime), 'hours');
+        console.log("🚀 ~ file: Booking.js:56 ~ getTotal ~ hour:", hour)
+        if (hour <= 0) {
+            Alert.alert('Starting time should be before the Ending time');
+            setError(true);
+            return;
         }
-    }
+        if (selected === 'bike') {
+            setFee(Math.round(item?.two_wheeler?.rate * hour))
+        } else {
+            setFee(Math.round(item?.four_wheeler?.rate * hour))
+        }
+    }, [startTime, endTime])
+
+
+    // const getTotal = () => {
+    //     const hour = moment(endTime).diff(moment(startTime), 'hours');
+    //     console.log("🚀 ~ file: Booking.js:56 ~ getTotal ~ hour:", hour)
+    //     if (hour <= 0) {
+    //         Alert.alert('Starting time should be before the Ending time');
+    //         setError(true);
+    //         return;
+    //     }
+    //     if (selected === 'bike') {
+    //         setFee(Math.round(item?.two_wheeler?.rate * hour))
+    //     } else {
+    //         setFee(Math.round(item?.four_wheeler?.rate * hour))
+    //     }
+    // }
 
     return (
         <SafeAreaView style={{
@@ -65,11 +90,11 @@ const Booking = ({ navigation, route }) => {
             backgroundColor: COLORS.white,
             padding: SIZES.padding
         }}>
-            <StatusBar barStyle={'light-content'} />
+            <StatusBar barStyle={'dark-content'} />
             <ScrollView style={{
                 flex: 1
             }}>
-                <Text style={{
+                {/* <Text style={{
                     ...lightFONTS.h4,
                     marginTop: 20,
                     marginHorizontal: SIZES.padding
@@ -81,10 +106,10 @@ const Booking = ({ navigation, route }) => {
                     selected={selectedDate}
                     mode={'calendar'}
                     onSelectedChange={date => setSelectedDate(date)}
-                />
+                /> */}
                 <DateTimePickerModal
                     isVisible={startTimeModal}
-                    mode="time"
+                    mode="datetime"
                     themeVariant='light'
                     // minimumDate={startTime}
                     onConfirm={(time) => {
@@ -96,7 +121,7 @@ const Booking = ({ navigation, route }) => {
                 />
                 <DateTimePickerModal
                     isVisible={endTimeModal}
-                    mode="time"
+                    mode="datetime"
                     themeVariant='light'
                     // minimumDate={endTime}
                     onConfirm={(time) => {
@@ -116,7 +141,7 @@ const Booking = ({ navigation, route }) => {
                         marginTop: 10
                     }}>
                         {
-                            item?.four_wheeler?.no_slot > 0 &&
+                            item?.two_wheeler?.no_slot > 0 &&
                             <Pressable
                                 onPress={() => setSelected('bike')}
                                 style={{
@@ -339,11 +364,32 @@ const Booking = ({ navigation, route }) => {
                     //   });
                     // }}
                     onPress={() => {
-                        dispatch(bookParking(user._id, item.ownerDetails._id, item._id, startTime, endTime, selected)).then(() => {
-                            navigation.navigate('HomeStack', { screen: 'home' })
-                        });
-                        // console.log(item)
-                        console.log(user._id, item.ownerDetails._id, item._id, startTime, endTime, selected)
+                        if (fee < 100) {
+                            Toast.show({
+                                type: ALERT_TYPE.WARNING,
+                                title: 'Warning',
+                                textBody: 'Your total booking fee should be at least Rs. 100',
+                                autoClose: 2000,
+                            });
+                            return;
+                        };
+
+                        let bookingDetails = {
+                            userId: user._id,
+                            ownerId: item?.ownerDetails._id,
+                            parkingId: item?._id,
+                            parkingAddress: item?.locationName,
+                            rate: selected == 'bike' ? item?.two_wheeler?.rate : item.four_wheeler?.rate,
+                            startTime: startTime,
+                            endTime: endTime,
+                            vehicleType: selected,
+                            fee: fee
+                        }
+                        // dispatch(bookParking(user._id, item.ownerDetails._id, item._id, startTime, endTime, selected)).then(() => {
+                        navigation.navigate('HomeStack',
+                            { screen: 'choosePayment', params: bookingDetails },
+
+                        )
                     }}
                     style={{
                         backgroundColor: COLORS.green,
@@ -358,7 +404,7 @@ const Booking = ({ navigation, route }) => {
                         color: 'white',
                     }}>
                         {/* {`Reserve for: Rs.${Math.round(selected === 'bike' ? item?.two_wheeler?.rate : item?.four_wheeler?.rate * (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60))}`} */}
-                        Reserve for: Rs. {getTotal()}
+                        Reserve for: Rs. {fee}
                     </Text>
                     {/* <Text style={{
                         ...lightFONTS.h5,

@@ -5,8 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native'
 
-const ParkingCard = ({ item }) => {
-
+const ParkingCard = ({ item, isMapScreen }) => {
     const navigation = useNavigation();
     return (
         <TouchableOpacity
@@ -14,7 +13,22 @@ const ParkingCard = ({ item }) => {
                 screen: 'parkingDetails',
                 params: { space: item },
             })}
-            style={styles.card}>
+            style={{
+                elevation: 2,
+                backgroundColor: "#FFF",
+                borderTopLeftRadius: 5,
+                borderTopRightRadius: 5,
+                marginHorizontal: 10,
+                shadowColor: "#000",
+                shadowRadius: 5,
+                shadowOpacity: 0.3,
+                shadowOffset: { x: 2, y: -2 },
+                height: 220,
+                width: isMapScreen ? Dimensions.get('window').width * 0.8 : Dimensions.get('window').width * 0.5,
+                overflow: "hidden",
+                flexDirection: 'column',
+            }}
+        >
             <Image
                 // source={{ uri: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1734&q=80' }}
                 source={{ uri: item?.image.url }}
@@ -29,7 +43,27 @@ const ParkingCard = ({ item }) => {
                     ...lightFONTS.body5,
                     color: '#707C80'
                 }}>/hr</Text></Text>
-                <Text numberOfLines={2} style={styles.cardtitle}>Paid Parking available</Text>
+                {/* <Text style={styles.cardtitle}>Paid Parking Available</Text> */}
+
+                {
+                    // item?.locationName &&
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                    }}>
+                        <MaterialIcon
+                            name='map-marker'
+                            size={17}
+                            color='black'
+                            style={{
+                                opacity: 0.5,
+                                // marginHorizontal: 20
+                            }}
+                        />
+                        <Text numberOfLines={1} style={{ ...lightFONTS.body5, color: '#707C80' }}>{item?.locationName}</Text>
+                    </View>
+                }
                 <View style={{
                     flex: 1,
                     flexDirection: 'row',
@@ -66,22 +100,27 @@ const ParkingCard = ({ item }) => {
                         item?.four_wheeler?.no_slot > 0 &&
                         <View style={{
                             flexDirection: 'row',
-                            justifyContent: 'center',
+                            justifyContent: 'space-between',
                             alignItems: 'center',
-                            backgroundColor: COLORS.green,
+                            backgroundColor: COLORS.gray,
                             paddingHorizontal: 8,
-                            borderRadius: 8,
-                            opacity: 0.5,
                             paddingVertical: 2,
+                            borderRadius: 8,
+                            marginRight: 5
                         }}>
                             <MaterialIcon
                                 name='car'
                                 size={20}
-                                color='white'
+                                color='black'
+                                style={{
+                                    opacity: 0.5,
+                                    // marginHorizontal: 20
+                                }}
                             />
                             <Text style={{
                                 ...lightFONTS.body5,
-                                color: 'white',
+                                // color: 'white',
+                                opacity: 0.5,
                                 marginLeft: 5
                             }}>{item?.four_wheeler?.no_slot} slot</Text>
                         </View>
@@ -106,6 +145,7 @@ const styles = StyleSheet.create({
     },
     card: {
         // padding: 10,
+        // flex: 1,
         elevation: 2,
         backgroundColor: "#FFF",
         borderTopLeftRadius: 5,

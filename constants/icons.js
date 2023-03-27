@@ -21,6 +21,9 @@ const secure = require("../assets/icons/secure.png");
 const user = require("../assets/icons/profile.png");
 const dark = require("../assets/icons/sleep-mode.png");
 
+const visa = require("../assets/icons/main//mv.png");
+const khalti = require("../assets/icons/main/khalti.png");
+
 export default {
     home,
     map,
@@ -43,6 +46,9 @@ export default {
     support,
     secure,
     user,
-    dark
+    dark,
+
+    visa,
+    khalti
 
 }

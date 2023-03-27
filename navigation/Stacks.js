@@ -7,7 +7,7 @@ import { NavigationContainer, DarkTheme, DefaultTheme, useTheme } from '@react-n
 import { useSelector, useDispatch } from 'react-redux';
 import Login from '../screens/Login/Login';
 import Register from '../screens/Login/Register';
-import { loadUser } from '../redux/action';
+import { loadUser, registerToken } from '../redux/action';
 import Profile from '../screens/Profile';
 import TestNotification from '../screens/TestNotification';
 import Tabs from './Tabs';
@@ -28,6 +28,10 @@ import OnboardingScreen from '../screens/Login/Onboarding';
 import Booking from '../screens/Booking/Booking';
 import Add from '../screens/Add/Add';
 import Messages from '../screens/Messages';
+import BookingDetails from '../screens/Booking/BookingDetails';
+import Payment from '../screens/Booking/Payment';
+import ChangeRole from '../screens/Login/ChangeRole';
+import ChoosePayment from '../screens/Booking/ChoosePayment';
 
 const Drawer = createDrawerNavigator();
 
@@ -77,7 +81,6 @@ async function registerForPushNotificationsAsync() {
             return;
         }
         token = (await Notifications.getExpoPushTokenAsync()).data;
-        console.log(token);
     } else {
         // alert('Must use physical device for Push Notifications');
     }
@@ -126,7 +129,6 @@ export const LoginStack = () => {
             <Stack.Screen name="signup" component={SignUp} options={{ headerShown: true, headerTitle: '', headerBackTitleVisible: false }} />
             <Stack.Screen name="forgotPassword" component={ForgetPassword} options={{ headerShown: true, headerTitle: '', headerBackTitleVisible: false }} />
             <Stack.Screen name="resetPassword" component={ResetPassword} options={{ presentation: 'modal' }} />
-
         </Stack.Navigator>
     );
 }
@@ -147,7 +149,7 @@ export const HomeStack = () => {
                     headerBackTitleVisible: false,
                     headerTitleStyle: { ...lightFONTS.h4 },
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />
-                    , presentation: 'modal'
+                    // , presentation: 'modal'
                 }}
             />
             <Stack.Screen name="add" component={Add}
@@ -177,8 +179,31 @@ export const HomeStack = () => {
                     headerTitle: 'Messages',
                     headerBackTitleVisible: false,
                     headerTitleStyle: { ...lightFONTS.h4 },
+                    headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />
+                }} />
+            <Stack.Screen name="bookingDetails" component={BookingDetails}
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Booking Details',
+                    headerBackTitleVisible: false,
+                    headerTitleStyle: { ...lightFONTS.h4 },
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
-                    presentation: 'modal'
+                }} />
+            <Stack.Screen name="payment" component={Payment}
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Payment',
+                    headerBackTitleVisible: false,
+                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
+                }} />
+            <Stack.Screen name="choosePayment" component={ChoosePayment}
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Payment Options',
+                    headerBackTitleVisible: false,
+                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
                 }} />
             <Stack.Screen name="editProfile" component={Profile} options={{ headerShown: true, headerTitle: 'Update Profile', headerBackTitleVisible: false, headerTitleStyle: { ...lightFONTS.h3 } }} />
         </Stack.Navigator>
@@ -213,7 +238,11 @@ const Stacks = () => {
 
 
     useEffect(() => {
-        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+        registerForPushNotificationsAsync().then(token => {
+            console.log("🚀 ~ file: Stacks.js:233 ~ registerForPushNotificationsAsync ~ token:", token)
+            setExpoPushToken(token);
+            dispatch(registerToken(token));
+        });
 
         notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
             setNotification(notification);

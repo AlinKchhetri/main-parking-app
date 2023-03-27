@@ -69,7 +69,6 @@ export const login = (email, password) => async (dispatch) => {
     );
     dispatch({ type: "loginSuccess", payload: data });
   } catch (error) {
-    // console.log(error.response.data.message)
     dispatch({ type: "loginFailure", payload: error.response.data.message });
   }
 };
@@ -112,24 +111,24 @@ export const googleOAuthlogin = (name, email, password) => async (dispatch) => {
   }
 };
 
-// export const registerToken = (token) => async (dispatch) => {
-//   try {
-//     dispatch({ type: "registerTokenRequest" });
+export const registerToken = (token) => async (dispatch) => {
+  try {
+    dispatch({ type: "registerTokenRequest" });
 
-//     const { data } = await axios.put(
-//       `${serverUrl}/token`,
-//       { token },
-//       {
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-//     // dispatch({ type: "registerTokenSuccess", payload: data.message });
-//   } catch (error) {
-//     // dispatch({ type: "registerTokenFailure", payload: error.response.data.message });
-//   }
-// };
+    const { data } = await axios.put(
+      `${serverUrl}/token`,
+      { token },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    dispatch({ type: "registerTokenSuccess", payload: data.message });
+  } catch (error) {
+    dispatch({ type: "registerTokenFailure", payload: error.response.data.message });
+  }
+};
 
 
 export const changePassword = (oldPassword, newPassword) => async (dispatch) => {
@@ -360,13 +359,48 @@ export const getMyBookings = (id) => async (dispatch) => {
   }
 };
 
-export const bookParking = (userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType ) => async (dispatch) => {
+export const payment = (amount) => async (dispatch) => {
+  try {
+    dispatch({ type: 'paymentRequest' });
+
+    const { data } = await axios.post(
+      `${serverUrl}/payment`,
+      { amount },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    dispatch({ type: "paymentSuccess", payload: data.paymentIntent });
+    return data;
+
+  } catch (error) {
+    dispatch({ type: "paymentFailure", payload: error.response.data.message })
+  }
+};
+
+export const getMyBookingRequests = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: 'getMyBookingRequestsRequest' });
+
+    const { data } = await axios.get(
+      `${serverUrl}/getrequests/${id}`,
+    );
+    dispatch({ type: "getMyBookingRequestsSuccess", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "getMyBookingRequestsFailure", payload: error.response.data.message })
+  }
+};
+
+export const bookParking = (userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType) => async (dispatch) => {
   try {
     dispatch({ type: "bookParkingRequest" });
 
     const { data } = await axios.post(
       `${serverUrl}/newbooking`,
-      { userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType  },
+      { userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType },
       {
         headers: {
           "Content-Type": "application/json",
@@ -376,5 +410,25 @@ export const bookParking = (userId, ownerId, parkingSpaceId, startTime, endTime,
     dispatch({ type: "bookParkingSuccess", payload: data.message });
   } catch (error) {
     dispatch({ type: "bookParkingFailure", payload: error.response.data.message });
+  }
+};
+
+export const respond = (id, response) => async (dispatch) => {
+  try {
+    dispatch({ type: 'respondRequest' });
+
+    const { data } = await axios.put(
+      `${serverUrl}/respond/${id}`,
+      { response },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    dispatch({ type: "responseSuccess", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "responseFailure", payload: error.response.data.message })
   }
 };

@@ -12,12 +12,13 @@ const OnboardingScreen = ({ navigation }) => {
                 onSkip={() => navigation.navigate('login')}
                 onDone={() => navigation.navigate('login')}
                 titleStyles={{
-                    ...lightFONTS.h2,
+                    ...lightFONTS.h3,
                     marginHorizontal: 10
                 }}
                 subTitleStyles={{
                     ...lightFONTS.body3,
-                    marginHorizontal: 10
+                    marginHorizontal: 10,
+                    color: '#707C80'
                 }}
                 pages={[
                     {

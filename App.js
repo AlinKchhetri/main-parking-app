@@ -8,6 +8,7 @@
 
 import React from 'react';
 import { Provider } from 'react-redux';
+import { StripeProvider } from '@stripe/stripe-react-native';
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -64,12 +65,16 @@ const App = () => {
   if (!loaded) {
     return null;
   }
+
+  const STRIPE_KEY = 'pk_test_51LesieK4lDTa5OSUoVkC3KIPnpCC8QJvTWn2HM15EWLGoD46znNPhzlmho2NNpDfX8vkvdiOjEtIAA3fdK2mx7fN00B5WNilPu';
   return (
     <Provider store={store}>
-      <AlertNotificationRoot>
-        <Stacks />
-        <Toast config={toastConfig} />
-      </AlertNotificationRoot>
+      <StripeProvider publishableKey={STRIPE_KEY}>
+        <AlertNotificationRoot>
+          <Stacks />
+          <Toast config={toastConfig} />
+        </AlertNotificationRoot>
+      </StripeProvider>
     </Provider>
   )
 }

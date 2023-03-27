@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { SafeAreaView, Platform, Text, View, Animated, StyleSheet, TouchableOpacity, Image, Dimensions, Linking, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { SafeAreaView, Platform, Text, View, StatusBar, Animated, StyleSheet, TouchableOpacity, Image, Dimensions, Linking, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { COLORS, lightFONTS, darkFONTS, images, icons, SIZES } from '../../constants'
 import Toast from 'react-native-toast-message'
 import { TextInput } from 'react-native-paper';
@@ -15,7 +15,7 @@ import { Searchbar } from 'react-native-paper';
 
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = 220;
-const CARD_WIDTH = width * 0.3;
+const CARD_WIDTH = width * 0.8;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 const Map = ({ navigation }) => {
@@ -826,7 +826,7 @@ const Map = ({ navigation }) => {
       >
         {parkingSpace.map((item) => {
           return (
-            <ParkingCard key={item._id} item={item} />
+            <ParkingCard key={item._id} item={item} isMapScreen={true} />
           )
         })}
       </Animated.ScrollView>

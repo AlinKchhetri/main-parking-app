@@ -203,7 +203,7 @@ const Login = ({ navigation }) => {
               body: 'Here is the notification body',
               data: { data: 'goes here' },
             },
-            trigger: { date: new Date('2023-02-12T16:57:55.560Z') },
+            trigger: { date: new Date('2023-03-25T18:47:40.918Z') },
           });
         }}
       >
@@ -237,7 +237,7 @@ const Login = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.login}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle='dark-content' />
       <View style={{
         flexDirection: 'column',
         justifyContent: 'space-around',
@@ -258,9 +258,12 @@ const Login = ({ navigation }) => {
             validationSchema={loginValidationSchema}
           >
             {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, touched }) => (
-              <>
+              <View style={{
+                marginHorizontal: 15
+              }}>
                 <TextInput
-                  style={styles.inputField} underlineColor='#FAFAFA' activeUnderlineColor='#333333'
+                  style={styles.inputField} outlineColor='#FAFAFA' activeOutlineColor='#333333'
+                  mode='outlined'
                   label="Email"
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
@@ -274,7 +277,8 @@ const Login = ({ navigation }) => {
                   <Text style={{ fontSize: 10, color: 'red', marginHorizontal: 15 }}>{errors.email}</Text>
                 }
                 <TextInput
-                  style={styles.inputField} underlineColor='#FAFAFA' activeUnderlineColor='#333333'
+                  style={styles.inputField} outlineColor='#FAFAFA' activeOutlineColor='#333333'
+                  mode='outlined'
                   label="Password"
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
@@ -323,7 +327,7 @@ const Login = ({ navigation }) => {
                     <Text style={styles.buttonStyle}>Sign in</Text>
                   </TouchableOpacity>
                 </View>
-              </>
+              </View>
             )}
           </Formik>
           <Text onPress={handleForgotPassword} style={styles.forgotText}>Forgot the password?</Text>
@@ -360,9 +364,10 @@ const styles = StyleSheet.create({
   loginHeader: {
     justifyContent: 'center',
     alignItems: 'flex-start',
+    marginHorizontal: 15
   },
   loginText: {
-    ...lightFONTS.h1,
+    ...lightFONTS.h2,
     textAlign: 'left',
     paddingHorizontal: SIZES.padding,
   },
@@ -409,5 +414,6 @@ const styles = StyleSheet.create({
   singnupText: {
     ...lightFONTS.body3,
     color: COLORS.green,
+    textDecorationLine: 'underline'
   },
 });

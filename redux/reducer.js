@@ -297,6 +297,39 @@ export const bookingReducer = createReducer({}, {
         state.loading = false;
         state.error = action.payload;
     },
+    getMyBookingRequestsRequest: (state) => {
+        state.loading = true;
+    },
+    getMyBookingRequestsSuccess: (state, action) => {
+        state.loading = false;
+        state.bookingDetails = action.payload;
+    },
+    getMyBookingRequestsFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    respondRequest: (state) => {
+        state.loading = true;
+    },
+    respondSuccess: (state, action) => {
+        state.loading = false;
+        state.bookingDetails = action.payload;
+    },
+    respondFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    paymentRequest: (state) => {
+        state.loading = true;
+    },
+    paymentSuccess: (state, action) => {
+        state.loading = false;
+        state.paymentIntent = action.payload;
+    },
+    paymentFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
 });
 
 export const locationReducer = createReducer({}, {
@@ -319,22 +352,22 @@ export const colorReducer = createReducer({}, {
     }
 });
 
-// export const notificationReducer = createReducer({}, {
-//     registerTokenRequest: (state) => {
-//         state.loading = true;
-//     },
-//     registerTokenSuccess: (state, action) => {
-//         state.loading = false;
-//         state.message = action.payload;
-//     },
-//     registerTokenFailure: (state, action) => {
-//         state.loading = false;
-//         state.error = action.payload;
-//     },
-//     clearError: (state) => {
-//         state.error = null;
-//     },
-//     clearMesssage: (state) => {
-//         state.message = null;
-//     }
-// });
+export const notificationReducer = createReducer({}, {
+    registerTokenRequest: (state) => {
+        state.loading = true;
+    },
+    registerTokenSuccess: (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+    },
+    registerTokenFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+    clearError: (state) => {
+        state.error = null;
+    },
+    clearMesssage: (state) => {
+        state.message = null;
+    }
+});

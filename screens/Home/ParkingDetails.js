@@ -22,7 +22,7 @@ const ParkingDetails = ({ navigation, route }) => {
 
   useEffect(() => {
     if (route.params) {
-      // console.log("🚀 ~ file: ParkingDetails.js:16 ~ useEffect ~ route", route)
+      console.log("🚀 ~ file: ParkingDetails.js:16 ~ useEffect ~ route", route)
       setDetails(route.params.space)
     }
   }, [route]);
@@ -72,13 +72,15 @@ const ParkingDetails = ({ navigation, route }) => {
     }
   };
 
+  const locationAddress = details.locationName;
+
   return (
     <BottomSheetModalProvider>
       <View style={{ flex: 1 }}>
         {/* <TouchableOpacity onPress={handleBooking} style={{ backgroundColor: COLORS.green, justifyContent: 'center', alignItems: 'center', width: '80%', height: 50 }}>
         <Text style={{ ...darkFONTS.h4 }}>Book</Text>
       </TouchableOpacity> */}
-        <StatusBar barStyle={'light-content'} hidden />
+        <StatusBar barStyle={'light-content'} />
         <BottomSheetModal
           ref={bottomSheetModalRef}
           // index={1}
@@ -199,12 +201,12 @@ const ParkingDetails = ({ navigation, route }) => {
                   }}>
                     <Text style={{
                       ...lightFONTS.h4
-                    }}>{`Paid Parking at \nPutalisadak, Kathmandu`}</Text>
+                    }}>{`Paid Parking at \n${locationAddress?.split(',')[0]}`}</Text>
                     <Text style={{
-                      ...lightFONTS.h3,
+                      ...lightFONTS.h4,
                       color: '#1987ff'
                     }}>Rs. {details.two_wheeler && details.two_wheeler.rate}<Text style={{
-                      ...lightFONTS.body3,
+                      ...lightFONTS.body4,
                       color: '#707C80'
                     }}>/hr</Text></Text>
                   </View>
@@ -215,11 +217,11 @@ const ParkingDetails = ({ navigation, route }) => {
                   }}>
                     <MaterialIcon name='map-marker'
                       size={25} />
-                    <Text style={{
-                      ...lightFONTS.body4,
+                    <Text numberOfLines={2} style={{
+                      ...lightFONTS.body5,
                       marginLeft: 5,
                       color: '#707C80'
-                    }}>Putalisadak, Kathmandu</Text>
+                    }}>{details?.locationName}</Text>
                   </View>
                   <View style={{
                     flexDirection: 'row',
@@ -236,52 +238,58 @@ const ParkingDetails = ({ navigation, route }) => {
                       details.two_wheeler?.no_slot > 0 &&
                       <View style={{
                         flexDirection: 'row',
-                        justifyContent: 'flex-start',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        // marginHorizontal: ,
-                        borderWidth: 1,
-                        padding: 10,
-                        borderRadius: 15
+                        backgroundColor: COLORS.gray,
+                        paddingHorizontal: 8,
+                        paddingVertical: 2,
+                        borderRadius: 8,
+                        marginRight: 5
                       }}>
                         <MaterialIcon
                           name='bike'
-                          size={27}
-                          // color='#1987ff'
+                          size={17}
+                          color='black'
                           style={{
-                            marginHorizontal: 5
+                            opacity: 0.5,
+                            // marginHorizontal: 20
                           }}
                         />
                         <Text style={{
-                          ...lightFONTS.body4,
-                          marginLeft: 5,
-                          color: '#707C80'
-                        }}>{details.two_wheeler.no_slot} Bike Spots</Text>
+                          ...lightFONTS.body5,
+                          // color: 'white',
+                          opacity: 0.5,
+                          marginLeft: 5
+                        }}>{details?.two_wheeler?.no_slot} slot</Text>
                       </View>
                     }
                     {
                       details.four_wheeler?.no_slot > 0 &&
                       <View style={{
                         flexDirection: 'row',
-                        justifyContent: 'flex-start',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        marginHorizontal: 10,
-                        borderWidth: 1,
-                        padding: 10,
-                        borderRadius: 15
+                        backgroundColor: COLORS.gray,
+                        paddingHorizontal: 8,
+                        paddingVertical: 2,
+                        borderRadius: 8,
+                        marginRight: 5
                       }}>
                         <MaterialIcon
                           name='car'
-                          size={27}
-                          // color='#1987ff'
+                          size={20}
+                          color='black'
                           style={{
-                            marginHorizontal: 5
+                            opacity: 0.5,
+                            // marginHorizontal: 20
                           }}
                         />
                         <Text style={{
-                          ...lightFONTS.body4,
-                          marginLeft: 5,
-                          color: '#707C80'
-                        }}>{details.four_wheeler.no_slot} Bike Spots</Text>
+                          ...lightFONTS.body5,
+                          // color: 'white',
+                          opacity: 0.5,
+                          marginLeft: 5
+                        }}>{details?.four_wheeler?.no_slot} slot</Text>
                       </View>
                     }
                     {/* </View> */}
@@ -369,7 +377,9 @@ const ParkingDetails = ({ navigation, route }) => {
                     }}>Description</Text>
                     <Text style={{
                       color: '#707C80',
-                    }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+                    }}>
+                      Our parking facility offers affordable and secure parking for both bikes and cars. With numbers of slots available, you can rest assured that there will be plenty of space for your vehicle. Our lot is equipped with surveillance cameras and security personnel, ensuring that your vehicle stays safe during your visit.
+                    </Text>
                   </View>
                   {/* <View>
                     <Text style={{

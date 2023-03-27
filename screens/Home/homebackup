@@ -1,0 +1,79 @@
+                {/* {
+                    ongoingBookings?.length > 0 &&
+                    <View>
+                        <Text style={{
+                            ...lightFONTS.h4,
+                            marginHorizontal: 20,
+                            marginBottom: 10,
+                        }}>Ongoing Bookings</Text>
+                        <View style={{
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            backgroundColor: 'white',
+                            margin: 15,
+                            borderRadius: 15
+                            // alignItems: 'center',
+                        }}>
+                            {/* <Image source={require('../../assets/images/progress.gif')} style={{ height: 6, width: Dimensions.get('window').width - 30, alignSelf: 'center', marginVertical: 15 }} /> */}
+                            {/* <Text style={{
+                                ...lightFONTS.h5,
+                                marginHorizontal: 20,
+                                marginBottom: 10,
+                                color: '#0054fdff'
+                            }}>ID: {ongoingBookings[0]?._id}</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'flex-start',
+                                marginHorizontal: 20
+                            }}>
+                                <View style={{
+                                    flexDirection: 'column',
+                                }}>
+                                    <Text style={{
+                                        ...lightFONTS.h5
+                                    }}>Kathmandu, Nepal</Text>
+                                    <Text style={{ ...lightFONTS.body3 }}>{moment(ongoingBookings[0]?.booking_startTime).format('LL')}</Text>
+                                </View>
+                                <View>
+                                    <Text style={{ ...lightFONTS.body3 }}>{`${moment(ongoingBookings[0]?.booking_startTime).format('LT')} - ${moment(ongoingBookings[0]?.booking_endTime).format('LT')}`}</Text>
+                                </View>
+                            </View>
+
+                            <View
+                                // onPress={() => navigation.navigate('HomeStack', {
+                                //     screen: 'parkingDetails',
+                                //     params: { space: item },
+                                // })}
+                                style={styles.card}>
+                                <Image
+                                    // source={{ uri: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1734&q=80' }}
+                                    source={{ uri: ongoingBookings[0]?.parkingSpaceDetails?.image.url }}
+                                    style={styles.cardImage}
+                                    resizeMode="cover"
+                                />
+                                <View style={styles.textContent}>
+                                    <Text numberOfLines={2} style={styles.cardtitle}>Kathmandu, Nepal</Text>
+                                    <Text style={{
+                                        color: 'orange',
+                                    }}>{ongoingBookings[0]?.response}</Text>
+                                    {/* <Text style={{
+                                        ...lightFONTS.h3,
+                                        color: '#0054fdff',
+                                    }}>Rs. {(Math.round(ongoingBookings[0]?.parkingSpaceDetails?.two_wheeler?.rate * Math.round((ongoingBookings[0]?.booking_endtime.getTime() - ongoingBookings[0]?.booking_starttime.getTime()) / (1000 * 60 * 60))))
+                                        }</Text> */}
+                                    {/* {} */}
+                                </View>
+                            </View> */}
+                            {/* <ParkingHistory item={item.parkingSpaceDetails} /> */}
+                            {/* {
+                            ongoingBookings?.map((item, index) => {
+                                return (
+                                    // <View key={item._id}>
+                                    <ParkingHistory item={item.parkingSpaceDetails} />
+                                );
+                            })
+                        } */}
+                        {/* </View> */}
+                    {/* </View> */}
+                {/* } */} 

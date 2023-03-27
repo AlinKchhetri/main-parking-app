@@ -19,6 +19,7 @@
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/stack": "^6.3.2",
     "@reduxjs/toolkit": "^1.8.5",
+    "@stripe/stripe-react-native": "0.13.1",
     "axios": "^1.1.2",
     "expo": "~46.0.13",
     "expo-auth-session": "~3.7.4",
@@ -37,6 +38,7 @@
     "formik": "^2.2.9",
     "mime": "^3.0.0",
     "moment": "^2.29.4",
+    "prop-types": "^15.8.1",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-map-gl": "^7.0.19",
@@ -54,6 +56,7 @@
     "react-native-modal-datetime-picker": "^14.0.1",
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-multi-steps": "^0.1.7",
+    "react-native-numeric-input": "^1.9.1",
     "react-native-onboarding-swiper": "^1.2.0",
     "react-native-pager-view": "5.4.24",
     "react-native-paper": "^4.12.5",
@@ -68,7 +71,9 @@
     "react-native-ui-lib": "^6.29.1",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.7",
+    "react-native-webview": "11.23.0",
     "react-redux": "^8.0.4",
+    "rn-all-nepal-payment": "^1.0.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {

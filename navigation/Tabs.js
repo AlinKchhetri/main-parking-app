@@ -23,10 +23,11 @@ const Tabs = () => {
     const dispatch = useDispatch();
 
     const [location, setLocation] = useState({});
-    console.log("🚀 ~ file: Tabs.js:25 ~ Tabs ~ location", location)
+    // console.log("🚀 ~ file: Tabs.js:25 ~ Tabs ~ location", location)
 
     const { isDarkMode } = useSelector(state => state.color)
-    console.log(isDarkMode)
+
+    const { user } = useSelector(state => state.auth);
 
     useEffect(() => {
         (async () => {
@@ -106,21 +107,24 @@ const Tabs = () => {
                         )
                     }}
                 />
-                <Tab.Screen
-                    name="MySpaces"
-                    component={MyParking}
-                    options={{
-                        tabBarIcon: ({ size, focused }) => (
-                            <Image
-                                source={focused ? icons.add : icons.add_outline}
-                                style={{
-                                    width: size,
-                                    height: size,
-                                }}
-                            />
-                        )
-                    }}
-                />
+                {
+                    !user.role === 'user' &&
+                    <Tab.Screen
+                        name="MySpaces"
+                        component={MyParking}
+                        options={{
+                            tabBarIcon: ({ size, focused }) => (
+                                <Image
+                                    source={focused ? icons.add : icons.add_outline}
+                                    style={{
+                                        width: size,
+                                        height: size,
+                                    }}
+                                />
+                            )
+                        }}
+                    />
+                }
                 <Tab.Screen
                     name="History"
                     component={History}

@@ -1,4 +1,4 @@
-import { ScrollView, SafeAreaView, StyleSheet, RefreshControl, Image, Text, View, TouchableOpacity, FlatList, StatusBar, Dimensions } from 'react-native'
+import { ScrollView, SafeAreaView, StyleSheet, RefreshControl, Image, Text, View, TouchableOpacity, FlatList, StatusBar, Dimensions, Platform } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Swiper from 'react-native-swiper';
 import { COLORS, SIZES, lightFONTS, darkFONTS, icons, images } from '../../constants'
@@ -36,8 +36,8 @@ const Home = ({ navigation }) => {
             fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${locationValue.coords.latitude}&lon=${locationValue.coords.longitude}`)
                 .then((response) => response.text())
                 .then((result) => {
-                    console.log("🚀 ~ file: Home.js:29 ~ .then ~ result", result)
-                    console.log("🚀 ~ file: Home.js:29 ~ .then ~ result", Object.values(JSON.parse(result).address)[0]);
+                    // console.log("🚀 ~ file: Home.js:29 ~ .then ~ result", result)
+                    // console.log("🚀 ~ file: Home.js:29 ~ .then ~ result", Object.values(JSON.parse(result).address)[0]);
                     const location_name = result.display_name
                     setLocationName(JSON.parse(result).display_name.split(','))
                 })
@@ -52,8 +52,9 @@ const Home = ({ navigation }) => {
         setRefreshing(false);
     }
 
-    const ongoingBookings = bookingDetails?.bookingDetails.filter(b => b.response !== 'Rejected')
-    console.log("🚀 ~ file: Home.js:49 ~ Home ~ ongoingBookings:", ongoingBookings)
+    // const ongoingBookings = bookingDetails?.bookingDetails
+    const ongoingBookings = bookingDetails?.bookingDetails.filter(b => b.response !== 'Rejected').sort((a, b) => new Date(b.bookedAt) - new Date(a.bookedAt));
+    // console.log("🚀 ~ file: Home.js:49 ~ Home ~ ongoingBookings:", ongoingBookings)
 
     useEffect(() => {
         if (error) {
@@ -83,7 +84,6 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
         )
     }
-
 
     return (
         <SafeAreaView style={styles.container}>
@@ -129,7 +129,7 @@ const Home = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
                 style={{
-                    // marginBottom: 160
+                    marginBottom: 140
                 }}>
                 <View style={styles.sliderContainer}>
                     <Swiper
@@ -155,25 +155,26 @@ const Home = ({ navigation }) => {
                 </View>
 
                 {
-                    ongoingBookings?.length > 0 &&
+                    (ongoingBookings?.length > 0 && moment().isBefore(ongoingBookings[0]?.booking_endTime)) &&
                     <View>
                         <Text style={{
                             ...lightFONTS.h4,
                             marginHorizontal: 20,
-                            marginBottom: 10,
+                            // marginBottom: 10,
                         }}>Ongoing Bookings</Text>
                         <View style={{
                             flexDirection: 'column',
                             justifyContent: 'center',
                             backgroundColor: 'white',
-                            margin: 15,
+                            marginHorizontal: 15,
+                            marginVertical: 10,
                             borderRadius: 15
-                            // alignItems: 'center',
                         }}>
                             {/* <Image source={require('../../assets/images/progress.gif')} style={{ height: 6, width: Dimensions.get('window').width - 30, alignSelf: 'center', marginVertical: 15 }} /> */}
                             <Text style={{
                                 ...lightFONTS.h5,
                                 marginHorizontal: 20,
+                                marginTop: 15,
                                 marginBottom: 10,
                                 color: '#0054fdff'
                             }}>ID: {ongoingBookings[0]?._id}</Text>
@@ -196,11 +197,11 @@ const Home = ({ navigation }) => {
                                 </View>
                             </View>
 
-                            <View
-                                // onPress={() => navigation.navigate('HomeStack', {
-                                //     screen: 'parkingDetails',
-                                //     params: { space: item },
-                                // })}
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('HomeStack', {
+                                    screen: 'bookingDetails',
+                                    params: { booking: ongoingBookings[0] }
+                                })}
                                 style={styles.card}>
                                 <Image
                                     // source={{ uri: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1734&q=80' }}
@@ -210,9 +211,10 @@ const Home = ({ navigation }) => {
                                 />
                                 <View style={styles.textContent}>
                                     <Text numberOfLines={2} style={styles.cardtitle}>Kathmandu, Nepal</Text>
-                                    <Text style={{
-                                        color: 'orange',
-                                    }}>{ongoingBookings[0]?.response}</Text>
+
+                                    <View style={{ width: 70, backgroundColor: ongoingBookings[0]?.response === 'Pending' ? '#ffcc00' : ongoingBookings[0]?.response === 'Rejected' ? '#cc3300' : '#99cc33', padding: 5, borderRadius: SIZES.padding }}>
+                                        <Text style={{ ...lightFONTS.body6, color: 'white' }}>{ongoingBookings[0]?.response}</Text>
+                                    </View>
                                     {/* <Text style={{
                                         ...lightFONTS.h3,
                                         color: '#0054fdff',
@@ -220,16 +222,16 @@ const Home = ({ navigation }) => {
                                         }</Text> */}
                                     {/* {} */}
                                 </View>
-                            </View>
-                            {/* <ParkingHistory item={item.parkingSpaceDetails} /> */}
-                            {/* {
-                            ongoingBookings?.map((item, index) => {
-                                return (
-                                    // <View key={item._id}>
-                                    <ParkingHistory item={item.parkingSpaceDetails} />
-                                );
-                            })
-                        } */}
+                            </TouchableOpacity>
+                            {/* <ParkingHistory item={item.parkingSpaceDetails} />
+                            {
+                                ongoingBookings?.map((item, index) => {
+                                    return (
+                                        // <View key={item._id}>
+                                        <ParkingHistory item={item.parkingSpaceDetails} />
+                                    );
+                                })
+                            } */}
                         </View>
                     </View>
                 }
@@ -248,7 +250,7 @@ const Home = ({ navigation }) => {
                     data={parkingSpace}
                     renderItem={({ item }) => {
                         return (
-                            <ParkingCard item={item} />
+                            <ParkingCard item={item} isMapScreen={false} />
                         )
                     }}
                     keyExtractor={item => item._id}
@@ -267,12 +269,12 @@ const Home = ({ navigation }) => {
                     data={parkingSpace}
                     renderItem={({ item }) => {
                         return (
-                            <ParkingCard item={item} />
+                            <ParkingCard item={item} isMapScreen={false} />
                         )
                     }}
                     keyExtractor={item => item._id}
                 />
-                <Text style={{
+                {/* <Text style={{
                     ...lightFONTS.h3,
                     marginHorizontal: 20,
                     marginVertical: 10,
@@ -283,7 +285,7 @@ const Home = ({ navigation }) => {
                     {
                         parkingSpace?.map((item, index) => <ParkingHistory key={item._id} item={item} />)
                     }
-                </View>
+                </View> */}
             </ScrollView>
 
         </SafeAreaView>
