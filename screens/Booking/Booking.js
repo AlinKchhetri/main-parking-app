@@ -57,8 +57,12 @@ const Booking = ({ navigation, route }) => {
         // const hour = moment(endTime).diff(moment(startTime), 'hours');
         console.log("🚀 ~ file: Booking.js:56 ~ getTotal ~ hour:", hour)
         if (hour <= 0) {
-            Alert.alert('Starting time should be before the Ending time');
-            setError(true);
+            Toast.show({
+                type: ALERT_TYPE.WARNING,
+                title: 'Warning',
+                textBody: 'Starting time cannot be before ending time',
+                autoClose: 2000
+            });
             return;
         }
         if (selected === 'bike') {
@@ -66,7 +70,7 @@ const Booking = ({ navigation, route }) => {
         } else {
             setFee(Math.round(item?.four_wheeler?.rate * hour))
         }
-    }, [startTime, endTime])
+    }, [selected, startTime, endTime])
 
 
     // const getTotal = () => {
@@ -133,7 +137,7 @@ const Booking = ({ navigation, route }) => {
                 />
                 <View>
                     <Text style={{
-                        ...lightFONTS.h4,
+                        ...lightFONTS.h5,
                         marginTop: 20,
                         marginHorizontal: SIZES.padding
                     }}>Select Vehicle Type</Text>
@@ -166,7 +170,7 @@ const Booking = ({ navigation, route }) => {
                                     alignItems: 'flex-start',
                                     alignSelf: 'flex-start'
                                 }}>
-                                    <Text style={{ ...lightFONTS.h4 }}>Bike</Text>
+                                    <Text style={{ ...lightFONTS.h5 }}>Bike</Text>
                                     <Text style={{
                                         ...lightFONTS.h5,
                                         color: '#1987ff'
@@ -205,7 +209,7 @@ const Booking = ({ navigation, route }) => {
                                     size={27}
                                 />
                                 <View>
-                                    <Text style={{ ...lightFONTS.h4 }}>Car</Text>
+                                    <Text style={{ ...lightFONTS.h5 }}>Car</Text>
                                     <Text style={{
                                         ...lightFONTS.h5,
                                         color: '#1987ff'
@@ -226,7 +230,7 @@ const Booking = ({ navigation, route }) => {
                     </View>
                 </View>
                 <Text style={{
-                    ...lightFONTS.h4,
+                    ...lightFONTS.h5,
                     marginTop: 20,
                     marginHorizontal: SIZES.padding
                 }}>Duration</Text>
@@ -293,7 +297,7 @@ const Booking = ({ navigation, route }) => {
                                 paddingVertical: 15,
                                 borderRadius: 15
                             }}>
-                            <Text style={{ ...lightFONTS.body3, marginRight: 15 }}>{moment(startTime).format('LT')}</Text>
+                            <Text style={{ ...lightFONTS.body4, marginRight: 15 }}>{moment(startTime).format('LT')}</Text>
                             <MaterialIcon
                                 name='clock-outline'
                                 size={30}
@@ -320,7 +324,7 @@ const Booking = ({ navigation, route }) => {
                                 paddingVertical: 15,
                                 borderRadius: 15
                             }}>
-                            <Text style={{ ...lightFONTS.body3, marginRight: 15 }}>{moment(endTime).format('LT')}</Text>
+                            <Text style={{ ...lightFONTS.body4, marginRight: 15 }}>{moment(endTime).format('LT')}</Text>
                             <MaterialIcon
                                 name='clock-outline'
                                 size={25}
@@ -364,11 +368,11 @@ const Booking = ({ navigation, route }) => {
                     //   });
                     // }}
                     onPress={() => {
-                        if (fee < 100) {
+                        if (user._id === item?.ownerDetails._id) {
                             Toast.show({
                                 type: ALERT_TYPE.WARNING,
                                 title: 'Warning',
-                                textBody: 'Your total booking fee should be at least Rs. 100',
+                                textBody: 'You cannot book your own parking space',
                                 autoClose: 2000,
                             });
                             return;

@@ -28,6 +28,7 @@ const Tabs = () => {
     const { isDarkMode } = useSelector(state => state.color)
 
     const { user } = useSelector(state => state.auth);
+    // console.log("🚀 ~ file: Tabs.js:31 ~ Tabs ~ user:", user)
 
     useEffect(() => {
         (async () => {

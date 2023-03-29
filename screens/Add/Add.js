@@ -10,6 +10,7 @@ import {
   Pressable,
   ScrollView,
   Dimensions,
+  ActivityIndicator
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import {
@@ -34,13 +35,15 @@ import LoadingScreen from '../../components/LoadingScreen';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
 
 const Add = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
 
   const { user } = useSelector(state => state.auth);
-  const { locationValue, loading } = useSelector(state => state.location);
+  const { locationValue } = useSelector(state => state.location);
+  const { loading, error } = useSelector(state => state.parking);
 
 
   // console.log(loading + ' value')
@@ -172,7 +175,21 @@ const Add = ({ navigation, route }) => {
               myForm.append('image', { uri: image, type: mime.getType(image), name: image.split("/").pop() });
 
               dispatch(addParking(myForm)).then(() => {
-                console.log("Added")
+                if (error) {
+                  Toast.show({
+                    type: ALERT_TYPE.DANGER,
+                    title: 'Error',
+                    textBody: 'Something went wrong. Please try again',
+                    autoClose: 2000,
+                  });
+                }
+                navigation.navigate('home')
+                Toast.show({
+                  type: ALERT_TYPE.SUCCESS,
+                  title: 'Parking Space Added Successfully',
+                  textBody: 'Your parking space has been added successfully.',
+                  autoClose: 2000,
+                });
               })
             }}
             validationSchema={addValidationSchema}
@@ -374,7 +391,12 @@ const Add = ({ navigation, route }) => {
                     <TouchableOpacity
                       onPress={handleSubmit}
                       style={styles.next}>
-                      <Text style={styles.buttonStyle}>Add</Text>
+                      {
+                        loading ?
+                          <ActivityIndicator size={'small'} color='white' />
+                          :
+                          <Text style={styles.buttonStyle}>Add</Text>
+                      }
                     </TouchableOpacity>
                   </View>
                 </KeyboardAwareScrollView>

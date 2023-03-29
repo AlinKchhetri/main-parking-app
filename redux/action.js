@@ -46,7 +46,6 @@ export const getUser = (id) => async (dispatch) => {
     const { data } = await axios.get(
       `${serverUrl}/getuser/${id}`,
     );
-    console.log(data);
     dispatch({ type: "getUserSuccess", payload: data });
 
   } catch (error) {
@@ -192,7 +191,7 @@ export const resendOTP = () => async (dispatch) => {
     dispatch({ type: "resendOTPRequest" });
 
     const { data } = await axios.get(
-      `${serverUrl}/resendotp`,
+      `${serverUrl}/resendotp`
     );
     dispatch({ type: "resendOTPSuccess", payload: data.message });
   } catch (error) {
@@ -328,6 +327,23 @@ export const getAllParking = () => async (dispatch) => {
 
   } catch (error) {
     dispatch({ type: "allParkingFailure", payload: error.response.data.message })
+  }
+};
+
+export const getNearParking = (latitude, longitude) => async (dispatch) => {
+  try {
+    console.log("🚀 ~ file: action.js:335 ~ getNearParking ~ latitude:", latitude, longitude)
+    dispatch({ type: 'nearParkingRequest' });
+
+    const { data } = await axios.get(
+      `${serverUrl}/nearparking`,
+      // { latitude, longitude }
+    );
+    console.log("🚀 ~ file: action.js:348 ~ getNearParking ~ data:", data, '-------------------------------------------------------------------')
+    dispatch({ type: "nearParkingSuccess", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "nearParkingFailure", payload: error.response.data.message })
   }
 };
 

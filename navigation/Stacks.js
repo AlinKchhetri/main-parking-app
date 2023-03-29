@@ -127,8 +127,18 @@ export const LoginStack = () => {
                 headerBackImage: () => <Icon name='arrow-back-ios' size={25} style={{ marginLeft: 10 }} />
             }} />
             <Stack.Screen name="signup" component={SignUp} options={{ headerShown: true, headerTitle: '', headerBackTitleVisible: false }} />
-            <Stack.Screen name="forgotPassword" component={ForgetPassword} options={{ headerShown: true, headerTitle: '', headerBackTitleVisible: false }} />
-            <Stack.Screen name="resetPassword" component={ResetPassword} options={{ presentation: 'modal' }} />
+            <Stack.Screen name="forgotPassword" component={ForgetPassword} options={{
+                headerShown: true,
+                headerTitle: 'Reset Password',
+                headerBackTitleVisible: false,
+                headerBackImage: () => <Icon name='arrow-back-ios' size={25} style={{ marginLeft: 10 }} />
+            }} />
+            <Stack.Screen name="resetPassword" component={ResetPassword} options={{
+                headerShown: true,
+                headerTitle: 'Create New Password',
+                headerBackTitleVisible: false,
+                headerBackImage: () => <Icon name='arrow-back-ios' size={25} style={{ marginLeft: 10 }} />
+            }} />
         </Stack.Navigator>
     );
 }
@@ -223,7 +233,7 @@ export const MainStack = () => {
 
 const Stacks = () => {
     const { isAuthenticated, loading, user } = useSelector(state => state.auth)
-    console.log("🚀 ~ file: Stacks.js:139 ~ Stacks ~ isAuthenticated", isAuthenticated, user)
+    // console.log("🚀 ~ file: Stacks.js:139 ~ Stacks ~ isAuthenticated", isAuthenticated, user)
 
     const [authStatus, setAuthStatus] = useState(false);
 

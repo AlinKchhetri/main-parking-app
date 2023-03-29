@@ -2,9 +2,28 @@ import { StyleSheet, SafeAreaView, StatusBar, Text, View, Pressable, Image, Touc
 import React, { useState } from 'react'
 import { COLORS, images, lightFONTS, SIZES, icons } from '../../constants';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
 
 const ChoosePayment = ({ navigation, route }) => {
     const [selectedPayment, setselectedPayment] = useState('card');
+
+    const { fee } = route.params;
+
+    const proceedPayment = () => {
+        if (selectedPayment === 'card' && fee < 100) {
+            Toast.show({
+                type: ALERT_TYPE.WARNING,
+                title: 'Warning',
+                textBody: 'Your total booking fee should be at least Rs. 100 for payment with Card',
+                autoClose: 2000,
+            });
+            return;
+        }
+        navigation.navigate('HomeStack',
+            { screen: 'payment', params: { details: route.params, paymentMethod: selectedPayment } },
+        )
+    };
+
     return (
         <SafeAreaView style={{
             flex: 1,
@@ -76,10 +95,7 @@ const ChoosePayment = ({ navigation, route }) => {
                     <Text style={{ ...lightFONTS.h5 }}>Khalti</Text>
                 </Pressable>
                 <TouchableOpacity
-                    onPress={() =>
-                        navigation.navigate('HomeStack',
-                            { screen: 'payment', params: { details: route.params, paymentMethod: selectedPayment } },
-                        )}
+                    onPress={proceedPayment}
                     style={{
                         backgroundColor: COLORS.green,
                         margin: SIZES.padding2,

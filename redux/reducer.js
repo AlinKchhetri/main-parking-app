@@ -240,6 +240,17 @@ export const parkingReducer = createReducer({}, {
         state.loading = false;
         state.error = action.payload;
     },
+    nearParkingRequest: (state) => {
+        state.loading = true;
+    },
+    nearParkingSuccess: (state, action) => {
+        state.loading = false;
+        state.nearParkingSpace = action.payload.parkingSpaceDetails;
+    },
+    nearParkingFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
     myParkingRequest: (state) => {
         state.loading = true;
     },

@@ -112,6 +112,7 @@ const Register = ({ navigation, route }) => {
       .required('Password is required'),
     fullName: yup
       .string()
+      .matches(/^[a-zA-Z ]*$/, 'Must be a valid character name')
       .required('Full Name is required'),
     phoneNumber: yup
       .string()

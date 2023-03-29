@@ -3,23 +3,26 @@ import React, { useState, useEffect } from 'react'
 import Swiper from 'react-native-swiper';
 import { COLORS, SIZES, lightFONTS, darkFONTS, icons, images } from '../../constants'
 import { Avatar, Card } from 'react-native-ui-lib'
-import { Searchbar } from 'react-native-paper';
+import { Badge } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllParking, getMyBookings } from '../../redux/action'
+import { getAllParking, getMyBookings, getNearParking } from '../../redux/action'
 import ParkingCard from '../../components/ParkingCard'
 import axios from 'axios'
 import TestNotification from '../TestNotification'
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
 import ParkingHistory from '../../components/ParkingHistory';
 import moment from 'moment';
+import ParkingList from '../../components/ParkingList';
+import BookingHistory from '../../components/BookingHistory';
 
 const Home = ({ navigation }) => {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
     const { locationValue } = useSelector(state => state.location);
-    const { parkingSpace, error, message } = useSelector(state => state.parking);
+    const { parkingSpace, nearParkingSpace, error, message } = useSelector(state => state.parking);
+    // console.log("🚀 ~ file: Home.js:23 ~ Home ~ nearParkingSpace:", nearParkingSpace)
     const { bookingDetails } = useSelector(state => state.booking);
 
     const [locationName, setLocationName] = useState();
@@ -45,6 +48,14 @@ const Home = ({ navigation }) => {
         }
     }, [user]);
 
+    useEffect(() => {
+        if (locationValue) {
+            console.log("🚀 ~ file: Home.js:51 ~ useEffect ~ locationValue:", locationValue)
+            dispatch(getNearParking(locationValue.coords.latitude, locationValue.coords.longitude));
+        }
+    }, [locationValue]);
+
+
     const handleRefresh = () => {
         setRefreshing(true);
         dispatch(getAllParking());
@@ -56,16 +67,16 @@ const Home = ({ navigation }) => {
     const ongoingBookings = bookingDetails?.bookingDetails.filter(b => b.response !== 'Rejected').sort((a, b) => new Date(b.bookedAt) - new Date(a.bookedAt));
     // console.log("🚀 ~ file: Home.js:49 ~ Home ~ ongoingBookings:", ongoingBookings)
 
-    useEffect(() => {
-        if (error) {
-            alert(error);
-            dispatch({ type: "clearError" });
-        }
-        if (message) {
-            alert(message);
-            dispatch({ type: "clearMessage" });
-        }
-    }, [alert, error, message, dispatch])
+    // useEffect(() => {
+    //     if (error) {
+    //         alert(error);
+    //         dispatch({ type: "clearError" });
+    //     }
+    //     if (message) {
+    //         alert(message);
+    //         dispatch({ type: "clearMessage" });
+    //     }
+    // }, [alert, error, message, dispatch])
 
 
     const AvailableParking = (props) => {
@@ -99,18 +110,27 @@ const Home = ({ navigation }) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}>
-                    <MaterialIcon
-                        name='message-outline'
-                        size={25}
+                    <TouchableOpacity
                         onPress={() => navigation.navigate('HomeStack', {
                             screen: 'messages'
                         })}
-                    />
-                    {/* <Icon
-                        name='ios-notifications-outline'
-                        size={25}
-                        onPress={() => navigation.navigate('Search')}
-                    /> */}
+                        style={{
+                            flexDirection: 'row'
+                        }}>
+                        {/* <MaterialIcon
+                            name='message-outline'
+                            size={25}
+                        /> */}
+                        <Icon
+                            name='ios-notifications-outline'
+                            size={25}
+                        />
+                        <Badge value="1" status="error"
+                            containerStyle={{ position: 'absolute', top: -6, right: -5 }}
+                        />
+                    </TouchableOpacity>
+
+
                     <TouchableOpacity style={{
                         marginLeft: 20
                     }} onPress={() => navigation.navigate('MyProfile')}>
@@ -156,83 +176,14 @@ const Home = ({ navigation }) => {
 
                 {
                     (ongoingBookings?.length > 0 && moment().isBefore(ongoingBookings[0]?.booking_endTime)) &&
-                    <View>
+                    <View style={{
+                        marginHorizontal: 15
+                    }}>
                         <Text style={{
                             ...lightFONTS.h4,
-                            marginHorizontal: 20,
-                            // marginBottom: 10,
+                            marginHorizontal: 10,
                         }}>Ongoing Bookings</Text>
-                        <View style={{
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            backgroundColor: 'white',
-                            marginHorizontal: 15,
-                            marginVertical: 10,
-                            borderRadius: 15
-                        }}>
-                            {/* <Image source={require('../../assets/images/progress.gif')} style={{ height: 6, width: Dimensions.get('window').width - 30, alignSelf: 'center', marginVertical: 15 }} /> */}
-                            <Text style={{
-                                ...lightFONTS.h5,
-                                marginHorizontal: 20,
-                                marginTop: 15,
-                                marginBottom: 10,
-                                color: '#0054fdff'
-                            }}>ID: {ongoingBookings[0]?._id}</Text>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'flex-start',
-                                marginHorizontal: 20
-                            }}>
-                                <View style={{
-                                    flexDirection: 'column',
-                                }}>
-                                    <Text style={{
-                                        ...lightFONTS.h5
-                                    }}>Kathmandu, Nepal</Text>
-                                    <Text style={{ ...lightFONTS.body3 }}>{moment(ongoingBookings[0]?.booking_startTime).format('LL')}</Text>
-                                </View>
-                                <View>
-                                    <Text style={{ ...lightFONTS.body3 }}>{`${moment(ongoingBookings[0]?.booking_startTime).format('LT')} - ${moment(ongoingBookings[0]?.booking_endTime).format('LT')}`}</Text>
-                                </View>
-                            </View>
-
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate('HomeStack', {
-                                    screen: 'bookingDetails',
-                                    params: { booking: ongoingBookings[0] }
-                                })}
-                                style={styles.card}>
-                                <Image
-                                    // source={{ uri: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1734&q=80' }}
-                                    source={{ uri: ongoingBookings[0]?.parkingSpaceDetails?.image.url }}
-                                    style={styles.cardImage}
-                                    resizeMode="cover"
-                                />
-                                <View style={styles.textContent}>
-                                    <Text numberOfLines={2} style={styles.cardtitle}>Kathmandu, Nepal</Text>
-
-                                    <View style={{ width: 70, backgroundColor: ongoingBookings[0]?.response === 'Pending' ? '#ffcc00' : ongoingBookings[0]?.response === 'Rejected' ? '#cc3300' : '#99cc33', padding: 5, borderRadius: SIZES.padding }}>
-                                        <Text style={{ ...lightFONTS.body6, color: 'white' }}>{ongoingBookings[0]?.response}</Text>
-                                    </View>
-                                    {/* <Text style={{
-                                        ...lightFONTS.h3,
-                                        color: '#0054fdff',
-                                    }}>Rs. {(Math.round(ongoingBookings[0]?.parkingSpaceDetails?.two_wheeler?.rate * Math.round((ongoingBookings[0]?.booking_endtime.getTime() - ongoingBookings[0]?.booking_starttime.getTime()) / (1000 * 60 * 60))))
-                                        }</Text> */}
-                                    {/* {} */}
-                                </View>
-                            </TouchableOpacity>
-                            {/* <ParkingHistory item={item.parkingSpaceDetails} />
-                            {
-                                ongoingBookings?.map((item, index) => {
-                                    return (
-                                        // <View key={item._id}>
-                                        <ParkingHistory item={item.parkingSpaceDetails} />
-                                    );
-                                })
-                            } */}
-                        </View>
+                        <BookingHistory item={ongoingBookings[0]} />
                     </View>
                 }
 
@@ -291,6 +242,7 @@ const Home = ({ navigation }) => {
         </SafeAreaView>
     )
 }
+console.log("🚀 ~ file: Home.js:245 ~ Home ~ TouchableOpacity:", TouchableOpacity)
 
 export default Home
 

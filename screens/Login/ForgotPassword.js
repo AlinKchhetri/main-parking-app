@@ -1,154 +1,181 @@
 import {
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    StatusBar,
-    TouchableOpacity,
-    TextInput,
-    Image,
-  } from 'react-native';
-  import React, { useState, useEffect } from 'react';
-  import {
-    COLORS,
-    lightFONTS,
-    SIZES,
-    darkFONTS,
-    images,
-    icons,
-  } from '../../constants';
-  import BouncyCheckbox from 'react-native-bouncy-checkbox';
-  import { Avatar } from 'react-native-paper';
-  import { changePassword, forgotPassword, loadUser, register } from '../../redux/action';
-  import { useDispatch, useSelector } from'react-redux';
-  import mime from 'mime';
-  import Toast  from 'react-native-toast-message';
-  
-  const ForgotPassword = ({ navigation, route }) => {
-  
-    const dispatch = useDispatch();
-    const {error} = useSelector(state => state.message)
-  
-    const [email, setEmail] = useState('');
-  
-    
-    const handleSendEmail = async () => {
-      await dispatch(forgotPassword(email));
-      if (!error) {
-        navigation.navigate('resetPassword');
-      }
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  StatusBar,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator
+} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TextInput } from 'react-native-paper';
+import {
+  COLORS,
+  lightFONTS,
+  SIZES,
+  darkFONTS,
+  images,
+  icons,
+} from '../../constants';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { Avatar } from 'react-native-paper';
+import { changePassword, forgotPassword, loadUser, register } from '../../redux/action';
+import { useDispatch, useSelector } from 'react-redux';
+import mime from 'mime';
+import { ALERT_TYPE, Toast, Dialog } from 'react-native-alert-notification';
+
+const ForgotPassword = ({ navigation, route }) => {
+
+  const dispatch = useDispatch();
+  const { error, loading } = useSelector(state => state.message)
+
+  const [email, setEmail] = useState('');
+  console.log("🚀 ~ file: ForgotPassword.js:34 ~ ForgotPassword ~ email:", email)
+  const [errorMessage, setErrorMessage] = useState();
+
+
+  const handleSendEmail = async () => {
+    if (email == '') {
+      setErrorMessage('Please enter a valid email');
+      return;
     }
+    if (error) return;
+    await dispatch(forgotPassword(email));
 
-    useEffect(() => {
-      if (error) {
-        Toast.show({
-          type: 'error',
-          position: 'bottom',
-          bottomOffset:100,
-          text1:  error || 'Invalid',
-        })
-        dispatch({ type: "clearError" })
-      }
-    }, [error]);
+    if (!error) {
+      Toast.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Email sent',
+        textBody: 'Email has been sent to your account with an OTP',
+        autoClose: 2000,
+      });
+      navigation.navigate('resetPassword');
+    }
+  }
 
-  
-    const Title = () => {
-      return (
-        <View style={styles.loginHeader}>
-          <Text style={styles.loginText}>Reset Password</Text>
-        </View>
-      );
-    };
+  useEffect(() => {
+    if (error) {
+      Toast.show({
+        type: ALERT_TYPE.DANGER,
+        title: 'Error',
+        textBody: error,
+        autoClose: 2000,
+      });
+      dispatch({ type: "clearError" })
+    }
+  }, [error]);
 
-    const SubmitButton = () => {
-      return (
-        <TouchableOpacity
-          onPress={handleSendEmail}
-          style={styles.next}>
-          <Text style={styles.buttonStyle}>Send OTP</Text>
-        </TouchableOpacity>
-      );
-    };
-  
+
+  const Title = () => {
     return (
-      <SafeAreaView style={styles.login}>
-        <StatusBar barStyle="dark-content" />
-        <View>
-          <Title />
-          <TextInput style={styles.inputField} placeholder="Email" onChangeText={setEmail} />
-          <SubmitButton />
-        </View>
-      </SafeAreaView>
+      <View style={styles.loginHeader}>
+        <Text style={styles.loginText}>Forgot Password?</Text>
+      </View>
     );
   };
-  
-  export default ForgotPassword;
-  
-  const styles = StyleSheet.create({
-    login: {
-      flex: 1,
-      flexDirection: 'column',
-      backgroundColor: COLORS.white,
-      padding: SIZES.padding,
-    },
-    loginHeader: {
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-    },
-    loginText: {
-      ...lightFONTS.h1,
-      fontWeight: 'bold',
-      textAlign: 'left',
-      padding: SIZES.padding,
-    },
-    inputField: {
-      backgroundColor: '#FAFAFA',
-      margin: SIZES.padding2,
-      height: 50,
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      paddingLeft: SIZES.base,
-      borderRadius: SIZES.padding,
-    },
-    next: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin: SIZES.padding,
-      backgroundColor: COLORS.green,
-      height: 55,
-      borderRadius: SIZES.padding * 2,
-    },
-  
-    buttonStyle: {
-      ...darkFONTS.h4,
-    },
-    forgotText: {
-      ...lightFONTS.body4,
-      textAlign: 'center',
-      marginTop: SIZES.padding,
-      color: COLORS.green,
-    },
-    socialButton: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      alignItems: 'center',
-      marginTop: 40,
-      margin: SIZES.padding,
-    },
-    iconStyle: {
-      width: 45,
-      height: 45,
-    },
-    socialText: {
-      ...lightFONTS.body3,
-      textAlign: 'center',
-    },
-    dontText: {
-      ...lightFONTS.body3,
-      textAlign: 'center',
-    },
-    singnupText: {
-      ...lightFONTS.body3,
-      color: COLORS.green,
-    },
-  });
+
+  const SubmitButton = () => {
+    return (
+      <TouchableOpacity
+        onPress={handleSendEmail}
+        style={styles.next}>
+        {
+          loading ?
+            <ActivityIndicator size={'small'} color='white' />
+            :
+            <Text style={styles.buttonStyle}>Send OTP</Text>
+        }
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.login}>
+      <StatusBar barStyle="dark-content" />
+      <View>
+        {/* <Title /> */}
+        {/* <TextInput style={styles.inputField} placeholder="Email" onChangeText={setEmail} /> */}
+        <Text style={{ ...lightFONTS.body3, margin: 15 }}>Enter the email address asscociated with your account and we'll send an email with instructions to reset your password.</Text>
+        <TextInput
+          style={styles.inputField} outlineColor='#FAFAFA' activeOutlineColor='#333333'
+          mode='outlined'
+          label="Email"
+          onChangeText={setEmail}
+          value={email}
+          keyboardType="email-address"
+        />
+        {errorMessage &&
+          <Text style={{ fontSize: 12, color: 'red', marginHorizontal: 15, marginVertical: 5 }}>{errorMessage}</Text>
+        }
+        <SubmitButton />
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default ForgotPassword;
+
+const styles = StyleSheet.create({
+  login: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: COLORS.white,
+  },
+  loginHeader: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginHorizontal: 5
+  },
+  loginText: {
+    ...lightFONTS.h3,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    padding: SIZES.padding,
+  },
+  inputField: {
+    backgroundColor: '#FAFAFA',
+    marginHorizontal: 15,
+  },
+  next: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: SIZES.padding,
+    backgroundColor: COLORS.green,
+    height: 55,
+    borderRadius: SIZES.padding * 2,
+  },
+
+  buttonStyle: {
+    ...darkFONTS.h4,
+  },
+  forgotText: {
+    ...lightFONTS.body4,
+    textAlign: 'center',
+    marginTop: SIZES.padding,
+    color: COLORS.green,
+  },
+  socialButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginTop: 40,
+    margin: SIZES.padding,
+  },
+  iconStyle: {
+    width: 45,
+    height: 45,
+  },
+  socialText: {
+    ...lightFONTS.body3,
+    textAlign: 'center',
+  },
+  dontText: {
+    ...lightFONTS.body3,
+    textAlign: 'center',
+  },
+  singnupText: {
+    ...lightFONTS.body3,
+    color: COLORS.green,
+  },
+});

@@ -40,9 +40,10 @@ const MyParking = ({ navigation }) => {
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                paddingTop: 30
             }}>
-                <Text style={{ ...lightFONTS.h3 }}>My Parking Spaces</Text>
+                <Text style={{ ...lightFONTS.h2 }}>My Parking Spaces</Text>
                 <Feather
                     name='plus'
                     size={30}
@@ -50,16 +51,13 @@ const MyParking = ({ navigation }) => {
                         screen: 'add'
                     })} />
             </View>
-            {/* <ScrollView horizontal style={{
-                // height: 50
-            }}>
-                <CustomChip title='All' press={() => setSelectedFilter('not')} />
-            </ScrollView> */}
-            <View>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
                 {
-                    parkingSpace?.map((item, index) => <ParkingList key={item._id} item={item} />)
+                    parkingSpace?.map((item) => <ParkingList key={item._id} item={item} />)
                 }
-            </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }

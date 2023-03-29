@@ -1,68 +1,118 @@
-import moment from 'moment';
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { SafeAreaView, StatusBar, View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import { COLORS, lightFONTS } from '../../constants';
+import moment from 'moment';
 
 const BookingDetails = ({ navigation, route }) => {
-    const [details, setDetails] = useState({});
-    console.log("🚀 ~ file: BookingDetails.js:8 ~ BookingDetails ~ details:", details)
+    // const [details, setDetails] = useState({});
+    console.log("🚀 ~ file: BookingDetails.js:8 ~ BookingDetails ~ details:", route.params.booking)
+    const {
+        _id,
+        booking_startTime,
+        booking_endTime,
+        vehicleType,
+        rate,
+        total_fee
+    } = route.params.booking;
 
-    useEffect(() => {
-        if (route.params) {
-            setDetails(route.params.booking)
-        }
-    }, [route]);
+    const {
+        locationName,
+        two_wheeler,
+        four_wheeler
+    } = route.params.booking.parkingSpaceDetails;
 
+
+    function SummarySection({ label, data }) {
+        return (
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginVertical: 5
+            }}>
+                <Text style={{
+                    ...lightFONTS.h5
+                }}>{label}</Text>
+                <View style={{ width: 30 }} />
+                <Text numberOfLines={1} style={{
+                    flex: 1,
+                    textAlign: 'right',
+                    ...lightFONTS.body4,
+                    flexWrap: 'wrap'
+                }}>{data}</Text>
+            </View>
+        )
+    };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.ticketContainer}>
-                <View style={styles.ticketHeader}>
-                    <Text style={styles.ticketHeaderText}>Parking Ticket</Text>
-                </View>
-                <View style={[styles.ticketHeader, { margin: 20 }]}>
-                    <View style={{ marginVertical: 15 }}>
-                        <Text style={styles.labelText}>Ticket Id:</Text>
-                        <Text onPress={() => navigation.navigate('parkingDetails', { space: details })} style={styles.detailText}>{details?._id}</Text>
-                    </View>
-                    <View style={{ marginVertical: 15 }}>
-                        <Text style={styles.labelText}>Location:</Text>
-                        <Text style={styles.detailText}>Putalisadak, Kathmandu</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 15 }}>
-                        <View>
-                            <Text style={styles.labelText}>Date:</Text>
-                            <Text style={styles.detailText}>{moment(details?.booking_startTime).format('LL')}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.labelText}>Duration:</Text>
-                            <Text style={styles.detailText}>{`${moment(details?.booking_startTime).format('LT')} - ${moment(details?.booking_endTime).format('LT')}`}</Text>
-                        </View>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 15 }}>
-
-                        <View>
-                            <Text style={styles.labelText}>Vehicle Type:</Text>
-                            <Text style={styles.detailText}>{details?.vehicleType}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.labelText}>Status:</Text>
-                            <View style={{ backgroundColor: details?.response === 'Pending' ? '#ffcc00' : details?.response === 'Rejected' ? '#cc3300' : '#99cc33', padding: 5, borderRadius: 10 }}>
-                                <Text style={{ ...lightFONTS.body6, color: 'white' }}>{details?.response}</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={{ alignSelf: 'flex-end', flexDirection: 'row' }}>
-                        <Text style={{ ...lightFONTS.h4 }}>Total:</Text>
-                        <Text style={{ ...lightFONTS.h4 }}> Rs. {details?.total_fee}</Text>
-                    </View>
-                </View>
-                <View style={{ alignSelf: 'center' }}>
-                    <QRCode value='ticket' size={170} />
+        <SafeAreaView style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+        }}>
+            <StatusBar barStyle={'dark-content'} />
+            <View style={{
+                flexDirection: 'column',
+                justifyContent: 'center',
+                backgroundColor: 'white',
+                margin: 15,
+                padding: 10,
+                borderRadius: 10
+            }}>
+                <View style={{
+                    flexDirection: 'column',
+                    marginHorizontal: 5
+                }}>
+                    <SummarySection label={'Parking Area'} data={locationName?.split(',')[0]} />
+                    <SummarySection label={'Address'} data={locationName} />
+                    <SummarySection label={'Vehicle Type'} data={vehicleType} />
+                    <SummarySection label={'No. of Slot'} data={1} />
+                    <SummarySection label={'Date'} data={moment(booking_startTime).format('LL')} />
+                    <SummarySection label={'Duration'} data={`${moment(booking_startTime).format('LT')} - ${moment(booking_endTime).format('LT')}`} />
                 </View>
             </View>
-        </View>
+            <View style={{
+                flexDirection: 'column',
+                justifyContent: 'center',
+                backgroundColor: 'white',
+                margin: 15,
+                padding: 10,
+                borderRadius: 10
+            }}>
+                <View style={{
+                    flexDirection: 'column',
+                    marginHorizontal: 5
+                }}>
+                    <SummarySection label={'Rate per hour'} data={`Rs. ${vehicleType == 'bike' ? two_wheeler.rate : four_wheeler.rate}`} />
+                    {/* <SummarySection label={'Hours'} data={`${Math.round((booking_endTime?.getTime() - booking_startTime?.getTime()) / (1000 * 60 * 60))} hour`} /> */}
+                    <SummarySection label={'Taxes & total_fees (10%)'} data={`Rs. ${(vehicleType == 'bike' ? two_wheeler.rate : four_wheeler.rate) * 0.1}`} />
+                    <View style={{ height: 1, backgroundColor: 'grey', margin: 10 }} />
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginVertical: 5
+                    }}>
+                        <Text style={{
+                            ...lightFONTS.h4
+                        }}>Total</Text>
+                        <Text style={{
+                            ...lightFONTS.h5
+                        }}>{total_fee}</Text>
+                    </View>
+                </View>
+            </View>
+            <View style={{
+                alignSelf: 'center',
+                backgroundColor: 'white',
+                margin: 15,
+                padding: 20,
+                borderRadius: 10
+            }}>
+                <QRCode value={_id} size={150} />
+            </View>
+        </SafeAreaView>
     );
 };
 

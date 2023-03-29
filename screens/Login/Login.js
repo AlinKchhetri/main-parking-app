@@ -130,8 +130,6 @@ const Login = ({ navigation }) => {
     })();
   });
 
-  const { isAuthenticated, loading } = useSelector(state => state.auth)
-
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('loginInfo')
@@ -294,8 +292,7 @@ const Login = ({ navigation }) => {
                 <View style={{
                   flexDirection: 'row-reverse',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
-                  // marginHorizontal: 8
+                  alignItems: 'center'
                 }}>
                   {
                     isBiometricSupported &&
@@ -390,13 +387,14 @@ const styles = StyleSheet.create({
   },
   forgotText: {
     ...lightFONTS.body4,
+    color: COLORS.green,
     textAlign: 'center',
   },
   socialButton: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginTop: 20,
+    marginVertical: 20,
     // margin: SIZES.padding,
   },
   iconStyle: {
@@ -406,6 +404,7 @@ const styles = StyleSheet.create({
   socialText: {
     ...lightFONTS.body3,
     textAlign: 'center',
+    marginVertical: 30
   },
   dontText: {
     ...lightFONTS.body3,

@@ -17,7 +17,7 @@ const ParkingHistory = ({ item }) => {
             style={styles.card}>
             <Image
                 // source={{ uri: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1734&q=80' }}
-                source={{ uri: item?.image.url}}
+                source={{ uri: item?.image.url }}
                 style={styles.cardImage}
                 resizeMode="cover"
             />
@@ -35,7 +35,7 @@ const ParkingHistory = ({ item }) => {
                     color: 'green',
                 }}>Completed</Text>
             </View>
-        </TouchableOpacity >
+        </TouchableOpacity>
     )
 }
 
