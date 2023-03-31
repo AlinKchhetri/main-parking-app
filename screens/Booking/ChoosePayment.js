@@ -7,7 +7,7 @@ import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
 const ChoosePayment = ({ navigation, route }) => {
     const [selectedPayment, setselectedPayment] = useState('card');
 
-    const { fee } = route.params;
+    const { fee } = route.params.details;
 
     const proceedPayment = () => {
         if (selectedPayment === 'card' && fee < 100) {
@@ -20,7 +20,7 @@ const ChoosePayment = ({ navigation, route }) => {
             return;
         }
         navigation.navigate('HomeStack',
-            { screen: 'payment', params: { details: route.params, paymentMethod: selectedPayment } },
+            { screen: 'payment', params: { details: route.params.details, paymentMethod: selectedPayment, paymentMode: true } },
         )
     };
 

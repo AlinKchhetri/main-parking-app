@@ -52,8 +52,8 @@ const Booking = ({ navigation, route }) => {
         return hours;
     }
 
+    const hour = Math.round((endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60));
     useEffect(() => {
-        const hour = Math.round((endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60));
         // const hour = moment(endTime).diff(moment(startTime), 'hours');
         console.log("🚀 ~ file: Booking.js:56 ~ getTotal ~ hour:", hour)
         if (hour <= 0) {
@@ -387,17 +387,17 @@ const Booking = ({ navigation, route }) => {
                             startTime: startTime,
                             endTime: endTime,
                             vehicleType: selected,
+                            hour: hour,
                             fee: fee
                         }
-                        // dispatch(bookParking(user._id, item.ownerDetails._id, item._id, startTime, endTime, selected)).then(() => {
-                        navigation.navigate('HomeStack',
-                            { screen: 'choosePayment', params: bookingDetails },
 
+                        navigation.navigate('HomeStack',
+                            { screen: 'payment', params: { details: bookingDetails, paymentMode: false } },
                         )
                     }}
                     style={{
                         backgroundColor: COLORS.green,
-                        margin: SIZES.padding2,
+                        // margin: SIZES.padding2,
                         padding: SIZES.padding2,
                         justifyContent: 'center',
                         alignItems: 'center',

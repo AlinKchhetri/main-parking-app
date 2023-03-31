@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer, messageReducer, parkingReducer, locationReducer, colorReducer, bookingReducer } from "./reducer";
+import { authReducer, messageReducer, parkingReducer, salesReducer, locationReducer, colorReducer, bookingReducer, paymentReducer, earningsReducer } from "./reducer";
 
 const store = configureStore({
   reducer: {
@@ -9,6 +9,9 @@ const store = configureStore({
     booking: bookingReducer,
     location: locationReducer,
     color: colorReducer,
+    payment: paymentReducer,
+    sales: salesReducer,
+    earnings: earningsReducer
     // notification: notificationReducer
   },
 });

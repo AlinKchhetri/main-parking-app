@@ -80,6 +80,15 @@ export const authReducer = createReducer({}, {
         state.isAuthenticated = false;
         state.error = action.payload;
     },
+    deleteUserRequest: (state) => {
+        state.loading = true;
+    },
+    deleteUserSuccess: (state, action) => {
+        state.loading = false;
+    },
+    deleteUserFailure: (state, action) => {
+        state.loading = false;
+    },
 
     logoutRequest: (state) => {
         state.loading = true;
@@ -275,12 +284,42 @@ export const parkingReducer = createReducer({}, {
         state.error = action.payload;
     },
 
+    getAllUserRequest: (state) => {
+        state.loading = true;
+    },
+    getAllUserSuccess: (state, action) => {
+        state.loading = false;
+        state.userDetails = action.payload;
+    },
+    getAllUserFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    },
+
 
     clearError: (state) => {
         state.error = null;
     },
     clearMesssage: (state) => {
         state.message = null;
+    }
+});
+
+export const salesReducer = createReducer({}, {
+    totalSales: (state, action) => {
+        state.totalSales = action.payload;
+    },
+    monthlySales: (state, action) => {
+        state.monthlySales = action.payload;
+    }
+});
+
+export const earningsReducer = createReducer({}, {
+    totalEarnings: (state, action) => {
+        state.totalEarnings = action.payload;
+    },
+    monthlyEarnings: (state, action) => {
+        state.monthlyEarnings = action.payload;
     }
 });
 
@@ -341,6 +380,20 @@ export const bookingReducer = createReducer({}, {
         state.loading = false;
         state.error = action.payload;
     },
+});
+
+export const paymentReducer = createReducer({}, {
+    makePaymentRequest: (state) => {
+        state.loading = true;
+    },
+    makePaymentSuccess: (state, action) => {
+        state.loading = false;
+        state.paymentDetails = action.payload;
+    },
+    makePaymentFailure: (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+    }
 });
 
 export const locationReducer = createReducer({}, {

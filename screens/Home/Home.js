@@ -33,7 +33,7 @@ const Home = ({ navigation }) => {
 
     useEffect(() => {
         dispatch(getAllParking());
-        dispatch(getMyBookings(user._id))
+        // dispatch(getMyBookings(user._id))
         if (locationValue) {
             // fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=27.756028&lon=85.321436`)
             fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${locationValue.coords.latitude}&lon=${locationValue.coords.longitude}`)
@@ -51,7 +51,7 @@ const Home = ({ navigation }) => {
     useEffect(() => {
         if (locationValue) {
             console.log("🚀 ~ file: Home.js:51 ~ useEffect ~ locationValue:", locationValue)
-            dispatch(getNearParking(locationValue.coords.latitude, locationValue.coords.longitude));
+            // dispatch(getNearParking(locationValue.coords.latitude, locationValue.coords.longitude));
         }
     }, [locationValue]);
 
@@ -65,18 +65,19 @@ const Home = ({ navigation }) => {
 
     // const ongoingBookings = bookingDetails?.bookingDetails
     const ongoingBookings = bookingDetails?.bookingDetails.filter(b => b.response !== 'Rejected').sort((a, b) => new Date(b.bookedAt) - new Date(a.bookedAt));
+    const badgeCount = bookingDetails?.bookingDetails.filter(b => b.response == 'Pending');
     // console.log("🚀 ~ file: Home.js:49 ~ Home ~ ongoingBookings:", ongoingBookings)
 
-    // useEffect(() => {
-    //     if (error) {
-    //         alert(error);
-    //         dispatch({ type: "clearError" });
-    //     }
-    //     if (message) {
-    //         alert(message);
-    //         dispatch({ type: "clearMessage" });
-    //     }
-    // }, [alert, error, message, dispatch])
+    useEffect(() => {
+        if (error) {
+            alert(error);
+            dispatch({ type: "clearError" });
+        }
+        if (message) {
+            alert(message);
+            dispatch({ type: "clearMessage" });
+        }
+    }, [alert, error, message, dispatch])
 
 
     const AvailableParking = (props) => {
@@ -125,7 +126,7 @@ const Home = ({ navigation }) => {
                             name='ios-notifications-outline'
                             size={25}
                         />
-                        <Badge value="1" status="error"
+                        <Badge value={badgeCount?.length} status="error"
                             containerStyle={{ position: 'absolute', top: -6, right: -5 }}
                         />
                     </TouchableOpacity>
@@ -181,7 +182,7 @@ const Home = ({ navigation }) => {
                     }}>
                         <Text style={{
                             ...lightFONTS.h4,
-                            marginHorizontal: 10,
+                            // marginHorizontal: 10,
                         }}>Ongoing Bookings</Text>
                         <BookingHistory item={ongoingBookings[0]} />
                     </View>
@@ -242,7 +243,6 @@ const Home = ({ navigation }) => {
         </SafeAreaView>
     )
 }
-console.log("🚀 ~ file: Home.js:245 ~ Home ~ TouchableOpacity:", TouchableOpacity)
 
 export default Home
 

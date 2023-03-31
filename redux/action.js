@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // const serverUrl = "https://parking-renting-app-server.herokuapp.com/api/v1";
-const serverUrl = "https://parkpin-server.onrender.com/api/v1";
+const serverUrl = "https://parkpin-server.cyclic.app/api/v1";
+// const serverUrl = "https://parkpin-server.onrender.com/api/v1";
 // const serverUrl = "http://localhost:4000/api/v1";
 // const serverUrl = "https://main-parking-server.herokuapp.com/api/v1";
 // const serverUrl = "https://parkpin.onrender.com/api/v1";
@@ -50,6 +51,81 @@ export const getUser = (id) => async (dispatch) => {
 
   } catch (error) {
     dispatch({ type: "getUserFailure", payload: error.response.data.message })
+  }
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: 'deleteUserRequest' });
+
+    const { data } = await axios.get(
+      `${serverUrl}/deleteuser/${id}`,
+    );
+    dispatch({ type: "deleteUserSuccess", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "deleteUserFailure", payload: error.response.data.message })
+  }
+};
+
+export const getAllUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: 'getAllUserRequest' });
+
+    const { data } = await axios.get(
+      `${serverUrl}/alluser`,
+    );
+    dispatch({ type: "getAllUserSuccess", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "getAllUserFailure", payload: error.response.data.message })
+  }
+};
+
+export const getTotalSales = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `${serverUrl}/totalsales`,
+    );
+    dispatch({ type: "totalSales", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "totalSales", payload: null });
+  }
+};
+
+export const getMonthlySales = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `${serverUrl}/monthlysales`,
+    );
+    dispatch({ type: "monthlySales", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "monthlySales", payload: null });
+  }
+};
+export const getTotalEarnings = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `${serverUrl}/totalearnings`,
+    );
+    dispatch({ type: "totalEarnings", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "totalEarnings", payload: null });
+  }
+};
+
+export const getMonthlyEarnings = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `${serverUrl}/monthlyearnings`,
+    );
+    dispatch({ type: "monthlyEarnings", payload: data });
+
+  } catch (error) {
+    dispatch({ type: "monthlyEarnings", payload: null });
   }
 };
 
@@ -396,6 +472,27 @@ export const payment = (amount) => async (dispatch) => {
   }
 };
 
+export const makePayment = (userId, ownerId, bookingId, parkingSpaceId, fee, commission) => async (dispatch) => {
+  try {
+    dispatch({ type: 'makePaymentRequest' });
+
+    const { data } = await axios.post(
+      `${serverUrl}/newpayment`,
+      { userId, ownerId, bookingId, parkingSpaceId, fee, commission },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    dispatch({ type: "makePaymentSuccess", payload: data.paymentIntent });
+    return data;
+
+  } catch (error) {
+    dispatch({ type: "makePaymentFailure", payload: error.response.data.message })
+  }
+};
+
 export const getMyBookingRequests = (id) => async (dispatch) => {
   try {
     dispatch({ type: 'getMyBookingRequestsRequest' });
@@ -410,13 +507,13 @@ export const getMyBookingRequests = (id) => async (dispatch) => {
   }
 };
 
-export const bookParking = (userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType) => async (dispatch) => {
+export const bookParking = (userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType, hour, fee) => async (dispatch) => {
   try {
     dispatch({ type: "bookParkingRequest" });
 
     const { data } = await axios.post(
       `${serverUrl}/newbooking`,
-      { userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType },
+      { userId, ownerId, parkingSpaceId, startTime, endTime, vehicleType, fee },
       {
         headers: {
           "Content-Type": "application/json",

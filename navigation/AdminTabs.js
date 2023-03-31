@@ -10,16 +10,20 @@ import * as Location from 'expo-location';
 import { Main, Home, MyProfile, History, Map, Shop, Add } from "../screens"
 import AddTabs from "../screens/Add/AddTabs";
 import { COLORS, icons, SIZES } from "../constants"
-import Icon from 'react-native-vector-icons';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import MapBox from "../screens/Search/MapBox";
 import { Theme } from "../constants/theme";
 import MyParking from "../screens/Add/MyParking";
+import AdminHome from "../screens/AdminScreens/AdminHome";
+import AdminUsers from "../screens/AdminScreens/AdminUsers";
+import AdminParkingSpaces from "../screens/AdminScreens/AdminParkingSpaces";
 
 const Tab = createBottomTabNavigator()
 
 
-const Tabs = () => {
+const AdminTabs = () => {
     const dispatch = useDispatch();
 
     const [location, setLocation] = useState({});
@@ -56,6 +60,7 @@ const Tabs = () => {
 
     }, []);
 
+
     return (
         <>
             <Tab.Navigator
@@ -78,8 +83,8 @@ const Tabs = () => {
                         null]
                 }}>
                 <Tab.Screen
-                    name="Home"
-                    component={Home}
+                    name="AdminHome"
+                    component={AdminHome}
                     options={{
                         tabBarIcon: ({ size, focused }) => (
                             <Image
@@ -93,53 +98,32 @@ const Tabs = () => {
                     }}
                 />
                 <Tab.Screen
-                    name="Search"
-                    component={Map}
+                    name="AdminUsers"
+                    component={AdminUsers}
                     options={{
                         tabBarIcon: ({ size, focused }) => (
-                            <Image
-                                source={focused ? icons.map : icons.map_outline}
-                                style={{
-                                    width: size,
-                                    height: size,
-                                }}
+                            <Ionicon
+                                name={focused ? 'ios-people' : 'ios-people-outline'}
+                                size={28}
+                                color={'#fff'}
                             />
                         )
                     }}
                 />
-                {
-                    user.role === 'owner' &&
-                    <Tab.Screen
-                        name="MySpaces"
-                        component={MyParking}
-                        options={{
-                            tabBarIcon: ({ size, focused }) => (
-                                <Image
-                                    source={focused ? icons.add : icons.add_outline}
-                                    style={{
-                                        width: size,
-                                        height: size,
-                                    }}
-                                />
-                            )
-                        }}
-                    />
-                }
                 <Tab.Screen
-                    name="History"
-                    component={History}
+                    name="AdminParkingSpaces"
+                    component={AdminParkingSpaces}
                     options={{
                         tabBarIcon: ({ size, focused }) => (
-                            <Image
-                                source={focused ? icons.history : icons.history_outline}
-                                style={{
-                                    width: size,
-                                    height: size,
-                                }}
+                            <MaterialIcon
+                                name={focused ? 'newspaper-variant' : 'newspaper-variant-outline'}
+                                size={28}
+                                color={'#fff'}
                             />
                         )
                     }}
                 />
+
                 <Tab.Screen
                     name="MyProfile"
                     component={MyProfile}
@@ -174,4 +158,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Tabs;
+export default AdminTabs;

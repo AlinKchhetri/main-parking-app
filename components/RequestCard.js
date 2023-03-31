@@ -30,8 +30,12 @@ const RequestCard = (props) => {
                                 ...lightFONTS.h5,
                                 marginRight: 5
                             }}>Booking Request</Text>
-                            <View style={{ backgroundColor: item?.response === 'Pending' ? '#ffcc00' : item.response === 'Rejected' ? '#cc3300' : '#99cc33', padding: 5, borderRadius: SIZES.padding }}>
+                            <View style={{ backgroundColor: item?.response === 'Pending' ? '#ffcc00' : item.response === 'Rejected' ? '#cc3300' : '#99cc33', padding: 5, borderRadius: SIZES.padding, marginRight: 5 }}>
                                 <Text style={{ ...lightFONTS.body6, color: 'white' }}>{item?.response}</Text>
+                            </View>
+                            {/* <View style={{ backgroundColor: COLORS.darkgray, padding: 5, borderRadius: SIZES.padding }}> */}
+                            <View style={{ backgroundColor: item?.response === 'Unpaid' ? COLORS.darkgray : '#99cc33', padding: 5, borderRadius: SIZES.padding }}>
+                                <Text style={{ ...lightFONTS.body6, color: 'white' }}>{item?.status ? item.status : 'Unpaid'}</Text>
                             </View>
                         </View>
                         {

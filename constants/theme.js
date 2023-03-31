@@ -38,6 +38,7 @@ export const COLORS = {
     lightGray: "#FCFBFC",
     gray: "#f0f1f2",
     darkgray: "#C3C6C7",
+    grey: '#707C80',
 
     transparent: "transparent",
 };
@@ -88,8 +89,8 @@ export const lightFONTS = {
 
 export const darkFONTS = {
     largeTitle: { fontFamily: "Roboto-regular", fontSize: SIZES.largeTitle, lineHeight: 55, color: COLORS.white },
-    h1: { fontFamily: "Roboto-Black", fontSize: SIZES.h1, lineHeight: 36 , color: COLORS.white},
-    h2: { fontFamily: "Roboto-Bold", fontSize: SIZES.h2, lineHeight: 30, color: COLORS.white},
+    h1: { fontFamily: "Roboto-Black", fontSize: SIZES.h1, lineHeight: 36, color: COLORS.white },
+    h2: { fontFamily: "Roboto-Bold", fontSize: SIZES.h2, lineHeight: 30, color: COLORS.white },
     h3: { fontFamily: "Roboto-Bold", fontSize: SIZES.h3, lineHeight: 22, color: COLORS.white },
     h4: { fontFamily: "Roboto-Bold", fontSize: SIZES.h4, lineHeight: 22, color: COLORS.white },
     body1: { fontFamily: "Roboto-Regular", fontSize: SIZES.body1, lineHeight: 36, color: COLORS.white },

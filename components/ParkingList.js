@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowOffset: { x: 2, y: -2 },
         height: 120,
+        marginVertical: 5,
         width: Dimensions.get('window').width - 30,
         overflow: "hidden",
         flexDirection: 'row',

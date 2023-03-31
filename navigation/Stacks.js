@@ -32,6 +32,7 @@ import BookingDetails from '../screens/Booking/BookingDetails';
 import Payment from '../screens/Booking/Payment';
 import ChangeRole from '../screens/Login/ChangeRole';
 import ChoosePayment from '../screens/Booking/ChoosePayment';
+import AdminTabs from './AdminTabs';
 
 const Drawer = createDrawerNavigator();
 
@@ -159,7 +160,6 @@ export const HomeStack = () => {
                     headerBackTitleVisible: false,
                     headerTitleStyle: { ...lightFONTS.h4 },
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />
-                    // , presentation: 'modal'
                 }}
             />
             <Stack.Screen name="add" component={Add}
@@ -220,7 +220,7 @@ export const HomeStack = () => {
     );
 }
 
-export const MainStack = () => {
+export const MainStack = ({ user }) => {
     return (
         <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
             <Drawer.Screen name="HomeDrawer" component={Tabs} />
@@ -287,13 +287,16 @@ const Stacks = () => {
                         initialRouteName={
                             isAuthenticated ?
                                 user && user.verified ?
-                                    'DrawerStack'
+                                    user.role === 'admin' ?
+                                        'AdminTabs' :
+                                        'DrawerStack'
                                     : 'verify'
                                 :
                                 'LoginStack'
                         }
                     >
                         <Stack.Screen name="LoginStack" component={LoginStack} />
+                        <Stack.Screen name="AdminTabs" component={AdminTabs} />
                         <Stack.Screen name="DrawerStack" component={DrawerNavigation} />
                         <Stack.Screen name="HomeStack" component={HomeStack} />
                         <Stack.Screen name="verify" component={Verify} options={{

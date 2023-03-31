@@ -2,7 +2,7 @@ import { StyleSheet, SafeAreaView, Text, View, Platform, TouchableOpacity, Alert
 import React from 'react'
 import { COLORS, images, lightFONTS, SIZES } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { bookParking } from '../../redux/action';
+import { bookParking, makePayment } from '../../redux/action';
 import axios from 'axios';
 import { useStripe } from '@stripe/stripe-react-native';
 import KhaltiPayment from './KhaltiPayment';
@@ -21,16 +21,21 @@ const Payment = ({ navigation, route }) => {
         userId,
         ownerId,
         parkingId,
+        bookingId,
         parkingAddress,
         startTime,
         endTime,
         vehicleType,
         rate,
+        hour,
         fee
     } = route.params.details;
 
     const paymentMethod = route.params.paymentMethod;
-    console.log("🚀 ~ file: Payment.js:33 ~ Payment ~ paymentMethod:", paymentMethod)
+    const paymentMode = route.params.paymentMode;
+
+    const commission = fee * 0.1;
+    console.log("🚀 ~ file: Payment.js:33 ~ Payment ~ paymentMethod:", route.params.details)
 
     const [isVisible, setIsVisible] = useState(false);
 
@@ -98,7 +103,21 @@ const Payment = ({ navigation, route }) => {
             });
             return;
         }
-        dispatch(bookParking(userId, ownerId, parkingId, startTime, endTime, vehicleType, fee)).then(async () => {
+        dispatch(makePayment(userId, ownerId, bookingId, parkingId, fee, commission)).then(async () => {
+            navigation.navigate('HomeStack', { screen: 'home' });
+        });
+
+        Toast.show({
+            type: ALERT_TYPE.SUCCESS,
+            title: 'Payment Successful',
+            textBody: 'Your payment has been completed successfully. Thank you!',
+            autoClose: 2000,
+        });
+
+    };
+
+    const onReserve = async () => {
+        dispatch(bookParking(userId, ownerId, parkingId, startTime, endTime, vehicleType, hour, fee)).then(async () => {
             navigation.navigate('HomeStack', { screen: 'home' });
 
             await Notifications.scheduleNotificationAsync({
@@ -114,10 +133,9 @@ const Payment = ({ navigation, route }) => {
             type: ALERT_TYPE.SUCCESS,
             title: 'Booking Successful',
             textBody: 'Your booking request has been sent successfully. Thank you!',
-            autoClose: 2000,
+            autoClose: 2000
         });
-
-    };
+    }
 
     const _onPaymentComplete = (data) => {
         setIsVisible(false);
@@ -126,23 +144,15 @@ const Payment = ({ navigation, route }) => {
         if (resp.event === 'CLOSED') {
             return;
         } else if (resp.event === 'SUCCESS') {
-            dispatch(bookParking(userId, ownerId, parkingId, startTime, endTime, vehicleType, fee)).then(async () => {
+            dispatch(makePayment(userId, ownerId, bookingId, parkingId, fee, commission)).then(async () => {
                 navigation.navigate('HomeStack', { screen: 'home' });
-
-                await Notifications.scheduleNotificationAsync({
-                    content: {
-                        title: "ParkPin 📬",
-                        body: 'Your booking time will expire after 5 minutes. Please extend your booking time if needed. Thank you!',
-                    },
-                    trigger: { date: moment(endTime).subtract(5, 'minutes') },
-                });
             });
 
             Toast.show({
                 type: ALERT_TYPE.SUCCESS,
-                title: 'Booking Successful',
-                textBody: 'Your booking request has been sent successfully. Thank you!',
-                autoClose: 2000
+                title: 'Payment Successful',
+                textBody: 'Your payment has been completed successfully. Thank you!',
+                autoClose: 2000,
             });
         } else if (resp.event === 'ERROR') {
             Toast.show({
@@ -221,8 +231,8 @@ const Payment = ({ navigation, route }) => {
                     marginHorizontal: 5
                 }}>
                     <SummarySection label={'Rate per hour'} data={`Rs. ${rate}`} />
-                    <SummarySection label={'Hours'} data={`${Math.round((endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60))} hour`} />
-                    {/* <SummarySection label={'Taxes & Fees (10%)'} data={`Rs. ${rate * 0.1}`} /> */}
+                    <SummarySection label={'Hours'} data={`${hour} hour`} />
+                    <SummarySection label={'Taxes & Fees (10%)'} data={`Rs. ${commission}`} />
                     <View style={{ height: 1, backgroundColor: 'grey', margin: 10 }} />
                     <View style={{
                         flexDirection: 'row',
@@ -239,23 +249,28 @@ const Payment = ({ navigation, route }) => {
                     </View>
                 </View>
             </View>
-            <TouchableOpacity
-                onPress={onPayment}
-                style={{
-                    backgroundColor: COLORS.green,
-                    margin: SIZES.padding2,
-                    padding: SIZES.padding2,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: SIZES.padding2
-                }}>
-                <Text style={{
-                    ...lightFONTS.h5,
-                    color: 'white',
-                }}>
-                    Pay
-                </Text>
-            </TouchableOpacity>
+            {
+                <TouchableOpacity
+                    onPress={paymentMode ? onPayment : onReserve}
+                    style={{
+                        backgroundColor: COLORS.green,
+                        margin: SIZES.padding2,
+                        padding: SIZES.padding2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: SIZES.padding2
+                    }}>
+                    <Text style={{
+                        ...lightFONTS.h5,
+                        color: 'white',
+                    }}>
+                        {
+                            paymentMode ?
+                                'Pay' : 'Reserve'
+                        }
+                    </Text>
+                </TouchableOpacity>
+            }
             {/* <TouchableOpacity
                 onPress={() => setIsVisible(true)}
                 style={{
