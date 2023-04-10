@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StatusBar, TouchableOpacity, View, Text, StyleSheet, Image, Dimensions, ScrollView } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { COLORS, lightFONTS, SIZES } from '../../constants';
+import { COLORS, FONTS, SIZES } from '../../constants';
 import moment from 'moment';
 
 const BookingDetails = ({ navigation, route }) => {
@@ -43,13 +43,13 @@ const BookingDetails = ({ navigation, route }) => {
                 marginVertical: 5
             }}>
                 <Text style={{
-                    ...lightFONTS.h5
+                    ...FONTS.h5
                 }}>{label}</Text>
                 <View style={{ width: 30 }} />
                 <Text numberOfLines={1} style={{
                     flex: 1,
                     textAlign: 'right',
-                    ...lightFONTS.body4,
+                    ...FONTS.body4,
                     flexWrap: 'wrap'
                 }}>{data}</Text>
             </View>
@@ -107,10 +107,10 @@ const BookingDetails = ({ navigation, route }) => {
                             marginVertical: 5
                         }}>
                             <Text style={{
-                                ...lightFONTS.h4
+                                ...FONTS.h4
                             }}>Total</Text>
                             <Text style={{
-                                ...lightFONTS.h5
+                                ...FONTS.h5
                             }}>{total_fee}</Text>
                         </View>
                     </View>
@@ -153,7 +153,7 @@ const BookingDetails = ({ navigation, route }) => {
                                 borderRadius: SIZES.padding2
                             }}>
                             <Text style={{
-                                ...lightFONTS.h5,
+                                ...FONTS.h5,
                                 color: 'white',
                             }}>
                                 Pay
@@ -186,16 +186,16 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     ticketHeaderText: {
-        ...lightFONTS.h3,
+        ...FONTS.h3,
         textAlign: 'center'
     },
     labelText: {
-        ...lightFONTS.h5,
+        ...FONTS.h5,
         color: '#707C80',
         marginBottom: 3,
     },
     detailText: {
-        ...lightFONTS.h5
+        ...FONTS.h5
     }
 });
 

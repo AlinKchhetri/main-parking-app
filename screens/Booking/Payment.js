@@ -1,6 +1,6 @@
 import { StyleSheet, SafeAreaView, Text, View, Platform, TouchableOpacity, Alert, StatusBar } from 'react-native'
 import React from 'react'
-import { COLORS, images, lightFONTS, SIZES } from '../../constants';
+import { COLORS, images, FONTS, SIZES } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookParking, makePayment } from '../../redux/action';
 import axios from 'axios';
@@ -178,13 +178,13 @@ const Payment = ({ navigation, route }) => {
                 marginVertical: 5
             }}>
                 <Text style={{
-                    ...lightFONTS.h5
+                    ...FONTS.h5
                 }}>{label}</Text>
                 <View style={{ width: 30 }} />
                 <Text numberOfLines={1} style={{
                     flex: 1,
                     textAlign: 'right',
-                    ...lightFONTS.body4,
+                    ...FONTS.body4,
                     flexWrap: 'wrap'
                 }}>{data}</Text>
             </View>
@@ -241,10 +241,10 @@ const Payment = ({ navigation, route }) => {
                         marginVertical: 5
                     }}>
                         <Text style={{
-                            ...lightFONTS.h4
+                            ...FONTS.h4
                         }}>Total</Text>
                         <Text style={{
-                            ...lightFONTS.h5
+                            ...FONTS.h5
                         }}>{fee}</Text>
                     </View>
                 </View>
@@ -261,7 +261,7 @@ const Payment = ({ navigation, route }) => {
                         borderRadius: SIZES.padding2
                     }}>
                     <Text style={{
-                        ...lightFONTS.h5,
+                        ...FONTS.h5,
                         color: 'white',
                     }}>
                         {
@@ -282,7 +282,7 @@ const Payment = ({ navigation, route }) => {
                     borderRadius: SIZES.padding2
                 }}>
                 <Text style={{
-                    ...lightFONTS.h5,
+                    ...FONTS.h5,
                     color: 'white',
                 }}>
                     Khalti

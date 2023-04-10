@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
 import React from 'react'
-import { COLORS, icons, SIZES, lightFONTS } from '../constants'
+import { COLORS, icons, SIZES, FONTS } from '../constants'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native'
@@ -27,15 +27,15 @@ const RequestCard = (props) => {
                     <View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{
-                                ...lightFONTS.h5,
+                                ...FONTS.h5,
                                 marginRight: 5
                             }}>Booking Request</Text>
                             <View style={{ backgroundColor: item?.response === 'Pending' ? '#ffcc00' : item.response === 'Rejected' ? '#cc3300' : '#99cc33', padding: 5, borderRadius: SIZES.padding, marginRight: 5 }}>
-                                <Text style={{ ...lightFONTS.body6, color: 'white' }}>{item?.response}</Text>
+                                <Text style={{ ...FONTS.body6, color: 'white' }}>{item?.response}</Text>
                             </View>
                             {/* <View style={{ backgroundColor: COLORS.darkgray, padding: 5, borderRadius: SIZES.padding }}> */}
-                            <View style={{ backgroundColor: item?.response === 'Unpaid' ? COLORS.darkgray : '#99cc33', padding: 5, borderRadius: SIZES.padding }}>
-                                <Text style={{ ...lightFONTS.body6, color: 'white' }}>{item?.status ? item.status : 'Unpaid'}</Text>
+                            <View style={{ backgroundColor: item?.status === 'Unpaid' ? COLORS.darkgray : '#99cc33', padding: 5, borderRadius: SIZES.padding }}>
+                                <Text style={{ ...FONTS.body6, color: 'white' }}>{item?.status ? item.status : 'Unpaid'}</Text>
                             </View>
                         </View>
                         {
@@ -44,7 +44,7 @@ const RequestCard = (props) => {
                                 :
                                 <Text style={styles.cardtitle}>{`Your booking request has been ${item?.response === 'Pending' ? 'sent' : item.response === 'Rejected' ? 'rejected' : 'accepted'}`}</Text>
                         }
-                        <Text style={{ ...lightFONTS.body5, color: '#707C80' }}>{moment(item?.bookedAt).calendar()}</Text>
+                        <Text style={{ ...FONTS.body5, color: '#707C80' }}>{moment(item?.bookedAt).calendar()}</Text>
                         {
                             item?.ownerDetails?._id == user._id && item?.response == 'Pending' &&
                             (
@@ -52,12 +52,12 @@ const RequestCard = (props) => {
                                     <TouchableOpacity
                                         onPress={() => dispatch(respond(item?._id, 'Accepted'))}
                                         style={{ backgroundColor: '#70db83', padding: SIZES.padding, borderRadius: SIZES.padding }}>
-                                        <Text style={{ ...lightFONTS.body4, color: 'white' }}>Accept</Text>
+                                        <Text style={{ ...FONTS.body4, color: 'white' }}>Accept</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         onPress={() => dispatch(respond(item?._id, 'Rejected'))}
                                         style={{ backgroundColor: COLORS.darkgray, padding: SIZES.padding, borderRadius: SIZES.padding, marginLeft: 10 }}>
-                                        <Text style={{ ...lightFONTS.body4, color: 'white' }}>Decline</Text>
+                                        <Text style={{ ...FONTS.body4, color: 'white' }}>Decline</Text>
                                     </TouchableOpacity>
                                 </View>
                             )
@@ -97,12 +97,12 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     cardtitle: {
-        ...lightFONTS.h4,
+        ...FONTS.h4,
         fontSize: 12,
         color: '#707C80'
     },
     cardDescription: {
-        ...lightFONTS.h6,
+        ...FONTS.h6,
         color: COLORS.blue,
         fontSize: 10
     },

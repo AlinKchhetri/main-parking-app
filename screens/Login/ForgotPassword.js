@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react';
 import { TextInput } from 'react-native-paper';
 import {
   COLORS,
-  lightFONTS,
+  FONTS,
   SIZES,
   darkFONTS,
   images,
@@ -96,7 +96,7 @@ const ForgotPassword = ({ navigation, route }) => {
       <View>
         {/* <Title /> */}
         {/* <TextInput style={styles.inputField} placeholder="Email" onChangeText={setEmail} /> */}
-        <Text style={{ ...lightFONTS.body3, margin: 15 }}>Enter the email address asscociated with your account and we'll send an email with instructions to reset your password.</Text>
+        <Text style={{ ...FONTS.body3, margin: 15 }}>Enter the email address asscociated with your account and we'll send an email with instructions to reset your password.</Text>
         <TextInput
           style={styles.inputField} outlineColor='#FAFAFA' activeOutlineColor='#333333'
           mode='outlined'
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5
   },
   loginText: {
-    ...lightFONTS.h3,
+    ...FONTS.h3,
     fontWeight: 'bold',
     textAlign: 'left',
     padding: SIZES.padding,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     ...darkFONTS.h4,
   },
   forgotText: {
-    ...lightFONTS.body4,
+    ...FONTS.body4,
     textAlign: 'center',
     marginTop: SIZES.padding,
     color: COLORS.green,
@@ -167,15 +167,15 @@ const styles = StyleSheet.create({
     height: 45,
   },
   socialText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   dontText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   singnupText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     color: COLORS.green,
   },
 });

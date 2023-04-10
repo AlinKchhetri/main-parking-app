@@ -1,26 +1,25 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, {useState} from 'react';
-import { COLORS, lightFONTS, SIZES } from '../../constants';
+import React, { useState } from 'react';
+import { COLORS, FONTS, SIZES } from '../../constants';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useDispatch } from 'react-redux';
 import { completeTask, deleteTask, loadUser } from '../../redux/action';
 
-const Task = ({ title, description, status, taskId}) => {
-
+const Task = ({ title, description, status, taskId }) => {
 	const dispatch = useDispatch();
- 	const [completed, setCompleted] = useState(status);
+	const [ completed, setCompleted ] = useState(status);
 
-    const handleChecked = () => {
+	const handleChecked = () => {
 		setCompleted(!completed);
 		dispatch(completeTask(taskId));
-    }
+	};
 
-    const deleteHandler = async() => {
-        console.log(taskId);
+	const deleteHandler = async () => {
+		console.log(taskId);
 		await dispatch(deleteTask(taskId));
 		dispatch(loadUser());
-    }
+	};
 
 	return (
 		<View style={styles.taskContainer}>
@@ -34,10 +33,10 @@ const Task = ({ title, description, status, taskId}) => {
 					fillColor="green"
 					innerIconStyle={{ borderWidth: 2 }}
 					isChecked={completed}
-                    onPress={handleChecked}
+					onPress={handleChecked}
 				/>
 				<View style={styles.deleteButton}>
-					<Icon size={22} name="delete" color="white" onPress={deleteHandler}/>
+					<Icon size={22} name="delete" color="white" onPress={deleteHandler} />
 				</View>
 			</View>
 		</View>
@@ -69,10 +68,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	taskTitle: {
-		...lightFONTS.h4
+		...FONTS.h4
 	},
 	taskDescription: {
-		...lightFONTS.h6
+		...FONTS.h6
 	},
 	deleteButton: {
 		backgroundColor: 'red',

@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StatusBar, Pressable, Share, StyleSheet, Linking } from 'react-native'
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
-import { COLORS, darkFONTS, lightFONTS, SIZES } from '../../constants';
+import { COLORS, darkFONTS, FONTS, SIZES } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { bookParking } from '../../redux/action';
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -100,7 +100,7 @@ const ParkingDetails = ({ navigation, route }) => {
         >
           <View style={styles.contentContainer}>
             <Text style={{
-              ...lightFONTS.h4,
+              ...FONTS.h4,
               textAlign: 'center',
             }}>Select a vehicle</Text>
             <View style={{
@@ -126,17 +126,17 @@ const ParkingDetails = ({ navigation, route }) => {
                   alignItems: 'flex-start',
                   alignSelf: 'flex-start'
                 }}>
-                  <Text style={{ ...lightFONTS.h4 }}>Bike</Text>
+                  <Text style={{ ...FONTS.h4 }}>Bike</Text>
                   <Text style={{
-                    ...lightFONTS.h5,
+                    ...FONTS.h5,
                     color: '#1987ff'
                   }}>Rs. {details.two_wheeler && details.two_wheeler.rate}<Text style={{
-                    ...lightFONTS.body4,
+                    ...FONTS.body4,
                     color: '#707C80'
                   }}>/hr</Text></Text>
                 </View>
                 <Text style={{
-                  ...lightFONTS.body4,
+                  ...FONTS.body4,
                   color: '#707C80'
                 }}>
                   <Text>{details.two_wheeler && details.two_wheeler.no_slot} </Text>
@@ -158,17 +158,17 @@ const ParkingDetails = ({ navigation, route }) => {
                   size={27}
                 />
                 <View>
-                  <Text style={{ ...lightFONTS.h4 }}>Car</Text>
+                  <Text style={{ ...FONTS.h4 }}>Car</Text>
                   <Text style={{
-                    ...lightFONTS.h5,
+                    ...FONTS.h5,
                     color: '#1987ff'
                   }}>Rs. {details.two_wheeler && details.two_wheeler.rate}<Text style={{
-                    ...lightFONTS.body4,
+                    ...FONTS.body4,
                     color: '#707C80'
                   }}>/hr</Text></Text>
                 </View>
                 <Text style={{
-                  ...lightFONTS.body4,
+                  ...FONTS.body4,
                   color: '#707C80'
                 }}>
                   <Text>{details.two_wheeler && details.two_wheeler.no_slot} </Text>
@@ -200,13 +200,13 @@ const ParkingDetails = ({ navigation, route }) => {
                     margin: 10
                   }}>
                     <Text style={{
-                      ...lightFONTS.h4
-                    }}>{`Paid Parking at \n${locationAddress?.split(',')[0]}`}</Text>
+                      ...FONTS.h4
+                    }}>{locationAddress?.split(',')[0]}</Text>
                     <Text style={{
-                      ...lightFONTS.h4,
+                      ...FONTS.h4,
                       color: '#1987ff'
                     }}>Rs. {details.two_wheeler && details.two_wheeler.rate}<Text style={{
-                      ...lightFONTS.body4,
+                      ...FONTS.body4,
                       color: '#707C80'
                     }}>/hr</Text></Text>
                   </View>
@@ -218,7 +218,7 @@ const ParkingDetails = ({ navigation, route }) => {
                     <MaterialIcon name='map-marker'
                       size={25} />
                     <Text numberOfLines={2} style={{
-                      ...lightFONTS.body5,
+                      ...FONTS.body5,
                       marginLeft: 5,
                       color: '#707C80'
                     }}>{details?.locationName}</Text>
@@ -256,7 +256,7 @@ const ParkingDetails = ({ navigation, route }) => {
                           }}
                         />
                         <Text style={{
-                          ...lightFONTS.body5,
+                          ...FONTS.body5,
                           // color: 'white',
                           opacity: 0.5,
                           marginLeft: 5
@@ -285,7 +285,7 @@ const ParkingDetails = ({ navigation, route }) => {
                           }}
                         />
                         <Text style={{
-                          ...lightFONTS.body5,
+                          ...FONTS.body5,
                           // color: 'white',
                           opacity: 0.5,
                           marginLeft: 5
@@ -372,7 +372,7 @@ const ParkingDetails = ({ navigation, route }) => {
                     marginVertical: 10,
                   }}>
                     <Text style={{
-                      ...lightFONTS.h5,
+                      ...FONTS.h5,
                       marginBottom: 10
                     }}>Description</Text>
                     <Text style={{
@@ -383,7 +383,7 @@ const ParkingDetails = ({ navigation, route }) => {
                   </View>
                   {/* <View>
                     <Text style={{
-                      ...lightFONTS.h4,
+                      ...FONTS.h4,
                       marginTop: 20,
                       marginHorizontal: SIZES.padding
                     }}>Select Vehicle Type</Text>
@@ -416,17 +416,17 @@ const ParkingDetails = ({ navigation, route }) => {
                             alignItems: 'flex-start',
                             alignSelf: 'flex-start'
                           }}>
-                            <Text style={{ ...lightFONTS.h4 }}>Bike</Text>
+                            <Text style={{ ...FONTS.h4 }}>Bike</Text>
                             <Text style={{
-                              ...lightFONTS.h5,
+                              ...FONTS.h5,
                               color: '#1987ff'
                             }}>{`Rs. ${details?.two_wheeler?.rate} `}<Text style={{
-                              ...lightFONTS.body4,
+                              ...FONTS.body4,
                               color: '#707C80'
                             }}>/hr</Text></Text>
                           </View>
                           <Text style={{
-                            ...lightFONTS.body4,
+                            ...FONTS.body4,
                             color: '#707C80'
                           }}>
                             <Text>{`${details?.two_wheeler?.no_slot} `}</Text>
@@ -455,17 +455,17 @@ const ParkingDetails = ({ navigation, route }) => {
                             size={27}
                           />
                           <View>
-                            <Text style={{ ...lightFONTS.h4 }}>Car</Text>
+                            <Text style={{ ...FONTS.h4 }}>Car</Text>
                             <Text style={{
-                              ...lightFONTS.h5,
+                              ...FONTS.h5,
                               color: '#1987ff'
                             }}>{`Rs. ${details?.four_wheeler?.rate} `}<Text style={{
-                              ...lightFONTS.body4,
+                              ...FONTS.body4,
                               color: '#707C80'
                             }}>/hr</Text></Text>
                           </View>
                           <Text style={{
-                            ...lightFONTS.body4,
+                            ...FONTS.body4,
                             color: '#707C80'
                           }}>
                             <Text>{`${details?.four_wheeler?.no_slot} `}</Text>
@@ -506,7 +506,7 @@ const ParkingDetails = ({ navigation, route }) => {
               borderRadius: SIZES.padding2
             }}>
             <Text style={{
-              ...lightFONTS.h5,
+              ...FONTS.h5,
               color: 'white',
             }}>{`Reserve Parking Space`}</Text>
           </TouchableOpacity>

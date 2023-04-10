@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions, ActionSheetIOS } from 'react-native'
 import React, { useState } from 'react'
-import { COLORS, icons, SIZES, lightFONTS } from '../constants'
+import { COLORS, icons, SIZES, FONTS } from '../constants'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 import { useNavigation } from '@react-navigation/native';
@@ -18,7 +18,7 @@ const UserList = ({ item }) => {
                 animate={true}
                 name={item?.name}
                 useAutoColors
-                source={{ uri: item?.avatarUrl?.url }}
+                source={{ uri: item?.avatar?.url }}
                 autoColorsConfig={item?.name}
             />
             <View style={styles.textContent}>
@@ -28,7 +28,7 @@ const UserList = ({ item }) => {
                     alignItems: 'center',
                 }}>
                     <Text style={{
-                        ...lightFONTS.h5,
+                        ...FONTS.h5,
                         color: '#1987ff'
                     }}>{item?.name}</Text>
                     {
@@ -58,7 +58,7 @@ const UserList = ({ item }) => {
 
                 <Text style={styles.cardtitle}>{item?.email}</Text>
 
-                <Text style={{ ...lightFONTS.body4, color: '#707C80', paddingRight: 30 }}>{item?.phoneNumber}</Text>
+                <Text style={{ ...FONTS.body4, color: '#707C80', paddingRight: 30 }}>{item?.phoneNumber}</Text>
             </View>
         </View >
     )
@@ -72,9 +72,8 @@ const styles = StyleSheet.create({
         padding: SIZES.padding2
     },
     headerText: {
-        ...lightFONTS.h2,
-        marginHorizontal: SIZES.padding2,
-        // top: 10,
+        ...FONTS.h2,
+        marginHorizontal: SIZES.padding2
     },
     card: {
         padding: 10,
@@ -106,12 +105,12 @@ const styles = StyleSheet.create({
         padding: 10
     },
     cardtitle: {
-        ...lightFONTS.h4,
+        ...FONTS.h4,
         fontSize: 13,
         color: '#707C80'
     },
     cardDescription: {
-        ...lightFONTS.h6,
+        ...FONTS.h6,
         color: COLORS.blue,
         fontSize: 10
     },

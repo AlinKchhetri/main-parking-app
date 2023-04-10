@@ -15,7 +15,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import {
   COLORS,
-  lightFONTS,
+  FONTS,
   SIZES,
   darkFONTS,
   images,
@@ -195,29 +195,22 @@ const Add = ({ navigation, route }) => {
             validationSchema={addValidationSchema}
           >
             {({ handleChange, handleBlur, handleSubmit, values, setFieldValue, errors, isValid, touched }) => {
-              console.log(errors)
               return (
                 <KeyboardAwareScrollView showsVerticalScrollIndicator={false} style={{
                   flex: 1,
                   marginHorizontal: 15
                 }}>
                   <Text style={{
-                    ...lightFONTS.h4,
+                    ...FONTS.h4,
                     marginVertical: 10,
                   }}>Parking Details</Text>
                   <Text style={{
-                    ...lightFONTS.h5,
+                    ...FONTS.h5,
                     marginVertical: 10,
                   }}>Location Details <Text style={{
                     color: 'red'
                   }}>*</Text></Text>
-                  <View style={{
-                    // marginHorizontal: 20
-                  }}>
-                    {/* <Text style={{
-                      ...lightFONTS.body3,
-                      color: '#707C80'
-                    }}>Location</Text> */}
+                  <View>
 
                     <PaperInput
                       style={styles.inputField} underlineColor='#FAFAFA' activeOutlineColor='#333333'
@@ -233,9 +226,6 @@ const Add = ({ navigation, route }) => {
                         <PaperInput.Icon icon='map-marker-outline' />
                       }
                     />
-                    {/* <TouchableOpacity onPress={handleChooseLocation} style={{ alignSelf: 'flex-end', margin: 5 }}>
-                      <Text style={{ ...lightFONTS.body4, color: COLORS.green }}>Set on map</Text>
-                    </TouchableOpacity> */}
                     {
                       locationValue ?
                         <View style={{ flex: 1 }} >
@@ -276,7 +266,7 @@ const Add = ({ navigation, route }) => {
                               }
                               }
                             >
-                              <Image source={icons.setMarker} style={{ width: 60, height: 60 }} />
+                              <Image source={icons.setMarker} style={{ width: 45, height: 45 }} />
                             </Marker>
                           </MapView>
                         </View>
@@ -287,7 +277,7 @@ const Add = ({ navigation, route }) => {
                   </View>
                   <View>
                     <Text style={{
-                      ...lightFONTS.h5,
+                      ...FONTS.h5,
                       marginVertical: 10,
                     }}>Bike Parking Details <Text style={{
                       color: 'red'
@@ -319,7 +309,7 @@ const Add = ({ navigation, route }) => {
                   </View>
                   <View>
                     <Text style={{
-                      ...lightFONTS.h5,
+                      ...FONTS.h5,
                       marginVertical: 10
                     }}>Car Parking Details</Text>
                     <PaperInput
@@ -343,7 +333,7 @@ const Add = ({ navigation, route }) => {
                   </View>
                   <View>
                     <Text style={{
-                      ...lightFONTS.h5,
+                      ...FONTS.h5,
                       marginVertical: 10,
                     }}>Parking Images <Text style={{
                       color: 'red'
@@ -383,10 +373,6 @@ const Add = ({ navigation, route }) => {
                       </Pressable>
                     </View>
                   </View>
-
-
-
-
                   <View>
                     <TouchableOpacity
                       onPress={handleSubmit}
@@ -423,7 +409,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   loginText: {
-    ...lightFONTS.h1,
+    ...FONTS.h1,
     fontWeight: 'bold',
     textAlign: 'left',
     padding: SIZES.padding,
@@ -446,7 +432,7 @@ const styles = StyleSheet.create({
     ...darkFONTS.h4,
   },
   forgotText: {
-    ...lightFONTS.body4,
+    ...FONTS.body4,
     textAlign: 'center',
     marginTop: SIZES.padding,
     color: COLORS.green,
@@ -463,15 +449,15 @@ const styles = StyleSheet.create({
     height: 45,
   },
   socialText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   dontText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   singnupText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     color: COLORS.green,
   },
 });

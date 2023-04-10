@@ -11,7 +11,7 @@ import { TextInput, HelperText } from 'react-native-paper';
 import React, { useState, useEffect } from 'react';
 import {
   COLORS,
-  lightFONTS,
+  FONTS,
   SIZES,
   darkFONTS,
   images,
@@ -308,14 +308,6 @@ const Login = ({ navigation }) => {
                       <Ionicon name='finger-print' size={30} color='#33333' style={{
                         padding: 10
                       }} />
-                      {/* <View style={{
-                width: 2,
-                backgroundColor: 'black',
-                marginVertical: 5
-              }} />
-              <MaterialIcon name='face-recognition' size={30} color='#33333' style={{
-                padding: 10
-              }} /> */}
                     </TouchableOpacity>
                   }
                   <TouchableOpacity
@@ -330,7 +322,7 @@ const Login = ({ navigation }) => {
           <Text onPress={handleForgotPassword} style={styles.forgotText}>Forgot the password?</Text>
 
           <Text style={{
-            ...lightFONTS.body4,
+            ...FONTS.body4,
             alignSelf: 'center',
             marginVertical: 10
           }}>or continue with </Text>
@@ -364,7 +356,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15
   },
   loginText: {
-    ...lightFONTS.h2,
+    ...FONTS.h2,
     textAlign: 'left',
     paddingHorizontal: SIZES.padding,
   },
@@ -386,7 +378,7 @@ const styles = StyleSheet.create({
     ...darkFONTS.h4,
   },
   forgotText: {
-    ...lightFONTS.body4,
+    ...FONTS.body4,
     color: COLORS.green,
     textAlign: 'center',
   },
@@ -402,16 +394,16 @@ const styles = StyleSheet.create({
     height: 45,
   },
   socialText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
     marginVertical: 30
   },
   dontText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   singnupText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     color: COLORS.green,
     textDecorationLine: 'underline'
   },

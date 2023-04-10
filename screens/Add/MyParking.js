@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity } fr
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMyParking } from '../../redux/action';
-import { COLORS, lightFONTS } from '../../constants';
+import { COLORS, FONTS } from '../../constants';
 import ParkingList from '../../components/ParkingList';
 import { Chip } from 'react-native-paper';
 import Feather from 'react-native-vector-icons/Feather';
@@ -29,7 +29,7 @@ const MyParking = ({ navigation }) => {
                     height: 45,
                     backgroundColor: selectedFilter === 'all' ? 'blue' : 'grey',
                 }}>
-                <Text style={{ ...lightFONTS.body4, padding: 10 }}>{props.title}</Text>
+                <Text style={{ ...FONTS.body4, padding: 10 }}>{props.title}</Text>
             </TouchableOpacity>
         );
     }
@@ -43,7 +43,7 @@ const MyParking = ({ navigation }) => {
                 alignItems: 'center',
                 paddingTop: 30
             }}>
-                <Text style={{ ...lightFONTS.h2 }}>My Parking Spaces</Text>
+                <Text style={{ ...FONTS.h2 }}>My Parking Spaces</Text>
                 <Feather
                     name='plus'
                     size={30}

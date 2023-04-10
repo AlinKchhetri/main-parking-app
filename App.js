@@ -15,7 +15,7 @@ import { useFonts } from 'expo-font';
 import store from './redux/store';
 import Tabs from "./navigation/Tabs";
 import Stacks from "./navigation/Stacks";
-import { COLORS, lightFONTS, darkFONTS } from './constants';
+import { COLORS, FONTS, darkFONTS } from './constants';
 import Toast, { BaseToast } from 'react-native-toast-message'
 import { AlertNotificationRoot } from 'react-native-alert-notification';
 import { LogBox } from 'react-native';

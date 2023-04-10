@@ -11,7 +11,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import React, { useState, useEffect } from 'react';
 import {
   COLORS,
-  lightFONTS,
+  FONTS,
   SIZES,
   darkFONTS,
   images,
@@ -163,7 +163,7 @@ const Register = ({ navigation, route }) => {
           }}
           validationSchema={registerValidationSchema}
         >
-          {({ handleChange, handleBlur, handleSubmit, values, errors, isValid, touched }) => (
+          {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
             <View style={{
               flex: 1,
               flexDirection: 'column',
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   registerText: {
-    ...lightFONTS.h2,
+    ...FONTS.h2,
     textAlign: 'left',
     padding: SIZES.padding,
   },
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     ...darkFONTS.h4,
   },
   forgotText: {
-    ...lightFONTS.body4,
+    ...FONTS.body4,
     textAlign: 'center',
     marginTop: SIZES.padding,
     color: COLORS.green,
@@ -321,15 +321,15 @@ const styles = StyleSheet.create({
     height: 45,
   },
   socialText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   dontText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   singnupText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     color: COLORS.green,
   },
 });

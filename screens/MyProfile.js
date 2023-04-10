@@ -16,11 +16,11 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Avatar } from 'react-native-ui-lib';
-import { login, logout, verifyPassword } from '../redux/action';
-import { COLORS, icons, SIZES, images, darkFONTS, lightFONTS } from '../constants';
+import { loadUser, login, logout, verifyPassword } from '../redux/action';
+import { COLORS, icons, SIZES, images, darkFONTS, FONTS } from '../constants';
 import * as LocalAuthentication from 'expo-local-authentication'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Icon } from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -30,14 +30,18 @@ const UI = (props) => {
   return (
     <TouchableOpacity onPress={props.press} style={styles.infoCard}>
       <View style={styles.iconCard}>
-        <Image source={props.icon} style={{ width: 20, height: 20 }} />
+        {/* <Image source={props.icon} style={{ width: 20, height: 20 }} /> */}
+        <Icon
+          name={props.icon}
+          size={20}
+        />
       </View>
       <View style={styles.textCard}>
-        <Text style={{ ...lightFONTS.h5 }}>{props.title}</Text>
-        <Text style={{ ...lightFONTS.body5 }}>{props.titleInfo}</Text>
+        <Text style={{ ...FONTS.h5 }}>{props.title}</Text>
+        <Text style={{ ...FONTS.body5 }}>{props.titleInfo}</Text>
       </View>
       <View style={styles.gotoCard}>
-        <Image source={props.goto} style={{ width: 15, height: 15 }} />
+        {props.option}
       </View>
     </TouchableOpacity>
   );
@@ -77,12 +81,10 @@ const MyProfile = ({ navigation }) => {
     })();
   }, [isEnabled])
 
-  // useEffect(() => {
-  //   if (verify) {
-  //     biometricAuth(biometricPassword);
-  //   }
-  // }, [verify])
+  useEffect(() => {
 
+    console.log('--------------------------------');
+  }, [])
 
 
   const storeData = async (value) => {
@@ -130,7 +132,8 @@ const MyProfile = ({ navigation }) => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    wait(1000).then(() => setRefreshing(false));
+    dispatch(loadUser());
+    setRefreshing(false);
   }, []);
 
   const handleLogout = () => {
@@ -164,9 +167,9 @@ const MyProfile = ({ navigation }) => {
           />
           <Text onPress={() => navigation.navigate('HomeStack', {
             screen: 'editProfile'
-          })} 
-          style={{ ...lightFONTS.body3 }}>Edit Profile</Text>
-          <Text onPress={() => {
+          })}
+            style={{ ...FONTS.body3, color: COLORS.green, margin: 5 }}>Edit Profile</Text>
+          {/* <Text onPress={() => {
             Alert.prompt(
               "Verify your password", `Please enter password for account with email address: ${user.email}`,
               (password) => {
@@ -181,79 +184,65 @@ const MyProfile = ({ navigation }) => {
                 }
               }
             )
-          }} style={{ ...lightFONTS.body3 }}>Open</Text>
+          }} style={{ ...FONTS.body3 }}>Open</Text> */}
           <View>
             <View style={styles.infoSection}>
               <UI
-                icon={icons.user}
+                icon='ios-person-outline'
                 title="My Account"
                 titleInfo="Make changes to your account"
-                goto={icons.goto}
+                option={<Icon name='ios-chevron-forward' size={25} />}
                 press={() => navigation.navigate('HomeStack', {
                   screen: 'editProfile'
                 })}
               />
-              <Pressable style={styles.infoCard}>
-                <View style={styles.iconCard}>
-                  <Image source={icons.lock} style={{ width: 20, height: 20 }} />
-                </View>
-                <View style={styles.textCard}>
-                  <Text style={{ ...lightFONTS.h5 }}>Face ID/Touch ID</Text>
-                  <Text style={{ ...lightFONTS.body5 }}>Manage your account security</Text>
-                </View>
-                <View style={styles.gotoCard}>
-                  <Switch
-                    trackColor={{ false: '#767577', true: COLORS.green }}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={async (c) => {
-                      if (c) {
-                        biometricAuth()
-                      } else {
-                        try {
-                          await AsyncStorage.removeItem('loginInfo')
-                          setIsEnabled(false)
-                        } catch (error) {
-                          console.log("🚀 ~ file: MyProfile.js:172 ~ onValueChange={async ~ error", error)
-                        }
-                      }
-                    }}
-                    value={isEnabled}
-                    disabled={disabled}
-                  />
-                </View>
-              </Pressable>
-              <Pressable style={styles.infoCard}>
-                <View style={styles.iconCard}>
-                  <Image source={icons.dark} style={{ width: 20, height: 20 }} />
-                </View>
-                <View style={styles.textCard}>
-                  <Text style={{ ...lightFONTS.h5 }}>Dark Mode</Text>
-                  <Text style={{ ...lightFONTS.body5 }}>Turn On/Off dark mode</Text>
-                </View>
-                <View style={styles.gotoCard}>
-                  <Switch
-                    trackColor={{ false: '#767577', true: COLORS.green }}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={darkModeSwitch}
-                    value={darkEnabled}
-                  />
-                </View>
-              </Pressable>
               <UI
-                icon={icons.logout}
+                icon='ios-lock-closed'
+                title="Face ID/Touch ID"
+                titleInfo="Manage your account security"
+                option={<Switch
+                  trackColor={{ false: '#767577', true: COLORS.green }}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={async (c) => {
+                    if (c) {
+                      biometricAuth()
+                    } else {
+                      try {
+                        await AsyncStorage.removeItem('loginInfo')
+                        setIsEnabled(false)
+                      } catch (error) {
+                        console.log("🚀 ~ file: MyProfile.js:172 ~ onValueChange={async ~ error", error)
+                      }
+                    }
+                  }}
+                  value={isEnabled}
+                  disabled={disabled}
+                />}
+              />
+              <UI
+                icon='color-filter-outline'
+                title="Dark Mode"
+                titleInfo="Turn On/Off dark mode"
+                option={<Switch
+                  trackColor={{ false: '#767577', true: COLORS.green }}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={darkModeSwitch}
+                  value={darkEnabled}
+                />}
+              />
+              <UI
+                icon='log-out-outline'
                 title="Log out"
                 titleInfo="Log out of yor account"
-                goto={icons.goto}
+                option={<Icon name='ios-chevron-forward' size={25} />}
                 press={handleLogout}
-              >
-                <Switch />
-              </UI>
+              />
             </View>
           </View>
-          <View style={[styles.infoSection, { height: 130 }]}>
+          {/* <View style={[styles.infoSection, { height: 130 }]}>
             <UI icon={icons.support} title="Help & Support" goto={icons.goto} />
             <UI icon={icons.lock} title="About App" goto={icons.goto} />
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>

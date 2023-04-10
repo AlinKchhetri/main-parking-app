@@ -1,6 +1,6 @@
 import { StyleSheet, SafeAreaView, StatusBar, Text, View, Pressable, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { COLORS, images, lightFONTS, SIZES, icons } from '../../constants';
+import { COLORS, images, FONTS, SIZES, icons } from '../../constants';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
 
@@ -31,7 +31,7 @@ const ChoosePayment = ({ navigation, route }) => {
         }}>
             <StatusBar barStyle={'dark-content'} />
             <Text style={{
-                ...lightFONTS.h5,
+                ...FONTS.h5,
                 marginTop: 20,
                 marginHorizontal: SIZES.padding
             }}>Choose Payment Method</Text>
@@ -64,7 +64,7 @@ const ChoosePayment = ({ navigation, route }) => {
                             height: 40
                         }}
                     />
-                    <Text style={{ ...lightFONTS.h5 }}>Card</Text>
+                    <Text style={{ ...FONTS.h5 }}>Card</Text>
                 </Pressable>
                 <Pressable
                     onPress={() => {
@@ -92,7 +92,7 @@ const ChoosePayment = ({ navigation, route }) => {
                             height: 40
                         }}
                     />
-                    <Text style={{ ...lightFONTS.h5 }}>Khalti</Text>
+                    <Text style={{ ...FONTS.h5 }}>Khalti</Text>
                 </Pressable>
                 <TouchableOpacity
                     onPress={proceedPayment}
@@ -105,7 +105,7 @@ const ChoosePayment = ({ navigation, route }) => {
                         borderRadius: SIZES.padding2
                     }}>
                     <Text style={{
-                        ...lightFONTS.h5,
+                        ...FONTS.h5,
                         color: 'white',
                     }}>
                         Confirm

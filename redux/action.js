@@ -225,6 +225,25 @@ export const changePassword = (oldPassword, newPassword) => async (dispatch) => 
   }
 };
 
+export const changeRole = (role) => async (dispatch) => {
+  try {
+    dispatch({ type: "changeRoleRequest" });
+
+    const { data } = await axios.put(
+      `${serverUrl}/changerole`,
+      { role },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    dispatch({ type: "changeRoleSuccess", payload: data.message });
+  } catch (error) {
+    dispatch({ type: "changeRoleFailure", payload: error.response.data.message });
+  }
+};
+
 export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: "forgotPasswordRequest" });
@@ -292,6 +311,7 @@ export const updateProfile = (formData) => async (dispatch) => {
     dispatch({ type: "updateFailure", payload: error.response.data.message });
   }
 };
+
 export const verify = (otp) => async (dispatch) => {
   try {
     dispatch({ type: "verifyRequest" });

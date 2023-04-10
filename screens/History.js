@@ -1,6 +1,6 @@
 import { SafeAreaView, ScrollView, View, Text, Image, TextInput, TouchableOpacity, Linking, Platform, StyleSheet, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { COLORS, SIZES, lightFONTS, darkFONTS } from '../constants'
+import { COLORS, SIZES, FONTS, darkFONTS } from '../constants'
 import Toast from 'react-native-toast-message'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMyBookings } from '../redux/action'
@@ -24,7 +24,7 @@ const History = ({ route }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: 50, justifyContent: 'flex-start' }}>
-      <Text style={{ ...lightFONTS.h3, margin: 20 }}>Booking History</Text>
+      <Text style={{ ...FONTS.h3, margin: 20 }}>Booking History</Text>
 
       <ScrollView style={{
         flex: 1,

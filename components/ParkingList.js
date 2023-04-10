@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
 import React from 'react'
-import { COLORS, icons, SIZES, lightFONTS } from '../constants'
+import { COLORS, icons, SIZES, FONTS } from '../constants'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native'
@@ -22,16 +22,13 @@ const ParkingList = ({ item }) => {
             />
             <View style={styles.textContent}>
                 <Text style={{
-                    ...lightFONTS.h5,
+                    ...FONTS.h5,
                     color: '#1987ff'
                 }}>Rs. {item?.two_wheeler && item?.two_wheeler.rate}<Text style={{
-                    ...lightFONTS.body5,
+                    ...FONTS.body5,
                     color: '#707C80'
                 }}>/hr</Text></Text>
-                {/* <Text style={styles.cardtitle}>Paid Parking Available</Text> */}
 
-                {
-                    // item?.locationName &&
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'flex-start',
@@ -42,13 +39,11 @@ const ParkingList = ({ item }) => {
                             size={17}
                             color='black'
                             style={{
-                                opacity: 0.5,
-                                // marginHorizontal: 20
+                                opacity: 0.5
                             }}
                         />
-                        <Text numberOfLines={1} style={{ ...lightFONTS.body5, color: '#707C80', paddingRight: 30 }}>{item?.locationName}</Text>
+                        <Text numberOfLines={1} style={{ ...FONTS.body5, color: '#707C80', paddingRight: 30 }}>{item?.locationName}</Text>
                     </View>
-                }
                 <View style={{
                     flex: 1,
                     flexDirection: 'row',
@@ -70,13 +65,11 @@ const ParkingList = ({ item }) => {
                             size={17}
                             color='black'
                             style={{
-                                opacity: 0.5,
-                                // marginHorizontal: 20
+                                opacity: 0.5
                             }}
                         />
                         <Text style={{
-                            ...lightFONTS.body5,
-                            // color: 'white',
+                            ...FONTS.body5,
                             opacity: 0.5,
                             marginLeft: 5
                         }}>{item?.two_wheeler?.no_slot} slot</Text>
@@ -98,13 +91,11 @@ const ParkingList = ({ item }) => {
                                 size={20}
                                 color='black'
                                 style={{
-                                    opacity: 0.5,
-                                    // marginHorizontal: 20
+                                    opacity: 0.5
                                 }}
                             />
                             <Text style={{
-                                ...lightFONTS.body5,
-                                // color: 'white',
+                                ...FONTS.body5,
                                 opacity: 0.5,
                                 marginLeft: 5
                             }}>{item?.four_wheeler?.no_slot} slot</Text>
@@ -124,7 +115,7 @@ const styles = StyleSheet.create({
         padding: SIZES.padding2
     },
     headerText: {
-        ...lightFONTS.h2,
+        ...FONTS.h2,
         marginHorizontal: SIZES.padding2,
         // top: 10,
     },
@@ -157,12 +148,12 @@ const styles = StyleSheet.create({
         padding: 10
     },
     cardtitle: {
-        ...lightFONTS.h4,
+        ...FONTS.h4,
         fontSize: 12,
         color: '#707C80'
     },
     cardDescription: {
-        ...lightFONTS.h6,
+        ...FONTS.h6,
         color: COLORS.blue,
         fontSize: 10
     },

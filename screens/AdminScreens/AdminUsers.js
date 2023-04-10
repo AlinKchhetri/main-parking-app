@@ -1,6 +1,6 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react';
-import { COLORS, SIZES, lightFONTS, darkFONTS, icons, images } from '../../constants'
+import { COLORS, SIZES, FONTS, darkFONTS, icons, images } from '../../constants'
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import UserList from '../../components/UserList';
@@ -29,7 +29,7 @@ const AdminUsers = () => {
                     backgroundColor: COLORS.red,
                     width: 100,
                     borderRadius: 10,
-                    marginVertical: 5
+                    margin: 5
                 }}>
                 <Icon
                     name='delete'
@@ -37,7 +37,7 @@ const AdminUsers = () => {
                     color='white'
                 />
                 <Text style={{
-                    ...lightFONTS.body3,
+                    ...FONTS.body3,
                     color: 'white'
                 }}>
                     Delete
@@ -50,11 +50,12 @@ const AdminUsers = () => {
             flex: 1,
             margin: 10
         }}>
-            <Text style={{ ...lightFONTS.h3, margin: 15, marginTop: 30 }}>Users</Text>
+            <Text style={{ ...FONTS.h3, margin: 15, marginTop: 30 }}>Users</Text>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{
-                    paddingBottom: 50
+                    paddingBottom: 50,
+                    alignSelf: 'center'
                 }}
                 contentInset={{ bottom: 50 }}
             >

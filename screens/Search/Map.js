@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { SafeAreaView, Platform, Text, View, StatusBar, Animated, StyleSheet, TouchableOpacity, Image, Dimensions, Linking, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { COLORS, lightFONTS, darkFONTS, images, icons, SIZES } from '../../constants'
+import { COLORS, FONTS, darkFONTS, images, icons, SIZES } from '../../constants'
 import Toast from 'react-native-toast-message'
 import { TextInput } from 'react-native-paper';
 import MapView, { Callout, Marker } from 'react-native-maps'
@@ -651,7 +651,7 @@ const Map = ({ navigation }) => {
               >
                 <Animated.View style={styles.markerWrap}>
                   <Animated.Image style={[{
-                    width: 50, height: 50
+                    width: 25, height: 30
                   }, scaleStyle]} source={icons.setMarker} />
                 </Animated.View>
                 {/* <Callout
@@ -754,7 +754,7 @@ const Map = ({ navigation }) => {
           onIconPress={handleSearch}
           autoComplete='street-address'
           inputStyle={{
-            ...lightFONTS,
+            ...FONTS,
             fontSize: 15,
             color: 'black'
           }}
@@ -842,7 +842,7 @@ const styles = StyleSheet.create({
     padding: SIZES.padding2
   },
   headerText: {
-    ...lightFONTS.h2,
+    ...FONTS.h2,
     marginHorizontal: SIZES.padding2,
     // top: 10,
   },

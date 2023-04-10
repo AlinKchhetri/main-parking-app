@@ -18,7 +18,7 @@ import ForgetPassword from '../screens/Login/ForgotPassword';
 import ResetPassword from '../screens/Login/ResetPassword';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import LoadingScreen from '../components/LoadingScreen';
-import { Theme, lightFONTS, COLORS } from '../constants';
+import { Theme, FONTS, COLORS } from '../constants';
 import ParkingDetails from '../screens/Home/ParkingDetails';
 import SignUp from '../screens/Login/SignUp';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -158,7 +158,7 @@ export const HomeStack = () => {
                     headerShown: true,
                     headerTitle: 'Reserve Parking Details',
                     headerBackTitleVisible: false,
-                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerTitleStyle: { ...FONTS.h4 },
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />
                 }}
             />
@@ -167,13 +167,13 @@ export const HomeStack = () => {
                     headerShown: true,
                     headerTitle: 'Add New Space',
                     headerBackTitleVisible: false,
-                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerTitleStyle: { ...FONTS.h4 },
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
                     presentation: 'modal'
                 }}
             />
             <Stack.Screen name="test" component={TestNotification} />
-            <Stack.Screen name="changePassword" component={ChangePassword} options={{ headerShown: true, headerTitle: 'Change Password', headerBackTitleVisible: false, headerTitleStyle: { ...lightFONTS.h3 } }} />
+            <Stack.Screen name="changePassword" component={ChangePassword} options={{ headerShown: true, headerTitle: 'Change Password', headerBackTitleVisible: false, headerTitleStyle: { ...FONTS.h4 } }} />
             <Stack.Screen name="verify" component={Verify} />
             <Stack.Screen name="parkingDetails" component={ParkingDetails}
                 options={{
@@ -188,7 +188,7 @@ export const HomeStack = () => {
                     headerShown: true,
                     headerTitle: 'Messages',
                     headerBackTitleVisible: false,
-                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerTitleStyle: { ...FONTS.h4 },
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />
                 }} />
             <Stack.Screen name="bookingDetails" component={BookingDetails}
@@ -196,7 +196,7 @@ export const HomeStack = () => {
                     headerShown: true,
                     headerTitle: 'Booking Details',
                     headerBackTitleVisible: false,
-                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerTitleStyle: { ...FONTS.h4 },
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
                 }} />
             <Stack.Screen name="payment" component={Payment}
@@ -204,7 +204,7 @@ export const HomeStack = () => {
                     headerShown: true,
                     headerTitle: 'Payment',
                     headerBackTitleVisible: false,
-                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerTitleStyle: { ...FONTS.h4 },
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
                 }} />
             <Stack.Screen name="choosePayment" component={ChoosePayment}
@@ -212,10 +212,18 @@ export const HomeStack = () => {
                     headerShown: true,
                     headerTitle: 'Payment Options',
                     headerBackTitleVisible: false,
-                    headerTitleStyle: { ...lightFONTS.h4 },
+                    headerTitleStyle: { ...FONTS.h4 },
                     headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
                 }} />
-            <Stack.Screen name="editProfile" component={Profile} options={{ headerShown: true, headerTitle: 'Update Profile', headerBackTitleVisible: false, headerTitleStyle: { ...lightFONTS.h3 } }} />
+            <Stack.Screen name="changeRole" component={ChangeRole}
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Choose Role',
+                    headerBackTitleVisible: false,
+                    headerTitleStyle: { ...FONTS.h4 },
+                    headerBackImage: () => <Icon name='arrow-back-ios' color={'#000'} size={25} style={{ marginLeft: 10 }} />,
+                }} />
+            <Stack.Screen name="editProfile" component={Profile} options={{ headerShown: true, headerTitle: 'Update Profile', headerBackTitleVisible: false, headerTitleStyle: { ...FONTS.h4 } }} />
         </Stack.Navigator>
     );
 }
@@ -280,9 +288,7 @@ const Stacks = () => {
                 <NavigationContainer independent={true}>
                     <Stack.Navigator
                         screenOptions={{
-                            headerShown: false,
-                            // headerLeft: null,
-                            // gestureEnabled: false,
+                            headerShown: false
                         }}
                         initialRouteName={
                             isAuthenticated ?
@@ -312,4 +318,4 @@ const Stacks = () => {
     )
 }
 
-export default Stacks
+export default Stacks;

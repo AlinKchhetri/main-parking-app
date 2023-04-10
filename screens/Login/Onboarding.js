@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import Onboarding from 'react-native-onboarding-swiper';
-import { images, lightFONTS } from '../../constants';
+import { images, FONTS } from '../../constants';
 
 const OnboardingScreen = ({ navigation }) => {
     return (
@@ -12,11 +12,11 @@ const OnboardingScreen = ({ navigation }) => {
                 onSkip={() => navigation.navigate('login')}
                 onDone={() => navigation.navigate('login')}
                 titleStyles={{
-                    ...lightFONTS.h3,
+                    ...FONTS.h3,
                     marginHorizontal: 10
                 }}
                 subTitleStyles={{
-                    ...lightFONTS.body3,
+                    ...FONTS.body3,
                     marginHorizontal: 10,
                     color: '#707C80'
                 }}

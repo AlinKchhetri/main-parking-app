@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, ScrollView, TextInput, View, Pressable, SafeAreaView, Platform, StatusBar } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { icons, images, lightFONTS, SIZES, COLORS } from '../constants'
+import { icons, images, FONTS, SIZES, COLORS } from '../constants'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Dialog, Button } from 'react-native-paper'
 
@@ -12,29 +12,29 @@ const Main = ({ navigation }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  
+
   const dispatch = useDispatch();
-  const {user} = useSelector(state => state.auth);
-  const {loading, message, error} = useSelector(state=>state.message)
+  const { user } = useSelector(state => state.auth);
+  const { loading, message, error } = useSelector(state => state.message)
   const handleDismiss = () => {
     setOpenDialog(!openDialog);
     setTitle('');
     setDescription('');
   }
 
-  const addTaskHandler = async() => {
+  const addTaskHandler = async () => {
     await dispatch(addTask(title, description))
     dispatch(loadUser());
   }
 
   useEffect(() => {
-    if(error) {
+    if (error) {
       alert(error);
-      dispatch({type: "clearError"});
+      dispatch({ type: "clearError" });
     }
-    if(message) {
+    if (message) {
       alert(message);
-      dispatch({type: "clearMessage"});
+      dispatch({ type: "clearMessage" });
     }
   }, [alert, error, message, dispatch])
 
@@ -79,7 +79,7 @@ const Main = ({ navigation }) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-            <Text style={{ ...lightFONTS.h3 }}>Add Task</Text>
+            <Text style={{ ...FONTS.h3 }}>Add Task</Text>
             <TouchableOpacity onPress={handleDismiss}>
               <Icon name="close" color='red' size={25} />
             </TouchableOpacity>
@@ -108,10 +108,10 @@ const Main = ({ navigation }) => {
             margin: SIZES.padding
           }}>
             <TouchableOpacity onPress={addTaskHandler} disabled={!title || !description || loading} style={styles.dialogButton}>
-              <Text style={{ ...lightFONTS.body3, color: 'white' }}>Add</Text>
+              <Text style={{ ...FONTS.body3, color: 'white' }}>Add</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleDismiss} style={[styles.dialogButton, { backgroundColor: 'red' }]}>
-              <Text style={{ ...lightFONTS.body3, color: 'white' }}>Cancel</Text>
+              <Text style={{ ...FONTS.body3, color: 'white' }}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </Dialog.Content>
@@ -124,7 +124,7 @@ export default Main
 
 const styles = StyleSheet.create({
   headerTitle: {
-    ...lightFONTS.h2,
+    ...FONTS.h2,
     textAlign: 'center',
     margin: SIZES.padding
   },

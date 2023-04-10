@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
 import React from 'react'
-import { COLORS, icons, SIZES, lightFONTS } from '../constants'
+import { COLORS, icons, SIZES, FONTS } from '../constants'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native'
@@ -30,40 +30,35 @@ const ParkingCard = ({ item, isMapScreen }) => {
             }}
         >
             <Image
-                // source={{ uri: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1734&q=80' }}
                 source={{ uri: item?.image.url }}
                 style={styles.cardImage}
                 resizeMode="cover"
             />
             <View style={styles.textContent}>
                 <Text style={{
-                    ...lightFONTS.h5,
+                    ...FONTS.h5,
                     color: '#1987ff'
                 }}>Rs. {item?.two_wheeler && item?.two_wheeler.rate}<Text style={{
-                    ...lightFONTS.body5,
+                    ...FONTS.body5,
                     color: '#707C80'
                 }}>/hr</Text></Text>
-                {/* <Text style={styles.cardtitle}>Paid Parking Available</Text> */}
+                {/* <Text style={styles.cardtitle}>{item?.locationName?.split(',')[0]}</Text> */}
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                }}>
+                    <MaterialIcon
+                        name='map-marker'
+                        size={17}
+                        color='black'
+                        style={{
+                            opacity: 0.5,
+                        }}
+                    />
+                    <Text numberOfLines={1} style={{ ...FONTS.body5, color: '#707C80' }}>{item?.locationName}</Text>
+                </View>
 
-                {
-                    // item?.locationName &&
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                    }}>
-                        <MaterialIcon
-                            name='map-marker'
-                            size={17}
-                            color='black'
-                            style={{
-                                opacity: 0.5,
-                                // marginHorizontal: 20
-                            }}
-                        />
-                        <Text numberOfLines={1} style={{ ...lightFONTS.body5, color: '#707C80' }}>{item?.locationName}</Text>
-                    </View>
-                }
                 <View style={{
                     flex: 1,
                     flexDirection: 'row',
@@ -86,12 +81,10 @@ const ParkingCard = ({ item, isMapScreen }) => {
                             color='black'
                             style={{
                                 opacity: 0.5,
-                                // marginHorizontal: 20
                             }}
                         />
                         <Text style={{
-                            ...lightFONTS.body5,
-                            // color: 'white',
+                            ...FONTS.body5,
                             opacity: 0.5,
                             marginLeft: 5
                         }}>{item?.two_wheeler?.no_slot} slot</Text>
@@ -114,12 +107,10 @@ const ParkingCard = ({ item, isMapScreen }) => {
                                 color='black'
                                 style={{
                                     opacity: 0.5,
-                                    // marginHorizontal: 20
                                 }}
                             />
                             <Text style={{
-                                ...lightFONTS.body5,
-                                // color: 'white',
+                                ...FONTS.body5,
                                 opacity: 0.5,
                                 marginLeft: 5
                             }}>{item?.four_wheeler?.no_slot} slot</Text>
@@ -139,7 +130,7 @@ const styles = StyleSheet.create({
         padding: SIZES.padding2
     },
     headerText: {
-        ...lightFONTS.h2,
+        ...FONTS.h2,
         marginHorizontal: SIZES.padding2,
         // top: 10,
     },
@@ -172,12 +163,12 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     cardtitle: {
-        ...lightFONTS.h4,
+        ...FONTS.h4,
         fontSize: 12,
         color: '#707C80'
     },
     cardDescription: {
-        ...lightFONTS.h6,
+        ...FONTS.h6,
         color: COLORS.blue,
         fontSize: 10
     },

@@ -71,7 +71,7 @@ export const SIZES = {
     height
 };
 
-export const lightFONTS = {
+export const FONTS = {
     largeTitle: { fontFamily: "SF-Pro-Regular", fontSize: SIZES.largeTitle, lineHeight: 55 },
     h1: { fontFamily: "SF-Pro-Bold", fontSize: SIZES.h1, lineHeight: 36 },
     h2: { fontFamily: "SF-Pro-Bold", fontSize: SIZES.h2, lineHeight: 30 },
@@ -100,6 +100,6 @@ export const darkFONTS = {
     body5: { fontFamily: "Roboto-Regular", fontSize: SIZES.body5, lineHeight: 22, color: COLORS.white },
 };
 
-const appTheme = { Theme, COLORS, SIZES, lightFONTS, darkFONTS };
+const appTheme = { Theme, COLORS, SIZES, FONTS, darkFONTS };
 
 export default appTheme;

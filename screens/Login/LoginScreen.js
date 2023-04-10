@@ -11,7 +11,7 @@ import { TextInput, HelperText } from 'react-native-paper';
 import React, { useState, useEffect } from 'react';
 import {
     COLORS,
-    lightFONTS,
+    FONTS,
     SIZES,
     darkFONTS,
     images,
@@ -242,7 +242,7 @@ const LoginScreen = ({ navigation }) => {
                 <View style={{ alignItems: 'center' }}>
                     <Image
                         source={images.appLogo}
-                        style={{ height: 300, width: 300}}
+                        style={{ height: 300, width: 300 }}
                     />
                 </View>
 
@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     loginText: {
-        ...lightFONTS.h1,
+        ...FONTS.h1,
         textAlign: 'left',
         padding: SIZES.padding,
     },
@@ -454,7 +454,7 @@ const styles = StyleSheet.create({
         ...darkFONTS.h4,
     },
     forgotText: {
-        ...lightFONTS.body4,
+        ...FONTS.body4,
         textAlign: 'center',
         color: COLORS.green,
     },
@@ -470,15 +470,15 @@ const styles = StyleSheet.create({
         height: 45,
     },
     socialText: {
-        ...lightFONTS.body3,
+        ...FONTS.body3,
         textAlign: 'center',
     },
     dontText: {
-        ...lightFONTS.body3,
+        ...FONTS.body3,
         textAlign: 'center',
     },
     singnupText: {
-        ...lightFONTS.body3,
+        ...FONTS.body3,
         color: COLORS.green,
     },
 });

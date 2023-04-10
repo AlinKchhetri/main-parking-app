@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-n
 import * as ImagePicker from 'expo-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Icons from 'react-native-vector-icons/AntDesign'
-import { lightFONTS, darkFONTS } from '../constants';
+import { FONTS, darkFONTS } from '../constants';
 
 export default function CameraComponent({ navigation, route }) {
   const [type, setType] = useState(CameraType.back);
@@ -85,7 +85,7 @@ export default function CameraComponent({ navigation, route }) {
             padding: 10,
           }}
         >
-          <Text style={{ ...lightFONTS.body3 }}>Close</Text>
+          <Text style={{ ...FONTS.body3 }}>Close</Text>
         </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>

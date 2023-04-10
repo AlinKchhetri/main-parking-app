@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Platform, Text, View, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
-import { COLORS, lightFONTS, darkFONTS, images } from '../../constants'
+import { COLORS, FONTS, darkFONTS, images } from '../../constants'
 import Toast from 'react-native-toast-message'
 import MapView, { Marker } from 'react-native-maps'
 import * as Location from 'expo-location';
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const MapView = () => {
   const dispatch = useDispatch();
-  const {locationValue} = useSelector(state => state.location);
+  const { locationValue } = useSelector(state => state.location);
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -25,7 +25,7 @@ const MapView = () => {
     if (locationValue) {
       setLatitude(locationValue.coords.latitude);
       setLongitude(locationValue.coords.longitude);
-    }    
+    }
   }, [locationValue])
 
 
@@ -55,7 +55,7 @@ const MapView = () => {
             })
           }}
         >
-          <Image source={images.marker} style={{width: 45, height: 45}} />
+          <Image source={images.marker} style={{ width: 45, height: 45 }} />
         </Marker>
       </MapView>
       <GooglePlacesAutocomplete
@@ -74,7 +74,7 @@ const MapView = () => {
           language: 'en',
         }}
         styles={{
-          container: { flex: 0, position: 'absolute', top: 50, width: '80%',height: '100%', zIndex: 1 },
+          container: { flex: 0, position: 'absolute', top: 50, width: '80%', height: '100%', zIndex: 1 },
           listView: { backgroundColor: COLORS.white }
         }}
       />

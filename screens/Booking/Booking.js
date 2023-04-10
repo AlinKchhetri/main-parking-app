@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker, { getToday } from 'react-native-modern-datepicker';
 import { ScrollView, SafeAreaView, View, Text, StatusBar, TouchableOpacity, Pressable, Alert } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { COLORS, images, lightFONTS, SIZES } from '../../constants';
+import { COLORS, images, FONTS, SIZES } from '../../constants';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons'
 import { CheckBox } from 'react-native-elements';
@@ -99,7 +99,7 @@ const Booking = ({ navigation, route }) => {
                 flex: 1
             }}>
                 {/* <Text style={{
-                    ...lightFONTS.h4,
+                    ...FONTS.h4,
                     marginTop: 20,
                     marginHorizontal: SIZES.padding
                 }}>Select Date</Text>
@@ -115,7 +115,7 @@ const Booking = ({ navigation, route }) => {
                     isVisible={startTimeModal}
                     mode="datetime"
                     themeVariant='light'
-                    // minimumDate={startTime}
+                    minimumDate={startTime}
                     onConfirm={(time) => {
                         setStartTime(time);
                         setStartTimeModal(false);
@@ -127,7 +127,7 @@ const Booking = ({ navigation, route }) => {
                     isVisible={endTimeModal}
                     mode="datetime"
                     themeVariant='light'
-                    // minimumDate={endTime}
+                    minimumDate={endTime}
                     onConfirm={(time) => {
                         setEndTime(time);
                         setEndTimeModal(false);
@@ -137,7 +137,7 @@ const Booking = ({ navigation, route }) => {
                 />
                 <View>
                     <Text style={{
-                        ...lightFONTS.h5,
+                        ...FONTS.h5,
                         marginTop: 20,
                         marginHorizontal: SIZES.padding
                     }}>Select Vehicle Type</Text>
@@ -170,17 +170,17 @@ const Booking = ({ navigation, route }) => {
                                     alignItems: 'flex-start',
                                     alignSelf: 'flex-start'
                                 }}>
-                                    <Text style={{ ...lightFONTS.h5 }}>Bike</Text>
+                                    <Text style={{ ...FONTS.h5 }}>Bike</Text>
                                     <Text style={{
-                                        ...lightFONTS.h5,
+                                        ...FONTS.h5,
                                         color: '#1987ff'
                                     }}>{`Rs. ${item?.two_wheeler?.rate} `}<Text style={{
-                                        ...lightFONTS.body4,
+                                        ...FONTS.body4,
                                         color: '#707C80'
                                     }}>/hr</Text></Text>
                                 </View>
                                 <Text style={{
-                                    ...lightFONTS.body4,
+                                    ...FONTS.body4,
                                     color: '#707C80'
                                 }}>
                                     <Text>{`${item?.two_wheeler?.no_slot} `}</Text>
@@ -209,17 +209,17 @@ const Booking = ({ navigation, route }) => {
                                     size={27}
                                 />
                                 <View>
-                                    <Text style={{ ...lightFONTS.h5 }}>Car</Text>
+                                    <Text style={{ ...FONTS.h5 }}>Car</Text>
                                     <Text style={{
-                                        ...lightFONTS.h5,
+                                        ...FONTS.h5,
                                         color: '#1987ff'
                                     }}>{`Rs. ${item?.four_wheeler?.rate} `}<Text style={{
-                                        ...lightFONTS.body4,
+                                        ...FONTS.body4,
                                         color: '#707C80'
                                     }}>/hr</Text></Text>
                                 </View>
                                 <Text style={{
-                                    ...lightFONTS.body4,
+                                    ...FONTS.body4,
                                     color: '#707C80'
                                 }}>
                                     <Text>{`${item?.four_wheeler?.no_slot} `}</Text>
@@ -230,7 +230,7 @@ const Booking = ({ navigation, route }) => {
                     </View>
                 </View>
                 <Text style={{
-                    ...lightFONTS.h5,
+                    ...FONTS.h5,
                     marginTop: 20,
                     marginHorizontal: SIZES.padding
                 }}>Duration</Text>
@@ -267,7 +267,7 @@ const Booking = ({ navigation, route }) => {
                         }}
                     />
                     <Text style={{
-                        ...lightFONTS.h4, color: '#0054fdff'
+                        ...FONTS.h4, color: '#0054fdff'
                     }}>{duration} hrs</Text>
                     <SimpleIcon
                         name='plus'
@@ -285,7 +285,7 @@ const Booking = ({ navigation, route }) => {
                     marginTop: 10
                 }}>
                     <View>
-                        <Text style={{ ...lightFONTS.h5, marginBottom: 10 }}>Start Hour</Text>
+                        <Text style={{ ...FONTS.h5, marginBottom: 10 }}>Start Hour</Text>
                         <TouchableOpacity
                             onPress={() => setStartTimeModal(true)}
                             style={{
@@ -297,10 +297,10 @@ const Booking = ({ navigation, route }) => {
                                 paddingVertical: 15,
                                 borderRadius: 15
                             }}>
-                            <Text style={{ ...lightFONTS.body4, marginRight: 15 }}>{moment(startTime).format('LT')}</Text>
+                            <Text style={{ ...FONTS.body4, marginRight: 15 }}>{moment(startTime).format('LT')}</Text>
                             <MaterialIcon
                                 name='clock-outline'
-                                size={30}
+                                size={20}
                             />
                         </TouchableOpacity>
                     </View>
@@ -312,7 +312,7 @@ const Booking = ({ navigation, route }) => {
                         }}
                     />
                     <View>
-                        <Text style={{ ...lightFONTS.h5, marginBottom: 10 }}>End Hour</Text>
+                        <Text style={{ ...FONTS.h5, marginBottom: 10 }}>End Hour</Text>
                         <TouchableOpacity
                             onPress={() => setEndTimeModal(true)}
                             style={{
@@ -324,49 +324,19 @@ const Booking = ({ navigation, route }) => {
                                 paddingVertical: 15,
                                 borderRadius: 15
                             }}>
-                            <Text style={{ ...lightFONTS.body4, marginRight: 15 }}>{moment(endTime).format('LT')}</Text>
+                            <Text style={{ ...FONTS.body4, marginRight: 15 }}>{moment(endTime).format('LT')}</Text>
                             <MaterialIcon
                                 name='clock-outline'
-                                size={25}
+                                size={20}
                             />
                         </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
             <View style={{
-                flex: 0.15,
-                // flexDirection: 'row',
-                // justifyContent: 'space-between',
-                // alignItems: 'center',
+                flex: 0.15
             }}>
-                {/* <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                    <MaterialIcon
-                        name='office-building-marker-outline'
-                        size={30}
-                    />
-                    <Text style={{
-                        ...lightFONTS.body3,
-                        color: '#707C80'
-                    }}>
-                        <Text>123 </Text>
-                        spaces left
-                    </Text> */}
-                {/* <Text>{(endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60)}</Text> */}
-                {/* </View> */}
                 <TouchableOpacity
-                    // onPress={async function schedulePushNotification() {
-                    //   await Notifications.scheduleNotificationAsync({
-                    //     content: {
-                    //       title: "ParkPin 📬",
-                    //       body: 'Your reservation request has been sent'
-                    //     },
-                    //     trigger: { seconds: 2 },
-                    //   });
-                    // }}
                     onPress={() => {
                         if (user._id === item?.ownerDetails._id) {
                             Toast.show({
@@ -397,21 +367,20 @@ const Booking = ({ navigation, route }) => {
                     }}
                     style={{
                         backgroundColor: COLORS.green,
-                        // margin: SIZES.padding2,
+                        margin: SIZES.padding2,
                         padding: SIZES.padding2,
                         justifyContent: 'center',
                         alignItems: 'center',
                         borderRadius: SIZES.padding2
                     }}>
                     <Text style={{
-                        ...lightFONTS.h5,
+                        ...FONTS.h5,
                         color: 'white',
                     }}>
-                        {/* {`Reserve for: Rs.${Math.round(selected === 'bike' ? item?.two_wheeler?.rate : item?.four_wheeler?.rate * (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60))}`} */}
                         Reserve for: Rs. {fee}
                     </Text>
                     {/* <Text style={{
-                        ...lightFONTS.h5,
+                        ...FONTS.h5,
                         color: 'white',
                     }}>{Math.round((endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60))} hrs</Text> */}
                 </TouchableOpacity>

@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  ActivityIndicator
 } from 'react-native';
+import { TextInput as PaperInput } from 'react-native-paper';
 import React, { useState, useEffect } from 'react';
 import {
   COLORS,
-  lightFONTS,
+  FONTS,
   SIZES,
   darkFONTS,
   images,
@@ -20,13 +22,17 @@ import {
 import useTheme from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import { Avatar } from 'react-native-paper';
+import { Avatar } from 'react-native-ui-lib';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadUser, logout, updateProfile } from '../redux/action';
 import mime from 'mime';
 
 const Profile = ({ navigation, route }) => {
-  const { user } = useSelector(state => state.auth);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const { user, loading } = useSelector(state => state.auth);
+  // console.log("🚀 ~ file: Profile.js:30 ~ Profile ~ loading:", user)
   const dispatch = useDispatch();
   // const {colors} = useTheme()
   const newNavigation = useNavigation();
@@ -34,6 +40,8 @@ const Profile = ({ navigation, route }) => {
 
   const [avatar, setAvatar] = useState(user.avatarUrl.url);
   const [name, setName] = useState(user.name);
+  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+  console.log("🚀 ~ file: Profile.js:44 ~ Profile ~ phoneNumber:", phoneNumber)
 
 
   useEffect(() => {
@@ -50,13 +58,15 @@ const Profile = ({ navigation, route }) => {
   }
 
   const handleUpdate = async () => {
+    setRefreshing(true);
     const myForm = new FormData();
 
     myForm.append('name', name);
     myForm.append('avatar', { uri: avatar, type: mime.getType(avatar), name: avatar.split("/").pop() });
 
     await dispatch(updateProfile(myForm));
-    dispatch(loadUser());
+    setRefreshing(false);
+    navigation.navigate('MyProfile')
   }
   const handleChangePassword = () => {
     navigation.navigate('changePassword');
@@ -75,7 +85,12 @@ const Profile = ({ navigation, route }) => {
       <TouchableOpacity
         onPress={handleUpdate}
         style={styles.next}>
-        <Text style={styles.buttonStyle}>Update Profile</Text>
+        {
+          refreshing ?
+            <ActivityIndicator color={'white'} size={'small'} />
+            :
+            <Text style={{ ...FONTS.h5, color: 'white' }}>Update Profile</Text>
+        }
       </TouchableOpacity>
     );
   };
@@ -84,40 +99,63 @@ const Profile = ({ navigation, route }) => {
     <SafeAreaView style={styles.login}>
       <StatusBar barStyle="dark-content" />
       <View>
-        {user.verified ? <View>
-          <Avatar.Image
+        <View style={{
+          margin: 15
+        }}>
+          <Avatar
             size={100}
-            source={{ uri: avatar }}
-            style={{ backgroundColor: '#1ab65c', alignSelf: 'center' }}
+            animate={true}
+            name={user.name}
+            useAutoColors
+            source={{ uri: user.avatarUrl.url }}
+            autoColorsConfig={user.name}
+            containerStyle={{
+              alignSelf: 'center'
+            }}
           />
           <Text
             onPress={handleImage}
-            style={{ ...lightFONTS.body4, color: COLORS.green, alignSelf: 'center' }}>
+            style={{ ...FONTS.body4, color: COLORS.green, alignSelf: 'center' }}>
             Change photo
           </Text>
-          <TextInput style={styles.inputField} placeholder={name} onChangeText={setName} clearButtonMode='while-editing'  />
-          <TextInput style={styles.inputField} placeholder={user.email}  editable={false} />
+          <PaperInput
+            style={{
+              backgroundColor: '#FFF',
+              margin: 5,
+            }} outlineColor='#707C80' activeOutlineColor='#333333'
+            mode='outlined'
+            label="Full Name"
+            onChangeText={setName}
+            value={name}
+          />
+          <PaperInput
+            style={{
+              backgroundColor: '#FFF',
+              margin: 5,
+            }} outlineColor='#707C80' activeOutlineColor='#333333'
+            mode='outlined'
+            label="Role"
+            // onChangeText={setName}
+            value={user.role}
+            disabled={true}
+          />
+          <PaperInput
+            disabled={true}
+            style={{
+              backgroundColor: '#FAFAFA',
+              margin: 5,
+            }} outlineColor='#FAFAFA' activeOutlineColor='#333333'
+            mode='outlined'
+            label="Email Address"
+            value={user.email}
+          />
           <UpdateButton />
-        </View> : 
-        <View>
-          <Text style={{...lightFONTS.h5, color: COLORS.red, textAlign: 'center'}}>Verify your account to access Account Settings</Text>
           <TouchableOpacity
-          onPress={handleVerify}
-          style={[styles.next]}>
-          <Text style={styles.buttonStyle}>Verify your Account</Text>
-        </TouchableOpacity>
-        </View>}
-        <TouchableOpacity
-          onPress={handleChangePassword}
-          style={[styles.next, {backgroundColor: null}]}>
-          <Text style={{...lightFONTS.h5, color:COLORS.green}}>Change Password</Text>
-        </TouchableOpacity>
+            onPress={handleChangePassword}>
+            <Text style={{ ...FONTS.body3, color: COLORS.green, textAlign: 'center', margin: 5 }}>Change Password</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-        <TouchableOpacity
-          onPress={handleLogout}
-          style={[styles.next, {position: 'absolute', bottom: 30, width: '95%'}]}>
-          <Text style={styles.buttonStyle}>Logout</Text>
-        </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -136,7 +174,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   loginText: {
-    ...lightFONTS.h1,
+    ...FONTS.h1,
     fontWeight: 'bold',
     textAlign: 'left',
     padding: SIZES.padding,
@@ -163,7 +201,7 @@ const styles = StyleSheet.create({
     ...darkFONTS.h4,
   },
   forgotText: {
-    ...lightFONTS.body4,
+    ...FONTS.body4,
     textAlign: 'center',
     marginTop: SIZES.padding,
     color: COLORS.green,
@@ -180,15 +218,15 @@ const styles = StyleSheet.create({
     height: 45,
   },
   socialText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   dontText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   singnupText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     color: COLORS.green,
   },
 });

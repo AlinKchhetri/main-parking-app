@@ -11,7 +11,7 @@ import {
 import React, { useState, useEffect, useRef } from 'react';
 import {
   COLORS,
-  lightFONTS,
+  FONTS,
   SIZES,
   darkFONTS,
   images,
@@ -22,6 +22,8 @@ import { Avatar } from 'react-native-paper';
 import { changePassword, loadUser, register, verify, resendOTP } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import mime from 'mime';
+import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
+
 
 const Verify = ({ navigation, route }) => {
 
@@ -46,17 +48,29 @@ const Verify = ({ navigation, route }) => {
 
 
   const handleVerify = async () => {
-    dispatch(verify(Object.values(otp).join(''))).then(() => {
-      dispatch(loadUser());
-    })
+    if (!otp) return;
+    dispatch(verify(Object.values(otp).join('')));
+    Toast.show({
+      type: ALERT_TYPE.SUCCESS,
+      title: 'Success',
+      textBody: 'Your account has been verified. Thank you!',
+      autoClose: 2000
+    });
+    await navigation.navigate('HomeStack', { screen: 'changeRole' });
   }
 
   const resendotp = () => {
-    dispatch(resendOTP())
+    dispatch(resendOTP());
+    Toast.show({
+      type: ALERT_TYPE.SUCCESS,
+      title: 'Resent OTP successfully',
+      textBody: 'New OTP has been sent to your email.',
+      autoClose: 2000
+    });
   }
 
 
-  const LoginTitle = () => {
+  const VerifyTitle = () => {
     return (
       <View style={styles.loginHeader}>
         <Text style={styles.loginText}>Verify Your Account</Text>
@@ -64,7 +78,7 @@ const Verify = ({ navigation, route }) => {
     );
   };
 
-  const LoginButton = () => {
+  const VerifyButton = () => {
     return (
       <TouchableOpacity
         onPress={handleVerify}
@@ -78,8 +92,8 @@ const Verify = ({ navigation, route }) => {
     <SafeAreaView style={styles.login}>
       <StatusBar barStyle="dark-content" />
       <View>
-        <LoginTitle />
-        <Text style={styles.infoText}>{`Enter the OTP number just sent to ${email} `}</Text>
+        <VerifyTitle />
+        <Text style={styles.infoText}>{`Enter the OTP number just sent to your email. `}</Text>
         <View style={styles.otpContainer}>
           <View style={styles.otpBox}>
             <TextInput
@@ -154,7 +168,7 @@ const Verify = ({ navigation, route }) => {
             />
           </View>
         </View>
-        <LoginButton />
+        <VerifyButton />
         <Text style={[{ alignSelf: 'center' }, styles.infoText]}>Didn't get code yet? <Text onPress={resendotp} style={[{ textDecorationLine: 'underline' }, styles.infoText]}>Resend OTP</Text></Text>
       </View>
     </SafeAreaView>
@@ -175,13 +189,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   loginText: {
-    ...lightFONTS.h2,
+    ...FONTS.h2,
     fontWeight: 'bold',
     textAlign: 'left',
     padding: SIZES.padding,
   },
   infoText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     fontWeight: 'bold',
     textAlign: 'left',
     padding: SIZES.padding,
@@ -208,7 +222,7 @@ const styles = StyleSheet.create({
     ...darkFONTS.h4,
   },
   forgotText: {
-    ...lightFONTS.body4,
+    ...FONTS.body4,
     textAlign: 'center',
     marginTop: SIZES.padding,
     color: COLORS.green,
@@ -245,15 +259,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   socialText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   dontText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   singnupText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     color: COLORS.green,
   },
 });

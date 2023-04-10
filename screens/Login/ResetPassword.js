@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react';
 import { TextInput } from 'react-native-paper';
 import {
   COLORS,
-  lightFONTS,
+  FONTS,
   SIZES,
   darkFONTS,
   images,
@@ -94,7 +94,7 @@ const ResetPassword = ({ navigation, route }) => {
       <StatusBar barStyle="dark-content" />
       <View>
         {/* <Title /> */}
-        <Text style={{ ...lightFONTS.body3, margin: 15 }}>Your new password must be different from previous used passwords.</Text>
+        <Text style={{ ...FONTS.body3, margin: 15 }}>Your new password must be different from previous used passwords.</Text>
         <Formik
           initialValues={{
             OTP: '',
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   loginText: {
-    ...lightFONTS.h1,
+    ...FONTS.h1,
     fontWeight: 'bold',
     textAlign: 'left',
     padding: SIZES.padding,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     ...darkFONTS.h4,
   },
   forgotText: {
-    ...lightFONTS.body4,
+    ...FONTS.body4,
     textAlign: 'center',
     marginTop: SIZES.padding,
     color: COLORS.green,
@@ -223,15 +223,15 @@ const styles = StyleSheet.create({
     height: 45,
   },
   socialText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   dontText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     textAlign: 'center',
   },
   singnupText: {
-    ...lightFONTS.body3,
+    ...FONTS.body3,
     color: COLORS.green,
   },
 });

@@ -10,7 +10,7 @@ const history_outline = require("../assets/icons/history-outline.png");
 const profile_outline = require("../assets/icons/user-outline.png");
 const addpost = require("../assets/icons/addpost.png");
 const thumbnail = require("../assets/icons/thumbnail.png");
-const setMarker = require("../assets/icons/setMarker.png");
+const setMarker = require("../assets/icons/main/main-marker.png");
 
 const goto = require("../assets/icons/goto.png");
 const lock = require("../assets/icons/lock.png");

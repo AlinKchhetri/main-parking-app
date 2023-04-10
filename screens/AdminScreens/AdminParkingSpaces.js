@@ -1,6 +1,6 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react';
-import { COLORS, SIZES, lightFONTS, darkFONTS, icons, images } from '../../constants'
+import { COLORS, SIZES, FONTS, darkFONTS, icons, images } from '../../constants'
 import { useSelector } from 'react-redux'
 import ParkingList from '../../components/ParkingList';
 
@@ -13,7 +13,7 @@ const AdminParkingSpaces = () => {
       flex: 1,
       margin: 10
     }}>
-      <Text style={{ ...lightFONTS.h3, margin: 15, marginTop: 30 }}>Parking Spaces</Text>
+      <Text style={{ ...FONTS.h3, margin: 15, marginTop: 30 }}>Parking Spaces</Text>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

@@ -1,7 +1,7 @@
 import { ScrollView, SafeAreaView, StyleSheet, RefreshControl, Image, Text, View, TouchableOpacity, FlatList, StatusBar, Dimensions, Platform } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Swiper from 'react-native-swiper';
-import { COLORS, SIZES, lightFONTS, darkFONTS, icons, images } from '../../constants'
+import { COLORS, SIZES, FONTS, darkFONTS, icons, images } from '../../constants'
 import { Avatar, Card } from 'react-native-ui-lib'
 import { Badge } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -77,7 +77,7 @@ const Home = ({ navigation }) => {
             alert(message);
             dispatch({ type: "clearMessage" });
         }
-    }, [alert, error, message, dispatch])
+    }, [alert, error, message, dispatch]);
 
 
     const AvailableParking = (props) => {
@@ -112,16 +112,13 @@ const Home = ({ navigation }) => {
                     alignItems: 'center',
                 }}>
                     <TouchableOpacity
+                        disabled={bookingDetails ? false : true}
                         onPress={() => navigation.navigate('HomeStack', {
                             screen: 'messages'
                         })}
                         style={{
                             flexDirection: 'row'
                         }}>
-                        {/* <MaterialIcon
-                            name='message-outline'
-                            size={25}
-                        /> */}
                         <Icon
                             name='ios-notifications-outline'
                             size={25}
@@ -181,15 +178,14 @@ const Home = ({ navigation }) => {
                         marginHorizontal: 15
                     }}>
                         <Text style={{
-                            ...lightFONTS.h4,
-                            // marginHorizontal: 10,
+                            ...FONTS.h4,
                         }}>Ongoing Bookings</Text>
                         <BookingHistory item={ongoingBookings[0]} />
                     </View>
                 }
 
                 <Text style={{
-                    ...lightFONTS.h4,
+                    ...FONTS.h4,
                     marginHorizontal: 20,
                     marginBottom: 10,
                 }}>Featured</Text>
@@ -208,7 +204,7 @@ const Home = ({ navigation }) => {
                     keyExtractor={item => item._id}
                 />
                 <Text style={{
-                    ...lightFONTS.h4,
+                    ...FONTS.h4,
                     marginHorizontal: 20,
                     marginVertical: 10,
                 }}>Parking Spaces near you</Text>
@@ -227,7 +223,7 @@ const Home = ({ navigation }) => {
                     keyExtractor={item => item._id}
                 />
                 {/* <Text style={{
-                    ...lightFONTS.h3,
+                    ...FONTS.h3,
                     marginHorizontal: 20,
                     marginVertical: 10,
                 }}>Recent Parking History</Text>
@@ -254,7 +250,7 @@ const styles = StyleSheet.create({
         padding: SIZES.padding2
     },
     headerText: {
-        ...lightFONTS.h2,
+        ...FONTS.h2,
         marginHorizontal: SIZES.padding2,
         // top: 10,
     },

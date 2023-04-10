@@ -1,6 +1,6 @@
 import { SafeAreaView, Dimensions, ScrollView, StatusBar, RefreshControl, TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native'
 import React, { useState, useEffect } from 'react';
-import { COLORS, SIZES, lightFONTS, darkFONTS, icons, images } from '../../constants'
+import { COLORS, SIZES, FONTS, darkFONTS, icons, images } from '../../constants'
 import { Avatar, Card } from 'react-native-ui-lib';
 import {
     LineChart
@@ -116,7 +116,7 @@ const AdminHome = ({ navigation }) => {
                 </View>
                 <View>
                     <Text style={{
-                        ...lightFONTS.h5,
+                        ...FONTS.h5,
                         fontSize: 14,
                         color: COLORS.grey,
                         margin: 5
@@ -132,7 +132,7 @@ const AdminHome = ({ navigation }) => {
                             <Image source={icons.rupees} resizeMode='cover' style={{ width: 30, height: 30 }} />
                         }
                         <Text style={{
-                            ...lightFONTS.h5,
+                            ...FONTS.h5,
                             // fontSize: 14,
 
                         }}>{props.information}</Text>
@@ -177,7 +177,7 @@ const AdminHome = ({ navigation }) => {
                     marginHorizontal: 15,
                     paddingBottom: 80
                 }}>
-                <Text style={{ ...lightFONTS.h3, marginHorizontal: 15 }}>Dashboard</Text>
+                <Text style={{ ...FONTS.h3, marginHorizontal: 15 }}>Dashboard</Text>
                 <View style={{
                     // flex: 1,
                     flexDirection: 'column',
@@ -247,7 +247,7 @@ const AdminHome = ({ navigation }) => {
                 {
                     monthly_sales &&
                     <>
-                        <Text style={{ ...lightFONTS.h5, marginHorizontal: 15, marginTop: 10, marginBottom: 5 }}>Monthly Sales</Text>
+                        <Text style={{ ...FONTS.h5, marginHorizontal: 15, marginTop: 10, marginBottom: 5 }}>Monthly Sales</Text>
 
                         <LineChart
                             data={{
@@ -295,7 +295,7 @@ const AdminHome = ({ navigation }) => {
                         />
                     </>
                 }
-                <Text style={{ ...lightFONTS.h5, marginHorizontal: 15, marginTop: 10, marginBottom: 5 }}>User Demography</Text>
+                <Text style={{ ...FONTS.h5, marginHorizontal: 15, marginTop: 10, marginBottom: 5 }}>User Demography</Text>
                 <UserDemography />
             </ScrollView>
         </SafeAreaView >

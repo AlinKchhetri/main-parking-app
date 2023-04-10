@@ -56,6 +56,19 @@ export const authReducer = createReducer({}, {
         state.isAuthenticated = false;
         state.error = action.payload;
     },
+    changeRoleRequest: (state) => {
+        state.loading = true;
+    },
+    changeRoleSuccess: (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.message = action.payload;
+    },
+    changeRoleFailure: (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = false;
+        state.error = action.payload;
+    },
     verifyPasswordSuccess: (state, action) => {
         state.verify = true;
         state.message = action.payload;
