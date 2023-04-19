@@ -22,19 +22,56 @@ const RequestCard = (props) => {
                     params: { booking: item }
                 })}
                 style={styles.card}>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <MaterialIcon name='circle' size={8} color={item.response === 'Pending' ? '#ffcc00' : item.response === 'Rejected' ? '#cc3300' : '#99cc33'} style={{ marginHorizontal: 10, marginTop: 5 }} />
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start'
+                }}>
+                    <MaterialIcon
+                        name='circle'
+                        size={8}
+                        color={
+                            item.response === 'Pending' ?
+                                '#ffcc00'
+                                : item.response === 'Rejected'
+                                    ? '#cc3300'
+                                    : '#99cc33'
+                        }
+                        style={{
+                            marginHorizontal: 10,
+                            marginTop: 5
+                        }}
+                    />
                     <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center'
+                        }}>
                             <Text style={{
                                 ...FONTS.h5,
                                 marginRight: 5
                             }}>Booking Request</Text>
-                            <View style={{ backgroundColor: item?.response === 'Pending' ? '#ffcc00' : item.response === 'Rejected' ? '#cc3300' : '#99cc33', padding: 5, borderRadius: SIZES.padding, marginRight: 5 }}>
+                            <View style={{
+                                backgroundColor: item?.response === 'Pending' ?
+                                    '#ffcc00'
+                                    : item.response === 'Rejected' ?
+                                        '#cc3300'
+                                        :
+                                        '#99cc33',
+                                padding: 5,
+                                borderRadius: SIZES.padding,
+                                marginRight: 5
+                            }}>
                                 <Text style={{ ...FONTS.body6, color: 'white' }}>{item?.response}</Text>
                             </View>
-                            {/* <View style={{ backgroundColor: COLORS.darkgray, padding: 5, borderRadius: SIZES.padding }}> */}
-                            <View style={{ backgroundColor: item?.status === 'Unpaid' ? COLORS.darkgray : '#99cc33', padding: 5, borderRadius: SIZES.padding }}>
+                            <View style={{
+                                backgroundColor: item?.status === 'Unpaid' ?
+                                    COLORS.darkgray
+                                    :
+                                    '#99cc33',
+                                padding: 5,
+                                borderRadius: SIZES.padding
+                            }}>
                                 <Text style={{ ...FONTS.body6, color: 'white' }}>{item?.status ? item.status : 'Unpaid'}</Text>
                             </View>
                         </View>
@@ -42,7 +79,13 @@ const RequestCard = (props) => {
                             item?.ownerDetails?._id == user._id ?
                                 <Text style={styles.cardtitle}>You have a new booking request for your parking space</Text>
                                 :
-                                <Text style={styles.cardtitle}>{`Your booking request has been ${item?.response === 'Pending' ? 'sent' : item.response === 'Rejected' ? 'rejected' : 'accepted'}`}</Text>
+                                <Text style={styles.cardtitle}>{`Your booking request has been ${item?.response === 'Pending' ?
+                                    'sent'
+                                    :
+                                    item.response === 'Rejected' ?
+                                        'rejected'
+                                        :
+                                        'accepted'}`}</Text>
                         }
                         <Text style={{ ...FONTS.body5, color: '#707C80' }}>{moment(item?.bookedAt).calendar()}</Text>
                         {

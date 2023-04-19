@@ -86,7 +86,6 @@ const ChoosePayment = ({ navigation, route }) => {
                     }}>
                     <Image
                         source={icons.khalti}
-                        // resizeMethod='scale'
                         style={{
                             width: 100,
                             height: 40

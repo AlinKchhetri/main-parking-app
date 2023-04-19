@@ -71,7 +71,7 @@ export default function CameraComponent({ navigation, route }) {
   return (
     <View style={styles.container}>
       <Camera style={styles.camera} ratio="1:1" ref={(e) => setCamera(e)} type={type}>
-        <TouchableOpacity onPress={() => {
+        {/* <TouchableOpacity onPress={() => {
           if (route.params.updateProfile) return navigation.navigate('editProfile')
           else if (route.params.addThumbnailImage) return navigation.navigate('Add')
           else if (route.params.addImage) return navigation.navigate('Add')
@@ -80,13 +80,14 @@ export default function CameraComponent({ navigation, route }) {
           style={{
             position: 'absolute',
             top: 30,
-            backgroundColor: 'white',
+            // backgroundColor: 'white',
             borderRadius: 40,
             padding: 10,
+            margin: 20
           }}
         >
-          <Text style={{ ...FONTS.body3 }}>Close</Text>
-        </TouchableOpacity>
+          <Text style={{ ...FONTS.body3, color: 'white', fontSize: 20 }}>{`<`}</Text>
+        </TouchableOpacity> */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
             <Icon name="flip-camera-ios" color="white" size={30} />

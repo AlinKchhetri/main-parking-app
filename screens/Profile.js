@@ -67,7 +67,8 @@ const Profile = ({ navigation, route }) => {
     await dispatch(updateProfile(myForm));
     setRefreshing(false);
     navigation.navigate('MyProfile')
-  }
+  };
+  
   const handleChangePassword = () => {
     navigation.navigate('changePassword');
   }
@@ -107,7 +108,7 @@ const Profile = ({ navigation, route }) => {
             animate={true}
             name={user.name}
             useAutoColors
-            source={{ uri: user.avatarUrl.url }}
+            source={{ uri: avatar ? avatar : user.avatarUrl.url }}
             autoColorsConfig={user.name}
             containerStyle={{
               alignSelf: 'center'

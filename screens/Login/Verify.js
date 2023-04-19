@@ -49,14 +49,15 @@ const Verify = ({ navigation, route }) => {
 
   const handleVerify = async () => {
     if (!otp) return;
-    dispatch(verify(Object.values(otp).join('')));
-    Toast.show({
-      type: ALERT_TYPE.SUCCESS,
-      title: 'Success',
-      textBody: 'Your account has been verified. Thank you!',
-      autoClose: 2000
-    });
-    await navigation.navigate('HomeStack', { screen: 'changeRole' });
+    dispatch(verify(Object.values(otp).join(''))).then(() => {
+      Toast.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Success',
+        textBody: 'Your account has been verified. Thank you!',
+        autoClose: 2000
+      });
+      dispatch(loadUser());
+    })
   }
 
   const resendotp = () => {

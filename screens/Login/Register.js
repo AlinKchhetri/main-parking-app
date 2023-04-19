@@ -43,16 +43,12 @@ const Register = ({ navigation, route }) => {
   // const [confirmPassword, setConfirmPassword] = useState('');
 
 
-  // useEffect(() => {
-  //   if (route.params) {
-  //     if (route.params.image) {
-  //       setAvatar(route.params.image)
-  //     }
-  //   }
+  useEffect(() => {
+    if (error) {
+      console.log("🚀 ~ file: Register.js:48 ~ useEffect ~ error:", error)
 
-  //   setName(firstName + ' ' + lastName)
-
-  // }, [route, firstName, lastName])
+    }
+  }, [route, error])
 
 
 
@@ -84,18 +80,6 @@ const Register = ({ navigation, route }) => {
       <TextInput style={styles.inputField} placeholder={props.placeholder} defaultValue={props.defaultValue} onChange={props.onChangeText} />
     );
   };
-
-  //   const registerCheckbox = () => {
-  //     return (
-  //       <View style={styles.checkbox}>
-  //         <CheckBox
-  //           disabled={false}
-  //           value={toggleCheckBox}
-  //           onValueChange={newValue => setToggleCheckBox(newValue)}
-  //         />
-  //       </View>
-  //     );
-  //   };
 
   const registerValidationSchema = yup.object().shape({
     email: yup

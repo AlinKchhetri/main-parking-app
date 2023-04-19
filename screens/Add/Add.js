@@ -7,7 +7,6 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  Pressable,
   ScrollView,
   Dimensions,
   ActivityIndicator
@@ -59,7 +58,7 @@ const Add = ({ navigation, route }) => {
   const [showCarDetails, setShowCarDetails] = useState(false);
 
   const [locationName, setLocationName] = useState();
-  console.log("🚀 ~ file: Add.js:58 ~ Add ~ locationName:", locationName)
+  // console.log("🚀 ~ file: Add.js:58 ~ Add ~ locationName:", locationName)
 
   useEffect(() => {
     if (route.params) {
@@ -159,8 +158,8 @@ const Add = ({ navigation, route }) => {
               two_wheeler_slot: null,
               four_wheeler_slot: null
             }}
-            onSubmit={async (values) => {
-              console.log(values.four_wheeler_rate)
+            onSubmit={(values) => {
+              console.log(values)
               const myForm = new FormData();
 
               myForm.append('ownerId', user._id);
@@ -182,8 +181,9 @@ const Add = ({ navigation, route }) => {
                     textBody: 'Something went wrong. Please try again',
                     autoClose: 2000,
                   });
+                  return;
                 }
-                navigation.navigate('home')
+                navigation.navigate('home');
                 Toast.show({
                   type: ALERT_TYPE.SUCCESS,
                   title: 'Parking Space Added Successfully',
@@ -196,7 +196,7 @@ const Add = ({ navigation, route }) => {
           >
             {({ handleChange, handleBlur, handleSubmit, values, setFieldValue, errors, isValid, touched }) => {
               return (
-                <KeyboardAwareScrollView showsVerticalScrollIndicator={false} style={{
+                <ScrollView showsVerticalScrollIndicator={false} style={{
                   flex: 1,
                   marginHorizontal: 15
                 }}>
@@ -339,7 +339,7 @@ const Add = ({ navigation, route }) => {
                       color: 'red'
                     }}>*</Text></Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                      <Pressable style={{ backgroundColor: COLORS.green, justifyContent: 'center', width: 170, height: 170, borderRadius: 20 }} onPress={handleThumbnailImage}>
+                      <TouchableOpacity style={{ backgroundColor: COLORS.green, justifyContent: 'center', width: 170, height: 170, borderRadius: 20 }} onPress={handleThumbnailImage}>
                         {
                           thumbnailImage ?
                             <Image
@@ -354,8 +354,8 @@ const Add = ({ navigation, route }) => {
                               style={{ backgroundColor: COLORS.green, alignSelf: 'center', width: 30, height: 30 }}
                             />
                         }
-                      </Pressable>
-                      <Pressable style={{ backgroundColor: COLORS.green, justifyContent: 'center', width: 170, height: 170, borderRadius: 20 }} onPress={handleImage}>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={{ backgroundColor: COLORS.green, justifyContent: 'center', width: 170, height: 170, borderRadius: 20 }} onPress={handleImage}>
                         {
                           image ?
                             <Image
@@ -370,7 +370,7 @@ const Add = ({ navigation, route }) => {
                               style={{ backgroundColor: COLORS.green, alignSelf: 'center', width: 30, height: 30 }}
                             />
                         }
-                      </Pressable>
+                      </TouchableOpacity>
                     </View>
                   </View>
                   <View>
@@ -384,8 +384,9 @@ const Add = ({ navigation, route }) => {
                           <Text style={styles.buttonStyle}>Add</Text>
                       }
                     </TouchableOpacity>
+                    {/* <Text onPress={handleSubmit}>Add</Text> */}
                   </View>
-                </KeyboardAwareScrollView>
+                </ScrollView>
               )
             }}
           </Formik>

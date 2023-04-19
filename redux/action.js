@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // const serverUrl = "https://parking-renting-app-server.herokuapp.com/api/v1";
-const serverUrl = "https://parkpin-server.cyclic.app/api/v1";
-// const serverUrl = "https://parkpin-server.onrender.com/api/v1";
+// const serverUrl = "https://parkpin-server.cyclic.app/api/v1";
+const serverUrl = "https://parkpin-server.onrender.com/api/v1";
 // const serverUrl = "http://localhost:4000/api/v1";
 // const serverUrl = "https://main-parking-server.herokuapp.com/api/v1";
 // const serverUrl = "https://parkpin.onrender.com/api/v1";
@@ -263,6 +263,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     dispatch({ type: "forgotPasswordFailure", payload: error.response.data.message });
   }
 };
+
 export const resetPassword = (otp, newPassword) => async (dispatch) => {
   try {
     dispatch({ type: "resetPasswordRequest" });
@@ -408,6 +409,7 @@ export const addParking = (formData) => async (dispatch) => {
     );
     dispatch({ type: "addParkingSuccess", payload: data });
   } catch (error) {
+    console.log("🚀 ~ file: action.js:412 ~ addParking ~ error:", error)
     dispatch({ type: "addParkingFailure", payload: error.response.data.message });
   }
 };
@@ -435,7 +437,6 @@ export const getNearParking = (latitude, longitude) => async (dispatch) => {
       `${serverUrl}/nearparking`,
       // { latitude, longitude }
     );
-    console.log("🚀 ~ file: action.js:348 ~ getNearParking ~ data:", data, '-------------------------------------------------------------------')
     dispatch({ type: "nearParkingSuccess", payload: data });
 
   } catch (error) {

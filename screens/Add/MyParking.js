@@ -18,7 +18,6 @@ const MyParking = ({ navigation }) => {
         dispatch(getMyParking(user._id))
     }, [])
 
-    console.log(parkingSpace);
 
     const CustomChip = (props) => {
         return (

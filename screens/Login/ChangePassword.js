@@ -6,6 +6,7 @@ import {
   StatusBar,
   TouchableOpacity,
   Image,
+  ActivityIndicator
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import React, { useState, useEffect } from 'react';
@@ -24,10 +25,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import mime from 'mime';
 import { Formik } from 'formik'
 import * as yup from 'yup'
+import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
 
 const ChangePassword = ({ navigation, route }) => {
 
   const dispatch = useDispatch();
+
+  const { loading } = useSelector(state => state.auth);
+
 
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -76,6 +81,12 @@ const ChangePassword = ({ navigation, route }) => {
         }}
         onSubmit={async (values) => {
           await dispatch(changePassword(oldPassword, newPassword));
+          Toast.show({
+            type: ALERT_TYPE.SUCCESS,
+            title: 'Success',
+            textBody: 'Your password has been changed successfully',
+            autoClose: 2000
+          });
           dispatch(loadUser());
         }}
         validationSchema={changePasswordValidationSchema}
@@ -124,7 +135,12 @@ const ChangePassword = ({ navigation, route }) => {
               <TouchableOpacity
                 onPress={handleSubmit}
                 style={styles.next}>
-                <Text style={{ ...FONTS.h5, color: 'white' }}>Change Password</Text>
+                {
+                  loading ?
+                    <ActivityIndicator size={'small'} color='white' />
+                    :
+                    <Text style={{ ...FONTS.h5, color: 'white' }}>Change Password</Text>
+                }
               </TouchableOpacity>
             </View>
           )

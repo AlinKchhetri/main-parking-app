@@ -271,23 +271,6 @@ const Payment = ({ navigation, route }) => {
                     </Text>
                 </TouchableOpacity>
             }
-            {/* <TouchableOpacity
-                onPress={() => setIsVisible(true)}
-                style={{
-                    backgroundColor: COLORS.green,
-                    margin: SIZES.padding2,
-                    padding: SIZES.padding2,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: SIZES.padding2
-                }}>
-                <Text style={{
-                    ...FONTS.h5,
-                    color: 'white',
-                }}>
-                    Khalti
-                </Text>
-            </TouchableOpacity> */}
             <KhatiSdk
                 amount={fee * 100} // Number in paisa
                 isVisible={isVisible} // Bool to show model

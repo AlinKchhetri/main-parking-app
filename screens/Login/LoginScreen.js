@@ -211,7 +211,6 @@ const LoginScreen = ({ navigation }) => {
             </TouchableOpacity>
         )
     }
-    console.log(new Date())
 
     const SocialLogin = () => {
         return (

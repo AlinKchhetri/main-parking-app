@@ -53,7 +53,6 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     if (googleResponse?.type === "success") {
-      console.log("🚀 ~ file: Login.js:49 ~ useEffect ~ googleResponse", googleResponse)
       setAccessToken(googleResponse.authentication.accessToken);
 
       async function getData() {
@@ -62,7 +61,6 @@ const Login = ({ navigation }) => {
         });
 
         userInfoResponse.json().then((data) => {
-          console.log("🚀 ~ file: Login.js:60 ~ userInfoResponse.json ~ data", data)
           dispatch(googleOAuthlogin(data.name, data.email, data.id))
           setUserInfo(data);
         });
@@ -209,7 +207,6 @@ const Login = ({ navigation }) => {
       </TouchableOpacity>
     )
   }
-  console.log(new Date())
 
   const SocialLogin = () => {
     return (

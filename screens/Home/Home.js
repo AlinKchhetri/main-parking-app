@@ -123,9 +123,12 @@ const Home = ({ navigation }) => {
                             name='ios-notifications-outline'
                             size={25}
                         />
-                        <Badge value={badgeCount?.length} status="error"
-                            containerStyle={{ position: 'absolute', top: -6, right: -5 }}
-                        />
+                        {
+                            badgeCount?.length > 0 &&
+                            <Badge value={badgeCount?.length} status="error"
+                                containerStyle={{ position: 'absolute', top: -6, right: -5 }}
+                            />
+                        }
                     </TouchableOpacity>
 
 
@@ -173,6 +176,7 @@ const Home = ({ navigation }) => {
                 </View>
 
                 {
+                    user.role === 'user' &&
                     (ongoingBookings?.length > 0 && moment().isBefore(ongoingBookings[0]?.booking_endTime)) &&
                     <View style={{
                         marginHorizontal: 15

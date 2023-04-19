@@ -58,15 +58,6 @@ const ParkingDetails = ({ navigation, route }) => {
           'Share ParkPin parking spaces',
         url: `https://maps.google.com/?q=${details?.location.coordinates[1]},${details?.location.coordinates[0]}`
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -327,9 +318,7 @@ const ParkingDetails = ({ navigation, route }) => {
                     <TouchableOpacity
 
                       onPress={() => {
-                        // Linking.openURL(`maps:0,0?q=ParkPin Parking Space@${details.location.coordinates[1]},${details.location.coordinates[0]}`);
-                        // Linking.openURL(`maps://app?daddr=${details.location.coordinates[1]},${details.location.coordinates[0]}`);
-                        Linking.openURL(`googleMaps://app?daddr=${details.location.coordinates[1]},${details.location.coordinates[0]}`)
+                       Linking.openURL(`googleMaps://app?daddr=${details.location.coordinates[1]},${details.location.coordinates[0]}`)
                       }}
                       style={{
                         flexDirection: 'row',

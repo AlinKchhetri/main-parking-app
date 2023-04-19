@@ -24,6 +24,7 @@ import { changePassword, forgotPassword, loadUser, register } from '../../redux/
 import { useDispatch, useSelector } from 'react-redux';
 import mime from 'mime';
 import { ALERT_TYPE, Toast, Dialog } from 'react-native-alert-notification';
+import * as yup from 'yup';
 
 const ForgotPassword = ({ navigation, route }) => {
 
@@ -34,6 +35,9 @@ const ForgotPassword = ({ navigation, route }) => {
   console.log("🚀 ~ file: ForgotPassword.js:34 ~ ForgotPassword ~ email:", email)
   const [errorMessage, setErrorMessage] = useState();
 
+  const emailValidation = yup.object().shape({
+    email: yup.string().email()
+  });
 
   const handleSendEmail = async () => {
     if (email == '') {
@@ -41,17 +45,30 @@ const ForgotPassword = ({ navigation, route }) => {
       return;
     }
     if (error) return;
-    await dispatch(forgotPassword(email));
-
-    if (!error) {
-      Toast.show({
-        type: ALERT_TYPE.SUCCESS,
-        title: 'Email sent',
-        textBody: 'Email has been sent to your account with an OTP',
-        autoClose: 2000,
-      });
-      navigation.navigate('resetPassword');
-    }
+    emailValidation.isValid({
+      email: email,
+    }).then((valid) => {
+      if (valid) {
+        dispatch(forgotPassword(email));
+        if (!error) {
+          Toast.show({
+            type: ALERT_TYPE.SUCCESS,
+            title: 'Email sent',
+            textBody: 'Email has been sent to your account with an OTP',
+            autoClose: 2000,
+          });
+          navigation.navigate('resetPassword');
+        }
+      }
+      else {
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Error',
+          textBody: 'Invalid email address. Please try again with a valid email address',
+          autoClose: 2000,
+        });
+      }
+    })
   }
 
   useEffect(() => {
@@ -94,8 +111,6 @@ const ForgotPassword = ({ navigation, route }) => {
     <SafeAreaView style={styles.login}>
       <StatusBar barStyle="dark-content" />
       <View>
-        {/* <Title /> */}
-        {/* <TextInput style={styles.inputField} placeholder="Email" onChangeText={setEmail} /> */}
         <Text style={{ ...FONTS.body3, margin: 15 }}>Enter the email address asscociated with your account and we'll send an email with instructions to reset your password.</Text>
         <TextInput
           style={styles.inputField} outlineColor='#FAFAFA' activeOutlineColor='#333333'

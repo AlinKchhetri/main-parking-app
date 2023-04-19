@@ -98,7 +98,7 @@ const Booking = ({ navigation, route }) => {
             <ScrollView style={{
                 flex: 1
             }}>
-                {/* <Text style={{
+                <Text style={{
                     ...FONTS.h4,
                     marginTop: 20,
                     marginHorizontal: SIZES.padding
@@ -110,7 +110,7 @@ const Booking = ({ navigation, route }) => {
                     selected={selectedDate}
                     mode={'calendar'}
                     onSelectedChange={date => setSelectedDate(date)}
-                /> */}
+                />
                 <DateTimePickerModal
                     isVisible={startTimeModal}
                     mode="datetime"
@@ -234,50 +234,6 @@ const Booking = ({ navigation, route }) => {
                     marginTop: 20,
                     marginHorizontal: SIZES.padding
                 }}>Duration</Text>
-                {/* <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                    margin: 10,
-                }}>
-                    <Slider
-                        value={duration}
-                        minimumValue={1}
-                        maximumValue={12}
-                        step={1}
-                        thumbTintColor='#0054fdff'
-                        minimumTrackTintColor='#0054fdff'
-                        containerStyle={{
-                            flex: 1,
-                            marginHorizontal: 15
-                        }}
-                        onValueChange={(value) => {
-                            const newEndTime = moment().add(value, 'h')
-                            console.log("🚀 ~ file: Booking.js:194 ~ Booking ~ newEndTime:", newEndTime)
-                            setEndTime(new Date(newEndTime));
-                            setDuration(value);
-                        }}
-                    />
-                    <SimpleIcon
-                        name='minus'
-                        size={25}
-                        onPress={() => {
-                            if (duration <= 1) return;
-                            setDuration(duration - 1)
-                        }}
-                    />
-                    <Text style={{
-                        ...FONTS.h4, color: '#0054fdff'
-                    }}>{duration} hrs</Text>
-                    <SimpleIcon
-                        name='plus'
-                        size={25}
-                        onPress={() => {
-                            if (duration >= 12) return;
-                            setDuration(duration + 1)
-                        }}
-                    />
-                </View> */}
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-around',
@@ -379,10 +335,6 @@ const Booking = ({ navigation, route }) => {
                     }}>
                         Reserve for: Rs. {fee}
                     </Text>
-                    {/* <Text style={{
-                        ...FONTS.h5,
-                        color: 'white',
-                    }}>{Math.round((endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60))} hrs</Text> */}
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

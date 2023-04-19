@@ -178,11 +178,7 @@ const AdminHome = ({ navigation }) => {
                     paddingBottom: 80
                 }}>
                 <Text style={{ ...FONTS.h3, marginHorizontal: 15 }}>Dashboard</Text>
-                <View style={{
-                    // flex: 1,
-                    flexDirection: 'column',
-                    // flexGrow: 1
-                }}>
+                <View>
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
@@ -257,18 +253,9 @@ const AdminHome = ({ navigation }) => {
                             width={Dimensions.get("window").width - 50} // from react-native
                             height={220}
                             segments={3}
-                            // yAxisLabel="Rs."
-                            // yAxisSuffix="k"
-                            // transparent
-                            // withVerticalLabels={false}
-                            // withHorizontalLabels={false}
                             withHorizontalLines={false}
-                            // withVerticalLines
                             yAxisInterval={1} // optional, defaults to 1
                             yLabelsOffset={2}
-
-                            // withShadow={false}
-                            // withDots={false}
                             withInnerLines={false}
                             withOuterLines={false}
                             chartConfig={{
@@ -286,10 +273,8 @@ const AdminHome = ({ navigation }) => {
                             }}
                             bezier
                             style={{
-                                // flex: 1,
                                 marginVertical: 8,
                                 marginHorizontal: 10,
-                                // padding: SIZES.padding,
                                 borderRadius: 10
                             }}
                         />

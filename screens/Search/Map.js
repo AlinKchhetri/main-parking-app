@@ -654,47 +654,6 @@ const Map = ({ navigation }) => {
                     width: 25, height: 30
                   }, scaleStyle]} source={icons.setMarker} />
                 </Animated.View>
-                {/* <Callout
-                  onPress={
-                    () => {
-                      Linking.openURL(`maps:0,0?q=parking@${item.location.latitude},${item.location.longitude}`);
-
-                    }
-
-                  }
-                  // onPress={() => navigation.navigate('parkingDetails', { space: item })}
-
-                  tooltip>
-                  <View style={styles.card}>
-                    <Image
-                      source={{ uri: 'https://images.unsplash.com/photo-1590674899484-d5640e854abe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1734&q=80' }}
-                      // source={{ uri: item.item.image.url}}
-                      style={styles.cardImage}
-                      resizeMode="cover"
-                    />
-                    <View style={styles.textContent}>
-                      <Text numberOfLines={1} style={styles.cardtitle}>123</Text>
-                      <Text numberOfLines={1} style={styles.cardDescription}>abdc</Text>
-                      <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
-                        alignItems: 'center'
-                      }}>
-                        <MaterialIcon
-                          name='bike'
-                          size={20}
-                          style={{
-                            marginHorizontal: 10
-                          }}
-                        />
-                        <MaterialIcon
-                          name='car'
-                          size={23}
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </Callout> */}
               </MapView.Marker>
             )
           })
